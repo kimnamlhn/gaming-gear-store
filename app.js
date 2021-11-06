@@ -24,6 +24,10 @@ app.get('/', function (req, res) {
     res.render('home');
 });
 
+
+require('./middlewares/error.mdw')(app);
+
+
 app.listen(port, () => {
   console.log(`Web app listening at http://localhost:${port}`)
 })
