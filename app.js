@@ -9,10 +9,10 @@ const exphbs  = require('express-handlebars');
 const app = express();
 // Views
 app.engine('hbs', exphbs({
-  defaultLayout: 'layout',
+  defaultLayout: 'user',
   extname: 'hbs',
-  layoutsDir: 'views/user/layouts',
-  partialsDir: 'views/user/partials',
+  layoutsDir: 'views/layouts',
+  partialsDir: 'views/partials',
 }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -23,6 +23,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // Routes
+
+//// ADMIN
+const adminIndexRouter = require('./routes/admin/index');
+
+app.use('/admin', adminIndexRouter);
+
+//// USER
 const userIndexRouter = require('./routes/user/index');
 const userProductsRouter = require('./routes/user/products');
 const userCheckoutRouter = require('./routes/user/checkout');
