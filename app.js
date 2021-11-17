@@ -4,9 +4,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+require('dotenv').config();
+
 const exphbs  = require('express-handlebars');
 
 const app = express();
+
+const db = require('./models');
+db.sequelize.sync();
+
 // Views
 app.engine('hbs', exphbs({
   defaultLayout: 'user',
@@ -33,6 +39,7 @@ app.use('/admin', adminIndexRouter);
 const userIndexRouter = require('./routes/user/index');
 const userProductsRouter = require('./routes/user/products');
 const userCheckoutRouter = require('./routes/user/checkout');
+const router = require('./routes/admin/index');
 
 app.use('/', userIndexRouter);
 app.use('/products', userProductsRouter);
