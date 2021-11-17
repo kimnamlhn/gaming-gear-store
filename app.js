@@ -1,15 +1,19 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const exphbs  = require('express-handlebars');
 
-var app = express();
-
+const app = express();
 // Views
+app.engine('hbs', exphbs({
+  defaultLayout: 'layout',
+  extname: 'hbs',
+  layoutsDir: 'views/user/layouts',
+  partialsDir: 'views/user/partials',
+}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 // Middlewares
@@ -19,8 +23,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // Routes
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+const userIndexRouter = require('./routes/user/index');
+const userProductsRouter = require('./routes/user/products');
+const userCheckoutRouter = require('./routes/user/checkout');
+
+app.use('/', userIndexRouter);
+app.use('/products', userProductsRouter);
+app.use('/checkout', userCheckoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
