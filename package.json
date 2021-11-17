@@ -1,28 +1,20 @@
 {
   "name": "gaming-gear-store",
-  "version": "1.0.0",
-  "description": "A gaming gear store website",
-  "main": "app.js",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kimnamlhn/gaming-gear-store.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kimnamlhn/gaming-gear-store/issues"
-  },
-  "homepage": "https://github.com/kimnamlhn/gaming-gear-store#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "express-handlebars": "^5.3.4",
-    "express-handlebars-sections": "^1.0.1"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.14"
+    "nodemon": "^2.0.15"
   }
 }
