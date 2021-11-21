@@ -10,9 +10,6 @@ const exphbs  = require('express-handlebars');
 
 const app = express();
 
-const db = require('./models');
-db.sequelize.sync();
-
 // Views
 app.engine('hbs', exphbs({
   defaultLayout: 'user',
