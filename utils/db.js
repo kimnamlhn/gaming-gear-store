@@ -1,6 +1,5 @@
 var mysql = require('mysql');
 var util = require('util');
-var config = require('../config/config.json');
 
 var pool  = mysql.createPool({
   "mysql":{
