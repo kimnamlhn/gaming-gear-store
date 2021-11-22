@@ -220,13 +220,13 @@
                         <div class="product">
                             <div class="product-img">
                                 <img src="{{images}}" alt="">
-                                <div class="product-label">
+                                {{!-- <div class="product-label">
                                     <span class="sale">-30%</span>
                                     <span class="new">NEW</span>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="product-body">
-                                <p class="product-category">{{"category_category.nameCategory"}}</p>
+                                <p class="product-category">{{"category_category.nameCategory"}} - {{brand}}</p>
                                 <h3 class="product-name"><a href="/products/{{idProduct}}">{{name}}</a></h3>
                                 <h4 class="product-price">${{price}}</h4>
                                 <div class="product-rating">
