@@ -1,0 +1,5 @@
+components/*/*-Service.js : thuộc về models
+components/*/*-Controller.js : thuộc về controllers
+models/index.js : kết nối database
+models/*.js : định hình (define) database
+

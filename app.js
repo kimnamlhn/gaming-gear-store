@@ -4,8 +4,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-require('dotenv').config();
-
 const exphbs  = require('express-handlebars');
 
 const app = express();
@@ -20,7 +18,7 @@ app.engine('hbs', exphbs({
   layoutsDir: 'views/layouts',
   partialsDir: 'views/partials',
 }));
-app.set('views', path.join(__dirname, 'views'));
+// app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 // Middlewares
 app.use(logger('dev'));
@@ -37,9 +35,8 @@ app.use('/admin', adminIndexRouter);
 
 //// USER
 const userIndexRouter = require('./routes/user/index');
-const userProductsRouter = require('./routes/user/products');
+const userProductsRouter = require('./components/products/index');
 const userCheckoutRouter = require('./routes/user/checkout');
-const router = require('./routes/admin/index');
 
 app.use('/', userIndexRouter);
 app.use('/products', userProductsRouter);
