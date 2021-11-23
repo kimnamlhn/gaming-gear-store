@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(30),
       allowNull: true
     },
-    images: {
+    thumbnail: {
       type: DataTypes.STRING(45),
       allowNull: true
     },
@@ -37,6 +37,14 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'category',
         key: 'idCategory'
+      }
+    },
+    images: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'product_images',
+        key: 'product'
       }
     }
   }, {
@@ -57,6 +65,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "category" },
+        ]
+      },
+      {
+        name: "fk_image_product_idx",
+        using: "BTREE",
+        fields: [
+          { name: "images" },
         ]
       },
     ]

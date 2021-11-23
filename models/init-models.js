@@ -5,6 +5,7 @@ var _orderdetail = require("./orderdetail");
 var _orders = require("./orders");
 var _payment = require("./payment");
 var _product = require("./product");
+var _product_images = require("./product_images");
 
 function initModels(sequelize) {
   var account = _account(sequelize, DataTypes);
@@ -13,6 +14,7 @@ function initModels(sequelize) {
   var orders = _orders(sequelize, DataTypes);
   var payment = _payment(sequelize, DataTypes);
   var product = _product(sequelize, DataTypes);
+  var product_images = _product_images(sequelize, DataTypes);
 
   orders.belongsToMany(product, { as: 'product_idProduct_products', through: orderdetail, foreignKey: "order_idOrder", otherKey: "product_idProduct" });
   product.belongsToMany(orders, { as: 'order_idOrder_orders', through: orderdetail, foreignKey: "product_idProduct", otherKey: "order_idOrder" });
@@ -28,6 +30,8 @@ function initModels(sequelize) {
   orders.hasMany(payment, { as: "payments", foreignKey: "order_idOrder"});
   orderdetail.belongsTo(product, { as: "product_idProduct_product", foreignKey: "product_idProduct"});
   product.hasMany(orderdetail, { as: "orderdetails", foreignKey: "product_idProduct"});
+  product.belongsTo(product_images, { as: "images_product_image", foreignKey: "images"});
+  product_images.hasMany(product, { as: "products", foreignKey: "images"});
 
   return {
     account,
@@ -36,6 +40,7 @@ function initModels(sequelize) {
     orders,
     payment,
     product,
+    product_images,
   };
 }
 module.exports = initModels;

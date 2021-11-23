@@ -1,16 +1,27 @@
-CREATE DATABASE  IF NOT EXISTS `mydb`
-USE `mydb`;
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
 -- Host: localhost    Database: mydb
 -- ------------------------------------------------------
 -- Server version	8.0.27
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 --
 -- Table structure for table `account`
 --
 
 DROP TABLE IF EXISTS `account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `account` (
   `idAccount` int NOT NULL AUTO_INCREMENT,
   `email` varchar(45) DEFAULT NULL,
@@ -19,25 +30,29 @@ CREATE TABLE `account` (
   `role` binary(1) DEFAULT NULL,
   PRIMARY KEY (`idAccount`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `category`
 --
 
 DROP TABLE IF EXISTS `category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
   `idCategory` int NOT NULL AUTO_INCREMENT,
   `nameCategory` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idCategory`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `orderdetail`
 --
 
 DROP TABLE IF EXISTS `orderdetail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orderdetail` (
   `idOrder` int NOT NULL,
   `idProduct` int NOT NULL,
@@ -50,12 +65,15 @@ CREATE TABLE `orderdetail` (
   CONSTRAINT `fk_orderDetail_order1` FOREIGN KEY (`order_idOrder`) REFERENCES `orders` (`idOrder`),
   CONSTRAINT `fk_orderDetail_product1` FOREIGN KEY (`product_idProduct`) REFERENCES `product` (`idProduct`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `orders`
 --
 
 DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `idOrder` int NOT NULL AUTO_INCREMENT,
   `orderDate` date DEFAULT NULL,
@@ -68,12 +86,15 @@ CREATE TABLE `orders` (
   KEY `fk_order_customer1_idx` (`customer_idCustomer`),
   CONSTRAINT `fk_order_customer1` FOREIGN KEY (`customer_idCustomer`) REFERENCES `account` (`idAccount`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `payment`
 --
 
 DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
   `idpayment` int NOT NULL AUTO_INCREMENT,
   `idCustomer` int DEFAULT NULL,
@@ -87,12 +108,15 @@ CREATE TABLE `payment` (
   CONSTRAINT `fk_payment_customer` FOREIGN KEY (`customer_idCustomer`) REFERENCES `account` (`idAccount`),
   CONSTRAINT `fk_payment_order1` FOREIGN KEY (`order_idOrder`) REFERENCES `orders` (`idOrder`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `product`
 --
 
 DROP TABLE IF EXISTS `product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product` (
   `idProduct` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
@@ -100,11 +124,40 @@ CREATE TABLE `product` (
   `price` int DEFAULT NULL,
   `stock` int DEFAULT NULL,
   `brand` varchar(30) DEFAULT NULL,
-  `images` varchar(45) DEFAULT NULL,
+  `thumbnail` varchar(45) DEFAULT NULL,
   `category` int DEFAULT NULL,
+  `images` int DEFAULT NULL,
   PRIMARY KEY (`idProduct`),
   KEY `fk_category_product_idx` (`category`),
-  CONSTRAINT `fk_category_product` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`)
+  KEY `fk_image_product_idx` (`images`) /*!80000 INVISIBLE */,
+  CONSTRAINT `fk_category_product` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`),
+  CONSTRAINT `fk_image_product` FOREIGN KEY (`images`) REFERENCES `product_images` (`product`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Dump completed on 2021-11-23  1:37:12
+--
+-- Table structure for table `product_images`
+--
+
+DROP TABLE IF EXISTS `product_images`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_images` (
+  `idImages` int NOT NULL AUTO_INCREMENT,
+  `product` int NOT NULL,
+  `imageurl` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idImages`,`product`),
+  KEY `product_idx` (`product`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-11-23 18:59:15
