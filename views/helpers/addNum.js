@@ -1,0 +1,1 @@
+module.exports = (num,a) => num+a;

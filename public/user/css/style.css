@@ -1383,6 +1383,19 @@ textarea.input {
   font-size: 12px;
 }
 
+.store-center {
+  display: flex;
+  justify-content: center;
+}
+
+.store-center > p {
+  margin-top: 10px;
+  font-size: 1.5em;
+}
+
+.not-found {
+  margin: 10vw;
+}
 /*=========================================================
 	08 -> PRODUCT DETAILS PAGE
 ===========================================================*/
