@@ -12,11 +12,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     description: {
-      type: DataTypes.STRING(1000),
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    detaildescription: {
+      type: DataTypes.TEXT,
       allowNull: true
     },
     price: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DOUBLE,
       allowNull: true
     },
     stock: {

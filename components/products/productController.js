@@ -1,29 +1,38 @@
 const productService = require('./productService');
 
 const list = async (req,res) => {
-    let page = req.query.page;
-    const itemsPerPage = 9;
-    page = productService.pageValidation(page);
-    const list = await productService.getAllProducts(page, itemsPerPage);
-    const products = list.rows;
-    const count = Math.ceil(list.count/itemsPerPage);
-    res.render('user/productList', { 
-        title: 'Electro - Product List',
-        products, 
-        page,
-        count
-    });
+    try {
+        let page = req.query.page;
+        const itemsPerPage = 9;
+        page = productService.pageValidation(page);
+        const list = await productService.getAllProducts(page, itemsPerPage);
+        const brands = await productService.getProductBrands();
+        const categories = await productService.getProductCategories();
+        const products = list.rows;
+        const count = Math.ceil(list.count/itemsPerPage);
+        res.render('user/productList', { 
+            title: 'Electro - Product List',
+            products, 
+            categories,
+            brands,
+            page,
+            count
+        });
+    } catch (error) {
+        res.render('error',{error});
+    }
+
 }
 
 const details = async (req, res) => {
-    const id = Number(req.params.productID);
-    const product = await productService.getDetails(id);
-    const relatedProducts = await productService.getDetailRelatedProducts(product.idProduct, product.category);
-    const image = await productService.getDetailImages(id);
-    if (!product) {
-        return res.status(404).send('Product not found')
+    try {
+        const id = Number(req.params.productID);
+        const product = await productService.getDetails(id);
+        const relatedProducts = await productService.getDetailRelatedProducts(product.idProduct, product.category);
+        const image = await productService.getDetailImages(id);
+        res.render('user/productDetails', { title: `${product.name} | Electro`, product, image, relatedProducts });
+    } catch (error) {
+        res.render('error',{error});
     }
-    
-    res.render('user/productDetails', { title: `${product.name} | Electro`, product, image, relatedProducts });
 }
 module.exports = {list, details};

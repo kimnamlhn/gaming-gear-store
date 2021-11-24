@@ -1,5 +1,5 @@
 const {models} = require('../../models');
-const {Op} = require('sequelize');
+const sequelize = require('sequelize');
 
 // Product List Page
 const pageValidation = (page) => {
@@ -19,6 +19,26 @@ const getAllProducts = (page = 0,itemsPerPage = 9) => {
         ],
     });
 };
+
+const getProductBrands = () => {
+    return models.product.findAll({
+        attributes: ['brand',[sequelize.fn('COUNT',sequelize.col('brand')),'numProducts']],
+        group: ['brand'],
+        raw: true,
+    })
+}
+
+const getProductCategories = () => {
+    return models.product.findAll({
+        include : [{
+            model:models.category, attributes: ['nameCategory'], as: 'category_category',
+            },
+        ],
+        attributes: ['category',[sequelize.fn('COUNT',sequelize.col('category')),'numProducts']],
+        group: ['category'],
+        raw: true,
+    })
+}
 // Product Details Page
 const getDetails = (id) => {
     return models.product.findOne({
@@ -46,7 +66,7 @@ const getDetailRelatedProducts = (id, idCategory) => {
     return models.product.findAll({
         where: {
             idProduct: {
-                [Op.not]: id
+                [sequelize.Op.not]: id
             },
             category: idCategory
         },
@@ -62,6 +82,8 @@ const getDetailRelatedProducts = (id, idCategory) => {
 module.exports = {
     pageValidation,
     getAllProducts,
+    getProductBrands,
+    getProductCategories,
     getDetails,
     getDetailImages,
     getDetailRelatedProducts,

@@ -37,7 +37,7 @@ const adminIndexRouter = require('./routes/admin/index');
 app.use('/admin', adminIndexRouter);
 
 //// USER
-const userIndexRouter = require('./routes/user/index');
+const userIndexRouter = require('./components/index/index');
 const userProductsRouter = require('./components/products/index');
 const userCheckoutRouter = require('./routes/user/checkout');
 
