@@ -3,12 +3,17 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
 const exphbs  = require('express-handlebars');
 const helpers = require('./views/helpers/index');
+const session = require('express-session');
 
 const app = express();
-
+// Router
+const adminIndexRouter = require('./routes/admin/index');
+const userIndexRouter = require('./components/index/index');
+const userProductsRouter = require('./components/products/productRouter');
+const accountRouter = require('./components/accounts/accountRouter');
+// Database
 const db = require('./models');
 db.sequelize.sync();
 
@@ -29,18 +34,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// Sessions
+app.use(session({secret: process.env.SESSION_SECRET}));
 // Routes
 
 //// ADMIN
-const adminIndexRouter = require('./routes/admin/index');
-
 app.use('/admin', adminIndexRouter);
 
 //// USER
-const userIndexRouter = require('./components/index/index');
-const userProductsRouter = require('./components/products/index');
-const accountRouter = require('./components/accounts/index');
-
 app.use('/', userIndexRouter);
 app.use('/products', userProductsRouter);
 app.use('/accounts', accountRouter);
