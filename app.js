@@ -39,11 +39,11 @@ app.use('/admin', adminIndexRouter);
 //// USER
 const userIndexRouter = require('./components/index/index');
 const userProductsRouter = require('./components/products/index');
-const userCheckoutRouter = require('./routes/user/checkout');
+const accountRouter = require('./components/accounts/index');
 
 app.use('/', userIndexRouter);
 app.use('/products', userProductsRouter);
-app.use('/checkout', userCheckoutRouter);
+app.use('/accounts', accountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

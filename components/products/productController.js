@@ -35,4 +35,12 @@ const details = async (req, res) => {
         res.render('error',{error});
     }
 }
-module.exports = {list, details};
+
+const checkout = async (req, res) => {
+    try {
+        res.render('user/checkout', { title: 'Electro - Checkout' });
+    } catch (error) {
+        res.render('error',{error});
+    }
+};
+module.exports = {list, details, checkout};
