@@ -2,10 +2,11 @@ const productService = require('./productService');
 
 const list = async (req,res) => {
     try {
+        let currentCategory = Number(req.query.category);
         let page = req.query.page;
         const itemsPerPage = 9;
         page = productService.pageValidation(page);
-        const list = await productService.getAllProducts(page, itemsPerPage);
+        const list = await productService.getAllProducts(currentCategory, page, itemsPerPage);
         const brands = await productService.getProductBrands();
         const categories = await productService.getProductCategories();
         const products = list.rows;
@@ -13,6 +14,7 @@ const list = async (req,res) => {
         res.render('user/productList', { 
             title: 'Electro - Product List',
             products, 
+            currentCategory,
             categories,
             brands,
             page,
@@ -21,7 +23,6 @@ const list = async (req,res) => {
     } catch (error) {
         res.render('error',{error});
     }
-
 }
 
 const details = async (req, res) => {

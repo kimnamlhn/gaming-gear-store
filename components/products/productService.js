@@ -8,10 +8,15 @@ const pageValidation = (page) => {
     return page;
 }
 
-const getAllProducts = (page = 0,itemsPerPage = 9) => {
+const getAllProducts = (categoryId = undefined, page = 0,itemsPerPage = 9) => {
+    let where = {};
+    if (categoryId!==undefined) {
+        where = {category:categoryId};
+    }
     return models.product.findAndCountAll({
         offset: page * itemsPerPage,
         limit: itemsPerPage,
+        where,
         raw : true,
         attributes: ['idProduct', 'name', 'brand', 'price','thumbnail'],
         include : [
