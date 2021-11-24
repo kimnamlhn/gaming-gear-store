@@ -8,9 +8,9 @@ const pageValidation = (page) => {
     return page;
 }
 
-const getAllProducts = (categoryId = undefined, page = 0,itemsPerPage = 9) => {
+const getAllProducts = (categoryId, page = 0,itemsPerPage = 9) => {
     let where = {};
-    if (categoryId!==undefined) {
+    if (!isNaN(categoryId)) {
         where = {category:categoryId};
     }
     return models.product.findAndCountAll({

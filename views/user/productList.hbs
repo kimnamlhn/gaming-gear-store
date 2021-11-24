@@ -112,33 +112,34 @@
                 <!-- store top filter -->
                 <div class="store-filter clearfix">
                     <div class="store-sort">
-                        <label>
+                        {{!-- <label>
                             Sort By:
                             <select class="input-select">
-                                <option value="0">Popular</option>
-                                <option value="1">Position</option>
+                                <option value="0">None</option>
+                                <option value="1">Price: Highest to Lowest</option>
+                                <option value="2">Price: Lowest to Highest</option>
                             </select>
-                        </label>
+                        </label> --}}
 
-                        <label>
+                        {{!-- <label>
                             Show:
                             <select class="input-select">
                                 <option value="0">20</option>
                                 <option value="1">50</option>
                             </select>
-                        </label>
+                        </label> --}}
                     </div>
-                    <ul class="store-grid">
+                    {{!-- <ul class="store-grid">
                         <li class="active"><i class="fa fa-th"></i></li>
                         <li><a href="#"><i class="fa fa-th-list"></i></a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
                 <!-- /store top filter -->
 
                 <!-- store products -->
                 <div class="row">
                     <!-- product -->
-                    {{#if products}}
+
                     {{#each products}}
                     <div class="col-md-4 col-xs-6">
                         <div class="product">
@@ -171,7 +172,21 @@
                             </div>
                         </div>
                     </div>
-                    {{/each}}
+                    {{#if (checkIfEqual @index 1)}}
+                    <div class="clearfix visible-sm visible-xs"></div>
+                    {{/if}}
+                    {{#if (checkIfEqual @index 2)}}
+                    <div class="clearfix visible-lg visible-md"></div>
+                    {{/if}}
+                    {{#if (checkIfEqual @index 3)}}
+                    <div class="clearfix visible-sm visible-xs"></div>
+                    {{/if}}
+                    {{#if (checkIfEqual @index 5)}}
+                    <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+                    {{/if}}
+                    {{#if (checkIfEqual @index 7)}}
+                    <div class="clearfix visible-sm visible-xs"></div>
+                    {{/if}}
                     {{else}}
                     <div class="not-found">
                         <div class="col-12 store-center">
@@ -181,10 +196,10 @@
                             <p class="mt-2">No products found.</p>
                         </div>
                     </div>
-                    {{/if}} 
+                    {{/each}}
                     <!-- /product -->
 
-                    <div class="clearfix visible-sm visible-xs"></div>
+                    {{!-- <div class="clearfix visible-sm visible-xs"></div>
 
                     <div class="clearfix visible-lg visible-md"></div>
 
@@ -192,12 +207,12 @@
 
                     <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
 
-                    <div class="clearfix visible-sm visible-xs"></div>
+                    <div class="clearfix visible-sm visible-xs"></div> --}}
                 </div>
                 <!-- /store products -->
                 <!-- store bottom filter -->
                 <div class="store-filter clearfix">
-                    <span class="store-qty">Showing 20-100 products</span>
+                    {{!-- <span class="store-qty">Showing 20-100 products</span> --}}
                     <ul class="store-pagination">
                         {{{pagination page count}}}
                     </ul>
