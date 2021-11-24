@@ -9,7 +9,7 @@ const session = require('express-session');
 
 const app = express();
 // Router
-const adminIndexRouter = require('./routes/admin/index');
+// const adminIndexRouter = require('./routes/admin/index');
 const userIndexRouter = require('./components/index/index');
 const userProductsRouter = require('./components/products/productRouter');
 const accountRouter = require('./components/accounts/accountRouter');
@@ -39,7 +39,7 @@ app.use(session({secret: process.env.SESSION_SECRET}));
 // Routes
 
 //// ADMIN
-app.use('/admin', adminIndexRouter);
+//app.use('/admin', adminIndexRouter);
 
 //// USER
 app.use('/', userIndexRouter);

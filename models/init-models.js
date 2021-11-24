@@ -30,8 +30,8 @@ function initModels(sequelize) {
   orders.hasMany(payment, { as: "payments", foreignKey: "order_idOrder"});
   orderdetail.belongsTo(product, { as: "product_idProduct_product", foreignKey: "product_idProduct"});
   product.hasMany(orderdetail, { as: "orderdetails", foreignKey: "product_idProduct"});
-  product.belongsTo(product_images, { as: "images_product_image", foreignKey: "images"});
-  product_images.hasMany(product, { as: "products", foreignKey: "images"});
+  product_images.belongsTo(product, { as: "product_product", foreignKey: "product"});
+  product.hasMany(product_images, { as: "product_images", foreignKey: "product"});
 
   return {
     account,

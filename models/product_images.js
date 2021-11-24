@@ -10,7 +10,11 @@ module.exports = function(sequelize, DataTypes) {
     product: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'product',
+        key: 'idProduct'
+      }
     },
     imageurl: {
       type: DataTypes.STRING(45),
