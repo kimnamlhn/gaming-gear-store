@@ -14,7 +14,7 @@ const register = async (req,res) => {
 }
 const list = async (req,res) => {
     try {
-        res.render('admin/productList', {layout:'admin'});
+        res.render('admin/productList', {layout:'admin',title:'Product List'});
     } catch (error) {
         res.render('error',{error});
     }
