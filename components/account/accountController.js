@@ -22,9 +22,17 @@ const forgotPassword = async (req,res) => {
     }
 }
 
+const userIndex = async (req,res) => {
+    try {
+        res.render('account/user/index', {layout:'user/account',title:'Main'});
+    } catch (error) {
+        res.render('error',{error});
+    }
+}
+
 const adminIndex = async (req,res) => {
     try {
-        res.render('account/index', {layout:'account',title:'Main'});
+        res.render('account/admin/index', {layout:'admin/account',title:'Main'});
     } catch (error) {
         res.render('error',{error});
     }
@@ -32,7 +40,7 @@ const adminIndex = async (req,res) => {
 
 const list = async (req,res) => {
     try {
-        res.render('account/productList', {layout:'account',title:'Product List'});
+        res.render('account/admin/productList', {layout:'admin/account',title:'Product List'});
     } catch (error) {
         res.render('error',{error});
     }
@@ -42,6 +50,7 @@ module.exports = {
     login,
     register,
     forgotPassword,
+    userIndex,
     adminIndex,
     list,
 }

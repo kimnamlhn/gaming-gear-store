@@ -16,6 +16,7 @@ router.get('/forgot-password',accountController.forgotPassword);
 // );
 // router.get('/', accountController.index);
 // router.get('/admin'. accountController.adminIndex);
+router.get('/', accountController.userIndex);
 router.get('/admin', accountController.adminIndex);
 router.get('/admin/products', accountController.list);
 module.exports = router;

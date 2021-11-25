@@ -11,7 +11,7 @@ const app = express();
 // Router
 const storeIndexRouter = require('./components/index/index');
 const storeProductsRouter = require('./components/products/productRouter');
-const accountRouter = require('./components/accounts/accountRouter');
+const accountRouter = require('./components/account/accountRouter');
 // Database
 const db = require('./models');
 db.sequelize.sync();
@@ -39,7 +39,7 @@ app.use(session({secret: process.env.SESSION_SECRET}));
 
 app.use('/', storeIndexRouter);
 app.use('/products', storeProductsRouter);
-app.use('/accounts', accountRouter);
+app.use('/account', accountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
