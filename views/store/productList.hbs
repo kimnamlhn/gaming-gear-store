@@ -124,13 +124,13 @@
                             </select>
                         </label> --}}
 
-                        {{!-- <label>
+                        <label>
                             Show:
-                            <select class="input-select">
-                                <option value="0">20</option>
-                                <option value="1">50</option>
+                            <select id="itemsPerPage" name="itemsPerPage" class="input-select">
+                                <option value="0">12</option>
+                                <option value="1">24</option>
                             </select>
-                        </label> --}}
+                        </label>
                     </div>
                     {{!-- <ul class="store-grid">
                         <li class="active"><i class="fa fa-th"></i></li>
@@ -138,11 +138,9 @@
                     </ul> --}}
                 </div>
                 <!-- /store top filter -->
-
                 <!-- store products -->
-                <div class="row">
+                <div class="row store-flex">
                     <!-- product -->
-
                     {{#each products}}
                     <div class="col-md-4 col-xs-6">
                         <div class="product">
@@ -175,21 +173,6 @@
                             </div>
                         </div>
                     </div>
-                    {{#if (checkIfEqual @index 1)}}
-                    <div class="clearfix visible-sm visible-xs"></div>
-                    {{/if}}
-                    {{#if (checkIfEqual @index 2)}}
-                    <div class="clearfix visible-lg visible-md"></div>
-                    {{/if}}
-                    {{#if (checkIfEqual @index 3)}}
-                    <div class="clearfix visible-sm visible-xs"></div>
-                    {{/if}}
-                    {{#if (checkIfEqual @index 5)}}
-                    <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
-                    {{/if}}
-                    {{#if (checkIfEqual @index 7)}}
-                    <div class="clearfix visible-sm visible-xs"></div>
-                    {{/if}}
                     {{else}}
                     <div class="not-found">
                         <div class="col-12 store-center">
@@ -201,16 +184,6 @@
                     </div>
                     {{/each}}
                     <!-- /product -->
-
-                    {{!-- <div class="clearfix visible-sm visible-xs"></div>
-
-                    <div class="clearfix visible-lg visible-md"></div>
-
-                    <div class="clearfix visible-sm visible-xs"></div>
-
-                    <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
-
-                    <div class="clearfix visible-sm visible-xs"></div> --}}
                 </div>
                 <!-- /store products -->
                 <!-- store bottom filter -->

@@ -1305,7 +1305,10 @@ textarea.input {
   text-transform: uppercase;
   margin-right: 15px;
 }
-
+.store-flex {
+  display:flex;
+  flex-wrap: wrap;
+}
 /*-- Store Grid --*/
 
 .store-grid {

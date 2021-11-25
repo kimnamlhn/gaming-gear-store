@@ -4,7 +4,7 @@ const list = async (req,res) => {
     try {
         let currentCategory = Number(req.query.category);
         let page = req.query.page;
-        const itemsPerPage = 9;
+        const itemsPerPage = 12;
         page = productService.pageValidation(page);
         const list = await productService.getAllProducts(currentCategory, page, itemsPerPage);
         const brands = await productService.getProductBrands();
