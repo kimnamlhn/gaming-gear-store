@@ -7,20 +7,28 @@ const logger = require('morgan');
 require('dotenv').config();
 
 const exphbs  = require('express-handlebars');
+const helpers = require('./views/helpers/index');
+const session = require('express-session');
 
 const app = express();
-
+// Router
+const storeIndexRouter = require('./components/index/index');
+const storeProductsRouter = require('./components/products/productRouter');
+const accountRouter = require('./components/account/accountRouter');
+// Database
 const db = require('./models');
 db.sequelize.sync();
 
 // Views
 app.engine('hbs', exphbs({
-  defaultLayout: 'user',
+  defaultLayout: 'store',
   extname: 'hbs',
   layoutsDir: 'views/layouts',
   partialsDir: 'views/partials',
+  helpers
 }));
-app.set('views', path.join(__dirname, 'views'));
+
+// app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 // Middlewares
 app.use(logger('dev'));
@@ -28,23 +36,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// Sessions
+app.use(session({secret: process.env.SESSION_SECRET}));
 // Routes
-
-//// ADMIN
-const adminIndexRouter = require('./routes/admin/index');
-
-app.use('/admin', adminIndexRouter);
-
-//// USER
-const userIndexRouter = require('./routes/user/index');
-const userProductsRouter = require('./routes/user/products');
-const userCheckoutRouter = require('./routes/user/checkout');
-const router = require('./routes/admin/index');
-
-app.use('/', userIndexRouter);
-app.use('/products', userProductsRouter);
-app.use('/checkout', userCheckoutRouter);
-
+app.use('/', storeIndexRouter);
+app.use('/products', storeProductsRouter);
+app.use('/account', accountRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
