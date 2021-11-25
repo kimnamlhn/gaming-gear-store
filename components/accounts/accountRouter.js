@@ -15,5 +15,6 @@ router.get('/register', accountController.register);
 // );
 // router.get('/', accountController.index);
 // router.get('/admin'. accountController.adminIndex);
+router.get('/admin', accountController.adminIndex);
 router.get('/admin/products', accountController.list);
 module.exports = router;
