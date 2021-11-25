@@ -6,6 +6,7 @@ const accountController = require('./accountController');
 
 router.get('/login', accountController.login);
 router.get('/register', accountController.register);
+router.get('/forgot-password',accountController.forgotPassword);
 // router.post('/login',
 //     passport.authenticate('local'),
 //     function(req, res) {
