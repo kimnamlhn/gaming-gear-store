@@ -6,11 +6,10 @@ const list = async (req,res) => {
         let page = req.query.page;
         const itemsPerPage = 12;
         page = productService.pageValidation(page);
-        const list = await productService.getAllProducts(currentCategory, page, itemsPerPage);
-        const brands = await productService.getProductBrands();
-        const categories = await productService.getProductCategories();
-        const products = list.rows;
-        const count = Math.ceil(list.count/itemsPerPage);
+        ({count,rows:products} = await productService.getAllProducts(currentCategory, page, itemsPerPage));
+        const brands = await productService.getProductBrandsCount();
+        const categories = await productService.getProductCategoriesCount();
+        count = Math.ceil(count/itemsPerPage);
         res.render('store/productList', { 
             title: 'Electro - Product List',
             products, 
@@ -31,7 +30,16 @@ const details = async (req, res) => {
         const product = await productService.getDetails(id);
         const relatedProducts = await productService.getDetailRelatedProducts(product.idProduct, product.category);
         const image = await productService.getDetailImages(id);
-        res.render('store/productDetails', { title: `${product.name} | Electro`, product, image, relatedProducts });
+        ({count,rows:comments} = await productService.getDetailComments(id));
+        const numRatings = await productService.getDetailsCommentsCount(id);
+        res.render('store/productDetails', { title: `${product.name} | Electro`, 
+        product,
+        image,
+        relatedProducts,
+        count,
+        comments,
+        numRatings,
+    });
     } catch (error) {
         res.render('error',{error});
     }

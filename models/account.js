@@ -8,11 +8,15 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     email: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.STRING(100),
       allowNull: true
     },
     password: {
       type: DataTypes.STRING(60),
+      allowNull: false
+    },
+    name: {
+      type: DataTypes.STRING(100),
       allowNull: true
     },
     phone: {
@@ -26,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'account',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",

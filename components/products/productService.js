@@ -25,7 +25,7 @@ const getAllProducts = (categoryId, page = 0,itemsPerPage = 9) => {
     });
 };
 
-const getProductBrands = () => {
+const getProductBrandsCount = () => {
     return models.product.findAll({
         attributes: ['brand',[sequelize.fn('COUNT',sequelize.col('brand')),'numProducts']],
         group: ['brand'],
@@ -33,7 +33,7 @@ const getProductBrands = () => {
     })
 }
 
-const getProductCategories = () => {
+const getProductCategoriesCount = () => {
     return models.product.findAll({
         include : [{
             model:models.category, attributes: ['nameCategory'], as: 'category_category',
@@ -67,6 +67,34 @@ const getDetailImages = (id) => {
     });
 }
 
+const getDetailComments = (id, page = 0) => {
+    return models.product_comments.findAndCountAll({
+        offset: page * 3,
+        limit: 3,
+        attributes: ['content','rating',[sequelize.fn('date_format', sequelize.col('creationAt'), '%d %b %Y, %h:%i %p'), 'creationAt']],
+        include: [{
+            model: models.account,
+            attributes: ['name'],
+            as: 'idAccount_account'
+        }],
+        where: {
+            idProduct: id,
+        },
+        raw: true,
+    })
+}
+
+const getDetailsCommentsCount = (id) => {
+    return models.product_comments.findAll({
+        where: {
+            idProduct: id,
+        },
+        attributes: ['rating',[sequelize.fn('COUNT',sequelize.col('rating')),'ratingcount']],
+        group: ['rating'],
+        raw: true,
+    })
+}
+
 const getDetailRelatedProducts = (id, idCategory) => {
     return models.product.findAll({
         where: {
@@ -84,12 +112,15 @@ const getDetailRelatedProducts = (id, idCategory) => {
     ],
     })
 }
+
 module.exports = {
     pageValidation,
     getAllProducts,
-    getProductBrands,
-    getProductCategories,
+    getProductBrandsCount,
+    getProductCategoriesCount,
     getDetails,
     getDetailImages,
+    getDetailComments,
+    getDetailsCommentsCount,
     getDetailRelatedProducts,
 };

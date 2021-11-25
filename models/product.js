@@ -23,6 +23,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
+    rating: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
     price: {
       type: DataTypes.DOUBLE,
       allowNull: true
