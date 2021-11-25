@@ -11,6 +11,7 @@ const helpers = require('./views/helpers/index');
 const session = require('express-session');
 
 const app = express();
+<<<<<<< HEAD
 // Router
 const storeIndexRouter = require('./components/index/index');
 const storeProductsRouter = require('./components/products/productRouter');
@@ -18,6 +19,8 @@ const accountRouter = require('./components/account/accountRouter');
 // Database
 const db = require('./models');
 db.sequelize.sync();
+=======
+>>>>>>> 0a8b9b5e5ff2bdc4b62b54f5dcf3a4e7cbe59d7c
 
 // Views
 app.engine('hbs', exphbs({
