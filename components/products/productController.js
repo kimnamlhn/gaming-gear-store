@@ -31,7 +31,7 @@ const details = async (req, res) => {
         const relatedProducts = await productService.getDetailRelatedProducts(product.idProduct, product.category);
         const image = await productService.getDetailImages(id);
         ({count,rows:comments} = await productService.getDetailComments(id));
-        const numRatings = await productService.getDetailsCommentsCount(id);
+        ({result: numRatings, ratingAvg} = await productService.getDetailsCommentsCount(id,count));
         res.render('store/productDetails', { title: `${product.name} | Electro`, 
         product,
         image,
@@ -39,6 +39,7 @@ const details = async (req, res) => {
         count,
         comments,
         numRatings,
+        ratingAvg,
     });
     } catch (error) {
         res.render('error',{error});

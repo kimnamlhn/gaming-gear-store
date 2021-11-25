@@ -84,15 +84,19 @@ const getDetailComments = (id, page = 0) => {
     })
 }
 
-const getDetailsCommentsCount = (id) => {
-    return models.product_comments.findAll({
+const getDetailsCommentsCount = async (id,count) => {
+    let result = await models.product_comments.findAll({
         where: {
             idProduct: id,
         },
         attributes: ['rating',[sequelize.fn('COUNT',sequelize.col('rating')),'ratingcount']],
         group: ['rating'],
         raw: true,
-    })
+    });
+    let ratingAvg = 0;
+    for (let e of result) ratingAvg+= e.rating*e.ratingcount;
+    ratingAvg/=count;
+    return {result,ratingAvg};
 }
 
 const getDetailRelatedProducts = (id, idCategory) => {

@@ -8,5 +8,5 @@ module.exports = {
     section: express_handlebars_sections(),  
     for: require('./forloop'),
     rating_count: require('./rating_count'),
-    rating_avg: require('./rating_avg'),
+    rating_star: require('./rating_star'),
 };

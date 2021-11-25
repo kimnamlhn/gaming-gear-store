@@ -60,11 +60,7 @@
                     <h2 class="product-name">{{name}}</h2>
                     <div>
                         <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
+                            {{{rating_star ../ratingAvg}}}
                         </div>
                         <a class="review-link" href="#">{{../count}} Review(s) | Add your review</a>
                     </div>
@@ -172,7 +168,10 @@
                                 <div class="col-md-3">
                                     <div id="rating">
                                         <div class="rating-avg">
-                                            {{{rating_avg numRatings count}}}
+                                            <span>{{ratingAvg}}</span>
+                                            <div class="rating-stars">
+                                                {{{rating_star ratingAvg}}}
+                                            </div>
                                         </div>
                                         <ul class="rating">
                                             <li>
@@ -240,13 +239,7 @@
                                                     <h5 class="name">{{'idAccount_account.name'}}</h5>
                                                     <p class="date">{{creationAt}}</p>
                                                     <div class="review-rating">
-                                                        
-                                                        {{#for 0 rating 1}}
-                                                        <i class="fa fa-star"></i>
-                                                        {{/for}}
-                                                        {{#for rating 5 1}}
-                                                        <i class="fa fa-star-o empty"></i>
-                                                        {{/for}}
+                                                        {{{rating_star rating}}}
                                                     </div>
                                                 </div>
                                                 <div class="review-body">
