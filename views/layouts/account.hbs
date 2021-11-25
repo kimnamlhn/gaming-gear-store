@@ -3,12 +3,12 @@
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
-	<title>{{title}} | Admin</title>
+	<title>{{title}} | account</title>
 
 	<!-- Site favicon -->
-	<link rel="apple-touch-icon" sizes="180x180" href="/admin/vendors/images/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/admin/vendors/images/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/admin/vendors/images/favicon-16x16.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/account/vendors/images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/account/vendors/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/account/vendors/images/favicon-16x16.png">
 
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -16,10 +16,10 @@
 	<!-- Google Font -->
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="/admin/vendors/styles/core.css">
-	<link rel="stylesheet" type="text/css" href="/admin/vendors/styles/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="/account/vendors/styles/core.css">
+	<link rel="stylesheet" type="text/css" href="/account/vendors/styles/icon-font.min.css">
     {{{_sections.data-table-css}}}
-	<link rel="stylesheet" type="text/css" href="/admin/vendors/styles/style.css">
+	<link rel="stylesheet" type="text/css" href="/account/vendors/styles/style.css">
 
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -35,7 +35,7 @@
 <body>
     {{!-- <div class="pre-loader">
         <div class="pre-loader-box">
-            <div class="loader-logo"><img src="/admin/vendors/images/deskapp-logo.svg" alt=""></div>
+            <div class="loader-logo"><img src="/account/vendors/images/deskapp-logo.svg" alt=""></div>
             <div class='loader-progress' id="progress_div">
                 <div class='bar' id='bar1'></div>
             </div>
@@ -45,23 +45,23 @@
             </div>
         </div>
     </div> --}}
-    {{>admin/header}}
-    {{>admin/right-sidebar}}
-    {{>admin/left-sidebar}}
+    {{>account/header}}
+    {{>account/right-sidebar}}
+    {{>account/left-sidebar}}
     <div class="mobile-menu-overlay"></div>
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             {{{body}}}
-            {{>admin/footer}}
+            {{>account/footer}}
         </div>
     </div>
 
 
     <!-- js -->
-    <script src="/admin/vendors/scripts/core.js"></script>
-	<script src="/admin/vendors/scripts/script.min.js"></script>
-	<script src="/admin/vendors/scripts/process.js"></script>
-	<script src="/admin/vendors/scripts/layout-settings.js"></script>
+    <script src="/account/vendors/scripts/core.js"></script>
+	<script src="/account/vendors/scripts/script.min.js"></script>
+	<script src="/account/vendors/scripts/process.js"></script>
+	<script src="/account/vendors/scripts/layout-settings.js"></script>
     {{{_sections.data-table-js}}}
 </body>
 </html>

@@ -9,9 +9,8 @@ const session = require('express-session');
 
 const app = express();
 // Router
-// const adminIndexRouter = require('./routes/admin/index');
-const userIndexRouter = require('./components/index/index');
-const userProductsRouter = require('./components/products/productRouter');
+const storeIndexRouter = require('./components/index/index');
+const storeProductsRouter = require('./components/products/productRouter');
 const accountRouter = require('./components/accounts/accountRouter');
 // Database
 const db = require('./models');
@@ -19,7 +18,7 @@ db.sequelize.sync();
 
 // Views
 app.engine('hbs', exphbs({
-  defaultLayout: 'user',
+  defaultLayout: 'store',
   extname: 'hbs',
   layoutsDir: 'views/layouts',
   partialsDir: 'views/partials',
@@ -38,12 +37,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: process.env.SESSION_SECRET}));
 // Routes
 
-//// ADMIN
-//app.use('/admin', adminIndexRouter);
-
-//// USER
-app.use('/', userIndexRouter);
-app.use('/products', userProductsRouter);
+app.use('/', storeIndexRouter);
+app.use('/products', storeProductsRouter);
 app.use('/accounts', accountRouter);
 
 // catch 404 and forward to error handler

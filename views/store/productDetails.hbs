@@ -34,7 +34,7 @@
                 <div id="product-main-img">
                     {{#each image}}
                     <div class="product-preview">
-                        <img src="{{imageurl}}" alt="">
+                        <img src="/store/img/{{imageurl}}" alt="">
                     </div>
                     {{/each}}
                 </div>
@@ -46,7 +46,7 @@
                 <div id="product-imgs">
                     {{#each image}}
                     <div class="product-preview">
-                        <img src="{{imageurl}}" alt="">
+                        <img src="/store/img/{{imageurl}}" alt="">
                     </div>
                     {{/each}}
                 </div>
@@ -360,19 +360,17 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-
             <div class="col-md-12">
                 <div class="section-title text-center">
                     <h3 class="title">Related Products</h3>
                 </div>
             </div>
             <!-- product -->
-            {{#if relatedProducts}}
                 {{#each relatedProducts}}
                     <div class="col-md-3 col-xs-6">
                         <div class="product">
                             <div class="product-img">
-                                <img src="{{thumbnail}}" alt="">
+                                <img src="/store/img/{{thumbnail}}" alt="">
                                 {{!-- <div class="product-label">
                                     <span class="sale">-30%</span>
                                 </div> --}}
@@ -394,14 +392,14 @@
                             </div>
                         </div>
                     </div>
-                {{/each}}
+                
             {{else}}
                 <div class="col-md-12">
                     <div class="section-title text-center">
                         <p class = "text-muted">No Related Product</p>
                     </div>
                 </div>
-            {{/if}}
+            {{/each}}
 
             <!-- /product -->
 

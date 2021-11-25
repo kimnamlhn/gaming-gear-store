@@ -11,7 +11,7 @@ const list = async (req,res) => {
         const categories = await productService.getProductCategories();
         const products = list.rows;
         const count = Math.ceil(list.count/itemsPerPage);
-        res.render('user/productList', { 
+        res.render('store/productList', { 
             title: 'Electro - Product List',
             products, 
             currentCategory,
@@ -31,7 +31,7 @@ const details = async (req, res) => {
         const product = await productService.getDetails(id);
         const relatedProducts = await productService.getDetailRelatedProducts(product.idProduct, product.category);
         const image = await productService.getDetailImages(id);
-        res.render('user/productDetails', { title: `${product.name} | Electro`, product, image, relatedProducts });
+        res.render('store/productDetails', { title: `${product.name} | Electro`, product, image, relatedProducts });
     } catch (error) {
         res.render('error',{error});
     }
@@ -39,7 +39,7 @@ const details = async (req, res) => {
 
 const checkout = async (req, res) => {
     try {
-        res.render('user/checkout', { title: 'Electro - Checkout' });
+        res.render('store/checkout', { title: 'Electro - Checkout' });
     } catch (error) {
         res.render('error',{error});
     }
