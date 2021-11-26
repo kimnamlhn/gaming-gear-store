@@ -24,9 +24,11 @@ DROP TABLE IF EXISTS `account`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `account` (
   `idAccount` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(45) DEFAULT NULL,
-  `password` varchar(60) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(60) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
   `phone` int DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
   `role` binary(1) DEFAULT NULL,
   PRIMARY KEY (`idAccount`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
@@ -119,9 +121,11 @@ DROP TABLE IF EXISTS `product`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product` (
   `idProduct` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `description` varchar(1000) DEFAULT NULL,
-  `price` int DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `generalInfo` mediumtext,
+  `description` mediumtext,
+  `detaildescription` longtext,
+  `price` double DEFAULT NULL,
   `stock` int DEFAULT NULL,
   `brand` varchar(30) DEFAULT NULL,
   `thumbnail` varchar(45) DEFAULT NULL,
@@ -129,10 +133,30 @@ CREATE TABLE `product` (
   `images` int DEFAULT NULL,
   PRIMARY KEY (`idProduct`),
   KEY `fk_category_product_idx` (`category`),
-  KEY `fk_image_product_idx` (`images`) /*!80000 INVISIBLE */,
-  CONSTRAINT `fk_category_product` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`),
-  CONSTRAINT `fk_image_product` FOREIGN KEY (`images`) REFERENCES `product_images` (`product`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_category_product` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `product_comments`
+--
+
+DROP TABLE IF EXISTS `product_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_comments` (
+  `idComment` int NOT NULL,
+  `rating` int NOT NULL,
+  `content` mediumtext,
+  `creationAt` datetime DEFAULT NULL,
+  `idAccount` int NOT NULL,
+  `idProduct` int NOT NULL,
+  PRIMARY KEY (`idComment`),
+  KEY `fk_comment_account_idx` (`idAccount`) /*!80000 INVISIBLE */,
+  KEY `fk_comment_product_idx` (`idProduct`),
+  CONSTRAINT `fk_comment_account` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`),
+  CONSTRAINT `fk_comment_product` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +171,8 @@ CREATE TABLE `product_images` (
   `product` int NOT NULL,
   `imageurl` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idImages`,`product`),
-  KEY `product_idx` (`product`)
+  KEY `product_idx` (`product`),
+  CONSTRAINT `fk_image_product` FOREIGN KEY (`product`) REFERENCES `product` (`idProduct`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -160,4 +185,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-23 18:59:15
+-- Dump completed on 2021-11-26 19:33:55

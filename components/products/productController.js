@@ -6,11 +6,17 @@ const list = async (req,res) => {
         let page = req.query.page;
         const itemsPerPage = 12;
         page = productService.pageValidation(page);
-        const list = await productService.getAllProducts(currentCategory, page, itemsPerPage);
-        const brands = await productService.getProductBrands();
-        const categories = await productService.getProductCategories();
-        const products = list.rows;
-        const count = Math.ceil(list.count/itemsPerPage);
+        let products = await productService.getAllProducts(currentCategory, page, itemsPerPage);
+        const brands = await productService.getProductBrandsCount();
+        const categories = await productService.getProductCategoriesCount();
+        let pageCount = await productService.getProductCount();
+        pageCount = Math.ceil(pageCount/itemsPerPage);
+        products = products.map(({
+            'product_comments.AvgRating': AvgRating,
+            'category_category.nameCategory': nameCategory, ...rest}) => ({
+            AvgRating, 
+            nameCategory,...rest
+        }));
         res.render('store/productList', { 
             title: 'Electro - Product List',
             products, 
@@ -18,7 +24,7 @@ const list = async (req,res) => {
             categories,
             brands,
             page,
-            count
+            pageCount
         });
     } catch (error) {
         res.render('error',{error});
@@ -31,7 +37,17 @@ const details = async (req, res) => {
         const product = await productService.getDetails(id);
         const relatedProducts = await productService.getDetailRelatedProducts(product.idProduct, product.category);
         const image = await productService.getDetailImages(id);
-        res.render('store/productDetails', { title: `${product.name} | Electro`, product, image, relatedProducts });
+        ({count,rows:comments} = await productService.getDetailComments(id));
+        ({result: numRatings, ratingAvg} = await productService.getDetailsCommentsCount(id,count));
+        res.render('store/productDetails', { title: `${product.name} | Electro`, 
+        product,
+        image,
+        relatedProducts,
+        count,
+        comments,
+        numRatings,
+        ratingAvg,
+    });
     } catch (error) {
         res.render('error',{error});
     }
