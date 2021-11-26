@@ -1,5 +1,6 @@
 const {models} = require('../../models');
 const sequelize = require('sequelize');
+const product = require('../../models/product');
 
 // Product List Page
 const pageValidation = (page) => {
@@ -8,21 +9,30 @@ const pageValidation = (page) => {
     return page;
 }
 
-const getAllProducts = (categoryId, page = 0,itemsPerPage = 9) => {
+const getProductCount = () => {
+    return models.product.count();
+}
+
+const getAllProducts = async (categoryId, page = 0,itemsPerPage = 9) => {
     let where = {};
     if (!isNaN(categoryId)) {
         where = {category:categoryId};
     }
-    return models.product.findAndCountAll({
-        offset: page * itemsPerPage,
-        limit: itemsPerPage,
+    const result = await models.product.findAll({
+        raw: true,
         where,
-        raw : true,
         attributes: ['idProduct', 'name', 'brand', 'price','thumbnail'],
-        include : [
-            {model:models.category, attributes: ['nameCategory'], as: 'category_category'},
+        include: [
+            {model: models.category, attributes: ['nameCategory'], as: 'category_category'},
+            {model: models.product_comments, attributes: [[sequelize.fn('AVG',sequelize.col('rating')),'AvgRating']], as: 'product_comments'}
         ],
-    });
+        distinct: true,
+        group: ['idProduct'],
+        limit: itemsPerPage,
+        offset: page * itemsPerPage,
+        subQuery: false,
+    })
+    return result;
 };
 
 const getProductBrandsCount = () => {
@@ -42,6 +52,21 @@ const getProductCategoriesCount = () => {
         attributes: ['category',[sequelize.fn('COUNT',sequelize.col('category')),'numProducts']],
         group: ['category'],
         raw: true,
+    })
+}
+
+const getProductSortByRating = () => {
+    return models.product.findAll({
+        raw: true,
+        attributes: ['idProduct', 'name', 'brand', 'price','thumbnail',],
+        include: [
+            {model: models.category, attributes: ['nameCategory'], as: 'category_category'},
+            {model: models.product_comments, attributes: [[sequelize.fn('AVG',sequelize.col('rating')),'AvgRating']], as: 'product_comments'}
+        ],
+        order: [
+            [sequelize.literal("`product_comments.AvgRating`"),'DESC'],
+        ],
+        group: ['idProduct'],
     })
 }
 // Product Details Page
@@ -119,9 +144,11 @@ const getDetailRelatedProducts = (id, idCategory) => {
 
 module.exports = {
     pageValidation,
+    getProductCount,
     getAllProducts,
     getProductBrandsCount,
     getProductCategoriesCount,
+    getProductSortByRating,
     getDetails,
     getDetailImages,
     getDetailComments,

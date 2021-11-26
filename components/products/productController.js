@@ -6,10 +6,17 @@ const list = async (req,res) => {
         let page = req.query.page;
         const itemsPerPage = 12;
         page = productService.pageValidation(page);
-        ({count,rows:products} = await productService.getAllProducts(currentCategory, page, itemsPerPage));
+        let products = await productService.getAllProducts(currentCategory, page, itemsPerPage);
         const brands = await productService.getProductBrandsCount();
         const categories = await productService.getProductCategoriesCount();
-        count = Math.ceil(count/itemsPerPage);
+        let pageCount = await productService.getProductCount();
+        pageCount = Math.ceil(pageCount/itemsPerPage);
+        products = products.map(({
+            'product_comments.AvgRating': AvgRating,
+            'category_category.nameCategory': nameCategory, ...rest}) => ({
+            AvgRating, 
+            nameCategory,...rest
+        }));
         res.render('store/productList', { 
             title: 'Electro - Product List',
             products, 
@@ -17,7 +24,7 @@ const list = async (req,res) => {
             categories,
             brands,
             page,
-            count
+            pageCount
         });
     } catch (error) {
         res.render('error',{error});

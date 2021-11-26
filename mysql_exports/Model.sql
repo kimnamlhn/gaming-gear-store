@@ -125,7 +125,6 @@ CREATE TABLE `product` (
   `generalInfo` mediumtext,
   `description` mediumtext,
   `detaildescription` longtext,
-  `rating` float DEFAULT NULL,
   `price` double DEFAULT NULL,
   `stock` int DEFAULT NULL,
   `brand` varchar(30) DEFAULT NULL,
@@ -186,4 +185,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-26  1:42:04
+-- Dump completed on 2021-11-26 19:33:55

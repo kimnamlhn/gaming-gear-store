@@ -152,15 +152,11 @@
                                 </div> --}}
                             </div>
                             <div class="product-body">
-                                <p class="product-category">{{"category_category.nameCategory"}} - {{brand}}</p>
+                                <p class="product-category">{{nameCategory}} - {{brand}}</p>
                                 <h3 class="product-name"><a href="/products/{{idProduct}}">{{name}}</a></h3>
                                 <h4 class="product-price">${{price}}</h4>
                                 <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+                                    {{{rating_star AvgRating}}}
                                 </div>
                                 <div class="product-btns">
                                     <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
@@ -190,7 +186,7 @@
                 <div class="store-filter clearfix">
                     {{!-- <span class="store-qty">Showing 20-100 products</span> --}}
                     <ul class="store-pagination">
-                        {{{pagination page count}}}
+                        {{{pagination page pageCount}}}
                     </ul>
                 </div>
                 <!-- /store bottom filter -->
