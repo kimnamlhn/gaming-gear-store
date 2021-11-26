@@ -146,10 +146,11 @@ DROP TABLE IF EXISTS `product_comments`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_comments` (
   `idComment` int NOT NULL,
+  `name` varchar(45) DEFAULT NULL,
   `rating` int NOT NULL,
   `content` mediumtext,
   `creationAt` datetime DEFAULT NULL,
-  `idAccount` int NOT NULL,
+  `idAccount` int DEFAULT NULL,
   `idProduct` int NOT NULL,
   PRIMARY KEY (`idComment`),
   KEY `fk_comment_account_idx` (`idAccount`) /*!80000 INVISIBLE */,
@@ -185,4 +186,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-26 19:33:55
+-- Dump completed on 2021-11-26 20:16:27

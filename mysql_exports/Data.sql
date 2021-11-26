@@ -81,7 +81,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `product_comments` WRITE;
 /*!40000 ALTER TABLE `product_comments` DISABLE KEYS */;
-INSERT INTO `product_comments` VALUES (1,5,'asd','2019-11-05 20:45:00',1,1),(2,2,'dsa','2020-01-23 00:00:00',2,1),(3,3,'ddd','2020-01-23 00:00:00',1,2),(4,5,'sss','2019-11-05 20:45:00',1,3),(5,4,'aweaw','2020-01-23 00:00:00',2,3);
+INSERT INTO `product_comments` VALUES (1,NULL,5,'asd','2019-11-05 20:45:00',1,1),(2,NULL,2,'dsa','2020-01-23 00:00:00',2,1),(3,NULL,3,'ddd','2020-01-23 00:00:00',1,2),(4,'ss',5,'sss','2019-11-05 20:45:00',NULL,3),(5,'dd',4,'aweaw','2020-01-23 00:00:00',NULL,3);
 /*!40000 ALTER TABLE `product_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,4 +104,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-26 19:33:45
+-- Dump completed on 2021-11-26 20:16:20

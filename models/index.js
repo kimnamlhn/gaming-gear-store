@@ -12,13 +12,6 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, pr
     }
 });
 
-// const db = {};
-
-// db.Sequelize = Sequelize;
-// db.sequelize = sequelize;
-
-// module.exports = db;
-
 module.exports = {
     sequelize,
     models: initModels(sequelize),
