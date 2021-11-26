@@ -96,7 +96,7 @@ const getDetailComments = (id, page = 0) => {
     return models.product_comments.findAndCountAll({
         offset: page * 3,
         limit: 3,
-        attributes: ['content','rating',[sequelize.fn('date_format', sequelize.col('creationAt'), '%d %b %Y, %h:%i %p'), 'creationAt']],
+        attributes: ['name','content','rating',[sequelize.fn('date_format', sequelize.col('creationAt'), '%d %b %Y, %h:%i %p'), 'creationAt']],
         include: [{
             model: models.account,
             attributes: ['name'],
