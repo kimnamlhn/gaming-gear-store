@@ -121,20 +121,20 @@ DROP TABLE IF EXISTS `product`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product` (
   `idProduct` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
   `generalInfo` mediumtext,
-  `description` mediumtext,
-  `detaildescription` longtext,
+  `description` longtext,
   `price` double DEFAULT NULL,
   `stock` int DEFAULT NULL,
-  `brand` varchar(30) DEFAULT NULL,
+  `brand` varchar(30) NOT NULL,
   `thumbnail` varchar(45) DEFAULT NULL,
-  `category` int DEFAULT NULL,
+  `category` int NOT NULL,
   `images` int DEFAULT NULL,
+  `creationDate` date NOT NULL,
   PRIMARY KEY (`idProduct`),
   KEY `fk_category_product_idx` (`category`),
   CONSTRAINT `fk_category_product` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,4 +186,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-26 20:16:27
+-- Dump completed on 2021-11-27 23:33:16

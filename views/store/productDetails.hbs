@@ -132,8 +132,7 @@
                     <!-- product tab nav -->
                     <ul class="tab-nav">
                         <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Details</a></li>
-                        <li><a data-toggle="tab" href="#tab3">Reviews ({{count}})</a></li>
+                        <li><a data-toggle="tab" href="#tab2">Reviews ({{count}})</a></li>
                     </ul>
                     <!-- /product tab nav -->
 
@@ -150,19 +149,10 @@
                         </div>
                         <!-- /tab1  -->
 
+                        {{/with}}
+
                         <!-- tab2  -->
                         <div id="tab2" class="tab-pane fade in">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>{{{detaildescription}}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        {{/with}}
-                        <!-- /tab2  -->
-
-                        <!-- tab3  -->
-                        <div id="tab3" class="tab-pane fade in">
                             <div class="row">
                                 <!-- Rating -->
                                 <div class="col-md-3">
@@ -288,7 +278,7 @@
                                 <!-- /Review Form -->
                             </div>
                         </div>
-                        <!-- /tab3  -->
+                        <!-- /tab2  -->
                     </div>
                     <!-- /product tab content  -->
                 </div>

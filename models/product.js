@@ -19,10 +19,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    detaildescription: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
     price: {
       type: DataTypes.DOUBLE,
       allowNull: true
