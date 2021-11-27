@@ -49,6 +49,14 @@ const list = async (req,res) => {
     }
 }
 
+const addProduct = async (req, res) => {
+    try {
+        res.render('account/admin/addProduct', {layout:'admin/account',title: 'Add a product'})
+    } catch (error) {
+        res.render('error',{error})
+    }
+}
+
 module.exports = {
     login,
     register,
@@ -56,4 +64,5 @@ module.exports = {
     userIndex,
     adminIndex,
     list,
+    addProduct,
 }

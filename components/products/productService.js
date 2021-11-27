@@ -150,7 +150,9 @@ const getAllProductsAdmin = () => {
         ],
     })
 };
-
+const addProduct = () => {
+    
+}
 module.exports = {
     pageValidation,
     getProductCount,
