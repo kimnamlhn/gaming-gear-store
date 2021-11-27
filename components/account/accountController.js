@@ -1,3 +1,5 @@
+const productService = require('../products/productService')
+
 const login = async (req,res) => {
     try {
         res.render('account/login', {layout:'auth',title:'Login'});
@@ -40,7 +42,8 @@ const adminIndex = async (req,res) => {
 
 const list = async (req,res) => {
     try {
-        res.render('account/admin/productList', {layout:'admin/account',title:'Product List'});
+        const products = await productService.getAllProductsAdmin();
+        res.render('account/admin/productList', {layout:'admin/account',title:'Product List',products});
     } catch (error) {
         res.render('error',{error});
     }

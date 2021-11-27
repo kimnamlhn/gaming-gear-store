@@ -13,12 +13,12 @@ const getProductCount = () => {
     return models.product.count();
 }
 
-const getAllProducts = async (categoryId, page = 0,itemsPerPage = 9) => {
+const getAllProducts = (categoryId, page = 0,itemsPerPage = 9) => {
     let where = {};
     if (!isNaN(categoryId)) {
         where = {category:categoryId};
     }
-    const result = await models.product.findAll({
+    return models.product.findAll({
         raw: true,
         where,
         attributes: ['idProduct', 'name', 'brand', 'price','thumbnail'],
@@ -32,7 +32,6 @@ const getAllProducts = async (categoryId, page = 0,itemsPerPage = 9) => {
         offset: page * itemsPerPage,
         subQuery: false,
     })
-    return result;
 };
 
 const getProductBrandsCount = () => {
@@ -142,6 +141,16 @@ const getDetailRelatedProducts = (id, idCategory) => {
     })
 }
 
+// Admin Product List Page
+const getAllProductsAdmin = () => {
+    return models.product.findAll({
+        raw: true,
+        include: [
+            {model: models.category, attributes: ['nameCategory'], as: 'category_category'},
+        ],
+    })
+};
+
 module.exports = {
     pageValidation,
     getProductCount,
@@ -154,4 +163,5 @@ module.exports = {
     getDetailComments,
     getDetailsCommentsCount,
     getDetailRelatedProducts,
+    getAllProductsAdmin,
 };

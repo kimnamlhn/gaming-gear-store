@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     name: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: false
     },
     generalInfo: {
       type: DataTypes.TEXT,
@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     brand: {
       type: DataTypes.STRING(30),
-      allowNull: true
+      allowNull: false
     },
     thumbnail: {
       type: DataTypes.STRING(45),
@@ -41,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     category: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'category',
         key: 'idCategory'
@@ -50,6 +50,10 @@ module.exports = function(sequelize, DataTypes) {
     images: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    creationDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
     }
   }, {
     sequelize,
