@@ -62,7 +62,7 @@
                         <div class="product-rating">
                             {{{rating_star ../ratingAvg}}}
                         </div>
-                        <a class="review-link" href="#">{{../count}} Review(s) | Add your review</a>
+                        <a class="review-link" href="#product-tab">{{../count}} Review(s) | Add your review</a>
                     </div>
                     <div>
                         <h3 class="product-price">${{price}}</h3>
@@ -268,20 +268,20 @@
                                 <!-- Review Form -->
                                 <div class="col-md-3">
                                     <div id="review-form">
-                                        <form class="review-form">
-                                            <input class="input" type="text" placeholder="Your Name">
-                                            <textarea class="input" placeholder="Your Review"></textarea>
+                                        <form class="review-form" method="post">
+                                            <input class="input" type="text" name="review_name" placeholder="Your Name">
+                                            <textarea class="input" name="review_content" placeholder="Your Review"></textarea>
                                             <div class="input-rating">
                                                 <span>Your Rating: </span>
                                                 <div class="stars">
-                                                    <input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-                                                    <input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-                                                    <input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-                                                    <input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-                                                    <input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+                                                    <input id="star5" name="review_rating" value="5" type="radio"><label for="star5"></label>
+                                                    <input id="star4" name="review_rating" value="4" type="radio"><label for="star4"></label>
+                                                    <input id="star3" name="review_rating" value="3" type="radio"><label for="star3"></label>
+                                                    <input id="star2" name="review_rating" value="2" type="radio"><label for="star2"></label>
+                                                    <input id="star1" name="review_rating" value="1" type="radio"><label for="star1"></label>
                                                 </div>
                                             </div>
-                                            <button class="primary-btn">Submit</button>
+                                            <button class="primary-btn" type="submit">Submit</button>
                                         </form>
                                     </div>
                                 </div>
@@ -293,8 +293,7 @@
                     <!-- /product tab content  -->
                 </div>
             </div>
-            <!-- /product tab -->
-            
+            <!-- /product tab -->  
         </div>
         <!-- /row -->
     </div>
@@ -352,7 +351,6 @@
             <!-- /product -->
 
             <div class="clearfix visible-sm visible-xs"></div>
-
         </div>
         <!-- /row -->
     </div>
