@@ -6,6 +6,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    name: {
+      type: DataTypes.STRING(45),
+      allowNull: true
+    },
     rating: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -20,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     idAccount: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'account',
         key: 'idAccount'

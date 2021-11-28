@@ -39,7 +39,6 @@ const details = async (req, res) => {
         const image = await productService.getDetailImages(id);
         ({count,rows:comments} = await productService.getDetailComments(id));
         ({result: numRatings, ratingAvg} = await productService.getDetailsCommentsCount(id,count));
-        console.log(comments);
         res.render('store/productDetails', { title: `${product.name} | Electro`, 
         product,
         image,
