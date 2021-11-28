@@ -11,6 +11,12 @@ const helpers = require('./views/helpers/index');
 const session = require('express-session');
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+
 // Router
 const storeIndexRouter = require('./components/index/index');
 const storeProductsRouter = require('./components/products/productRouter');
