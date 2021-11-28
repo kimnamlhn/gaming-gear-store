@@ -67,6 +67,31 @@ const deleteProduct = async (req, res) => {
         res.render('error',{error})
     }
 }
+const addProductPost = async (req, res) => {
+    try {
+        if(req.body.product_name != null && req.body.brand != null){ //can check lai dieu kien validation
+            const entity = {
+                idProduct: null,
+                name : req.body.product_name,
+                category : req.body.product_category,
+                brand : req.body.brand,
+                stock : req.body.product_stock,
+                price : req.body.product_price,
+                thumbnail : req.body.product_thumbnail,
+                images : req.body.product_images,
+                generalInfo : req.body.product_generalinfo,
+                desciption : req.body.product_desciption,
+    
+            }
+
+            await productService.createProduct(entity);
+        }
+
+        res.redirect(req.headers.referer);
+    } catch (error) {
+        res.render('error',{error})
+    }
+}
 
 module.exports = {
     login,
@@ -76,5 +101,6 @@ module.exports = {
     adminIndex,
     list,
     addProduct,
-    deleteProduct
+    deleteProduct,
+    addProductPost
 }

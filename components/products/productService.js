@@ -179,16 +179,28 @@ const deleteProduct = async (idProduct) => {
 
 const createProduct = async (entity) => {
     try {    
-        models.product.build(entity).then(function(){
-    
-            res.status(200).json({
-                message: 'Add successful.'
-            })
-    
+
+        console.log("abc:", entity);
+
+        const product = models.product.build({  
+            idProduct: null,
+            name : entity.name,
+            category : entity.category,
+            brand : entity.brand,
+            stock : entity.stock,
+            price : entity.price,
+            thumbnail : entity.thumbnail,
+            images : entity.images,
+            generalInfo : entity.generalInfo,
+            desciption : entity.desciption, 
+            creationDate: "1/1/2021" //test truoc da
         });
+
+        console.log("abc",product);
+        await product.save();
     
     } catch (e) {
-        res.render('error',{e})
+        console.log("err:",e);
     }
 
 }
