@@ -150,9 +150,34 @@ const getAllProductsAdmin = () => {
         ],
     })
 };
-const addProduct = () => {
-    
+
+const deleteProduct = (req, res) => {
+    const id = req.params.id;
+  
+    product.destroy({
+      where: { id: id }
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: "Product was deleted successfully!"
+          });
+        } else {
+          res.send({
+            message: `Cannot delete Product with id=${id}. Maybe Product was not found!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Could not delete Product with id=" + id
+        });
+      });
 }
+
+
+
+
 module.exports = {
     pageValidation,
     getProductCount,
@@ -166,4 +191,5 @@ module.exports = {
     getDetailsCommentsCount,
     getDetailRelatedProducts,
     getAllProductsAdmin,
+    deleteProduct,
 };
