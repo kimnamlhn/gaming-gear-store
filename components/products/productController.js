@@ -1,3 +1,4 @@
+const { response } = require('express');
 const productService = require('./productService');
 
 const list = async (req,res) => {
@@ -60,4 +61,20 @@ const checkout = async (req, res) => {
         res.render('error',{error});
     }
 };
-module.exports = {list, details, checkout};
+
+const deleteProduct = async (req, res) => {
+    try {
+        console.log("delete product controller work!");
+        await productService.deleteProduct();
+
+        response.redirect("/");
+    } catch (error) {
+        res.render('error',{error});
+    }
+};
+module.exports = {
+    list, 
+    details, 
+    checkout,
+    deleteProduct
+};
