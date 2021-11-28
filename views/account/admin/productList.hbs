@@ -43,6 +43,7 @@
                     {{#each products}}
                     <tr>
                         <form id="deleteProductForm" method="post" action="products/delete">
+                        <input type="hidden" name="idProduct" value="{{idProduct}}">
                         <td class="table-plus">{{idProduct}}</td>
                         <td>{{name}}</td>
                         <td>{{'category_category.nameCategory'}}</td>

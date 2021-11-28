@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 
 const accountController = require('./accountController');
-const productController = require('../products/productController');
 
 
 router.get('/login', accountController.login);
@@ -24,12 +23,7 @@ router.get('/admin', accountController.adminIndex);
 // Product list
 router.get('/admin/products', accountController.list);
 router.get('/admin/products/add', accountController.addProduct);
-router.post('/admin/products/delete', function(req, res){
-    console.log("abc");
-    const id = req.params.productID;  
-    console.log("id test",id);
-    productController.deleteProduct(req, res);
-    res.redirect(req.headers.referer);
-} );
+router.post('/admin/products/delete', accountController.deleteProduct);
+
 
 module.exports = router;

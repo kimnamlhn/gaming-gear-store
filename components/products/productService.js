@@ -151,28 +151,30 @@ const getAllProductsAdmin = () => {
     })
 };
 
-const deleteProduct = (req, res) => {
-    const id = req.params.id;
-  
-    product.destroy({
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "Product was deleted successfully!"
-          });
-        } else {
-          res.send({
-            message: `Cannot delete Product with id=${id}. Maybe Product was not found!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Could not delete Product with id=" + id
+const deleteProduct = async (idProduct) => {
+    // const product = await models.product.findOne({
+    //     where: {
+    //         idProduct: idProduct,
+    //     },
+    //     raw : true,
+    // });
+
+    // await product.destroy();
+    try {
+        let product = await models.product.findOne({ idProduct: idProduct});
+    
+        product.destroy().then(function(){
+    
+            res.status(200).json({
+                message: 'User deleted.'
+            })
+    
         });
-      });
+    
+    } catch (e) {
+        res.render('error',{e})
+    }
+
 }
 
 

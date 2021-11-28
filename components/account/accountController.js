@@ -57,6 +57,17 @@ const addProduct = async (req, res) => {
     }
 }
 
+const deleteProduct = async (req, res) => {
+    try {
+        const idProduct = req.body.idProduct;  
+        console.log("id body",idProduct);
+        await productService.deleteProduct(idProduct);   
+        res.redirect(req.headers.referer);
+    } catch (error) {
+        res.render('error',{error})
+    }
+}
+
 module.exports = {
     login,
     register,
@@ -65,4 +76,5 @@ module.exports = {
     adminIndex,
     list,
     addProduct,
+    deleteProduct
 }
