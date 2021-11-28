@@ -177,6 +177,22 @@ const deleteProduct = async (idProduct) => {
 
 }
 
+const createProduct = async (entity) => {
+    try {    
+        models.product.build(entity).then(function(){
+    
+            res.status(200).json({
+                message: 'Add successful.'
+            })
+    
+        });
+    
+    } catch (e) {
+        res.render('error',{e})
+    }
+
+}
+
 
 
 
@@ -194,4 +210,5 @@ module.exports = {
     getDetailRelatedProducts,
     getAllProductsAdmin,
     deleteProduct,
+    createProduct
 };
