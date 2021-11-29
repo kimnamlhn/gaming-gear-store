@@ -24,6 +24,10 @@ router.get('/admin/products', accountController.list);
 router.get('/admin/products/add', accountController.addProduct);
 router.post('/admin/products/delete', accountController.deleteProduct);
 router.post('/admin/products/add', accountController.addProductPost);
+<<<<<<< HEAD
+router.post('/admin/products/edit/:productID', accountController.editProductPost);
+router.get('/admin/products/edit/:productID', accountController.getEditProductPage);
+=======
 router.get('/admin/products/add/upload', (req, res) => {
 	res.render('account/admin/upload', {
 		layout: 'admin/account',
@@ -67,6 +71,7 @@ router.post('/admin/products/add/upload', (req, res) => {
 	});
 });
 // test
+>>>>>>> 1c6412ec51dd171348192b10b277afe3fb810bf6
 
 router.get(
 	'/admin/products/edit/:productID',

@@ -104,6 +104,28 @@ const addProductPost = async (req, res) => {
 	}
 };
 
+const editProductPost = async (req, res) => {
+	try {
+		const idProduct = Number(req.params.productID);
+		const entity = {
+			idProduct: idProduct,
+			name: req.body.product_name,
+			category: req.body.product_category,
+			brand: req.body.product_brand,
+			stock: req.body.product_stock,
+			price: req.body.product_price,
+			thumbnail: req.body.product_thumbnail,
+			images: req.body.product_images,
+			generalInfo: req.body.product_generalinfo,
+			desciption: req.body.product_desciption,
+		};
+		await productService.updateProduct(entity);
+		res.redirect(req.headers.referer);
+	} catch (error) {
+		res.render('error', { error });
+	}
+};
+
 const getEditProductPage = async (req, res) => {
 	try {
 		const id = Number(req.params.productID);
@@ -143,4 +165,5 @@ module.exports = {
 	deleteProduct,
 	addProductPost,
 	getEditProductPage,
+	editProductPost
 };

@@ -243,6 +243,35 @@ const createProduct = async (entity) => {
 	}
 };
 
+const updateProduct = async (entity) => {
+	try {
+		console.log('trying to update:', entity);
+
+		let product = await models.product.findOne({
+			where: { idProduct: entity.idProduct },
+		});
+
+		product.set({
+			idProduct: entity.idProduct,
+			name: entity.name,
+			category: entity.category,
+			brand: entity.brand,
+			stock: entity.stock,
+			price: entity.price,
+			thumbnail: entity.thumbnail,
+			// images: entity.images,
+			generalInfo: entity.generalInfo,
+			desciption: entity.desciption,
+			creationDate: moment(), //test truoc da
+		});
+
+		console.log('trying to update:', product);
+		await product.save();
+	} catch (e) {
+		console.log('err:', e);
+	}
+};
+
 module.exports = {
 	pageValidation,
 	getProductCount,
@@ -258,4 +287,5 @@ module.exports = {
 	getAllProductsAdmin,
 	deleteProduct,
 	createProduct,
+	updateProduct
 };
