@@ -28,10 +28,11 @@ CREATE TABLE `account` (
   `password` varchar(60) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `phone` int DEFAULT NULL,
-  `createdAt` timestamp NULL DEFAULT NULL,
-  `role` binary(1) DEFAULT NULL,
+  `role` blob,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idAccount`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,10 +63,11 @@ CREATE TABLE `orderdetail` (
   `product_idProduct` int NOT NULL,
   `order_idOrder` int NOT NULL,
   PRIMARY KEY (`idOrder`,`idProduct`,`product_idProduct`,`order_idOrder`),
-  KEY `fk_orderDetail_product1_idx` (`product_idProduct`),
-  KEY `fk_orderDetail_order1_idx` (`order_idOrder`),
-  CONSTRAINT `fk_orderDetail_order1` FOREIGN KEY (`order_idOrder`) REFERENCES `orders` (`idOrder`),
-  CONSTRAINT `fk_orderDetail_product1` FOREIGN KEY (`product_idProduct`) REFERENCES `product` (`idProduct`)
+  UNIQUE KEY `orderdetail_product_idProduct_order_idOrder_unique` (`product_idProduct`,`order_idOrder`),
+  KEY `fk_orderDetail_product1_idx` (`product_idProduct`) USING BTREE,
+  KEY `fk_orderDetail_order1_idx` (`order_idOrder`) USING BTREE,
+  CONSTRAINT `orderdetail_ibfk_1` FOREIGN KEY (`product_idProduct`) REFERENCES `product` (`idProduct`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `orderdetail_ibfk_2` FOREIGN KEY (`order_idOrder`) REFERENCES `orders` (`idOrder`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -85,8 +87,8 @@ CREATE TABLE `orders` (
   `idPayment` int DEFAULT NULL,
   `customer_idCustomer` int NOT NULL,
   PRIMARY KEY (`idOrder`),
-  KEY `fk_order_customer1_idx` (`customer_idCustomer`),
-  CONSTRAINT `fk_order_customer1` FOREIGN KEY (`customer_idCustomer`) REFERENCES `account` (`idAccount`)
+  KEY `fk_order_customer1_idx` (`customer_idCustomer`) USING BTREE,
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_idCustomer`) REFERENCES `account` (`idAccount`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -105,10 +107,10 @@ CREATE TABLE `payment` (
   `customer_idCustomer` int NOT NULL,
   `order_idOrder` int NOT NULL,
   PRIMARY KEY (`idpayment`),
-  KEY `fk_payment_customer_idx` (`customer_idCustomer`),
-  KEY `fk_payment_order1_idx` (`order_idOrder`),
-  CONSTRAINT `fk_payment_customer` FOREIGN KEY (`customer_idCustomer`) REFERENCES `account` (`idAccount`),
-  CONSTRAINT `fk_payment_order1` FOREIGN KEY (`order_idOrder`) REFERENCES `orders` (`idOrder`)
+  KEY `fk_payment_customer_idx` (`customer_idCustomer`) USING BTREE,
+  KEY `fk_payment_order1_idx` (`order_idOrder`) USING BTREE,
+  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`customer_idCustomer`) REFERENCES `account` (`idAccount`) ON UPDATE CASCADE,
+  CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`order_idOrder`) REFERENCES `orders` (`idOrder`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -122,19 +124,18 @@ DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `idProduct` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `generalInfo` mediumtext,
-  `description` longtext,
+  `generalInfo` text,
+  `detailedDescription` text,
   `price` double DEFAULT NULL,
   `stock` int DEFAULT NULL,
   `brand` varchar(30) NOT NULL,
   `thumbnail` varchar(45) DEFAULT NULL,
   `category` int NOT NULL,
-  `images` int DEFAULT NULL,
   `creationDate` date NOT NULL,
   PRIMARY KEY (`idProduct`),
-  KEY `fk_category_product_idx` (`category`),
-  CONSTRAINT `fk_category_product` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+  KEY `fk_category_product_idx` (`category`) USING BTREE,
+  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,15 +149,15 @@ CREATE TABLE `product_comments` (
   `idComment` int NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `rating` int NOT NULL,
-  `content` mediumtext,
+  `content` text,
   `creationAt` datetime DEFAULT NULL,
   `idAccount` int DEFAULT NULL,
   `idProduct` int NOT NULL,
   PRIMARY KEY (`idComment`),
-  KEY `fk_comment_account_idx` (`idAccount`) /*!80000 INVISIBLE */,
-  KEY `fk_comment_product_idx` (`idProduct`),
-  CONSTRAINT `fk_comment_account` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`),
-  CONSTRAINT `fk_comment_product` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`)
+  KEY `fk_comment_account_idx` (`idAccount`) USING BTREE,
+  KEY `fk_comment_product_idx` (`idProduct`) USING BTREE,
+  CONSTRAINT `product_comments_ibfk_1` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `product_comments_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -172,9 +173,9 @@ CREATE TABLE `product_images` (
   `product` int NOT NULL,
   `imageurl` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idImages`,`product`),
-  KEY `product_idx` (`product`),
-  CONSTRAINT `fk_image_product` FOREIGN KEY (`product`) REFERENCES `product` (`idProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3;
+  KEY `product_idx` (`product`) USING BTREE,
+  CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product`) REFERENCES `product` (`idProduct`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -186,4 +187,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-27 23:33:16
+-- Dump completed on 2021-11-29 16:25:02
