@@ -1,0 +1,50 @@
+{{#section "image-drop-zone-css"}}
+<link rel="stylesheet" type="text/css" href="/account/src/plugins/dropzone/src/dropzone.css">
+{{/section}}
+
+{{#section "image-drop-zone-js"}}
+<script src="/account/src/plugins/dropzone/src/dropzone.js"></script>
+<script>
+    Dropzone.autoDiscover = false;
+    $(".dropzone").dropzone({
+        addRemoveLinks: true,
+        removedfile: function(file) {
+            var name = file.name;
+            var _ref;
+            return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+        }
+    });
+</script>
+{{/section}}
+
+<div class="min-height-200px">
+    {{>account/page-header}}
+    <div class="pd-20 card-box mb-30">
+        <div class="clearfix mb-20">
+            <div class="pull-left">
+                <h4 class="text-blue h4">Dropzone</h4>
+            </div>
+        </div>
+        <form method="post" action="/account/admin/products/add/upload">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="product_thumbnail">Thumbnail</label>
+                    <input id="product_thumbnail" name="product_thumbnail" type="file" class="form-control-file form-control height-auto" accept="image/jpeg, image/png, image/gif">
+                </div>
+            </div>
+            <!--Images-->
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="product_images">Product Images</label>
+                    <input id="product_images" name="product_images" type="file" class="form-control-file form-control height-auto" accept="image/jpeg, image/png, image/gif" multiple="multiple">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

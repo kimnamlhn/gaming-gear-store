@@ -207,15 +207,6 @@ const getAllProductsAdmin = () => {
 };
 
 const deleteProduct = async (id) => {
-	// const product = await models.product.findOne({
-	//     where: {
-	//         idProduct: idProduct,
-	//     },
-	//     raw : true,
-	// });
-
-	// await product.destroy();
-
 	let product = await models.product.findOne({
 		where: { idProduct: id },
 	});
@@ -229,23 +220,23 @@ const deleteProduct = async (id) => {
 
 const createProduct = async (entity) => {
 	try {
-		console.log('trying to add:', entity);
+		// console.log('trying to add:', entity);
 
 		const product = models.product.build({
 			idProduct: null,
 			name: entity.name,
+			generalInfo: entity.generalInfo,
+			detailedDescription: entity.detailedDescription,
 			category: entity.category,
 			brand: entity.brand,
 			stock: entity.stock,
 			price: entity.price,
 			thumbnail: entity.thumbnail,
 			// images: entity.images,
-			generalInfo: entity.generalInfo,
-			desciption: entity.desciption,
 			creationDate: moment(), //test truoc da
 		});
 
-		console.log('trying to add row:', product);
+		// console.log('trying to add row:', product);
 		await product.save();
 	} catch (e) {
 		console.log('err:', e);

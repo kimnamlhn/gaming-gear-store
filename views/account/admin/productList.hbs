@@ -24,7 +24,7 @@
     {{>account/page-header}}
     <div class="card-box mb-30">
         <div class="pd-20">
-            <h4 class="text-blue h4">Product List <a href="products/add" style="float:right;"><i class="fa fa-plus"></i> Add a product</a></h4>
+            <h4 class="text-blue h4">Product List <a href="/account/admin/products/add" style="float:right;"><i class="fa fa-plus"></i> Add a product</a></h4>
         </div>
         <div class="pb-20">
             <table class="data-table table stripe hover nowrap">
@@ -42,7 +42,7 @@
                 <tbody>
                     {{#each products}}
                     <tr>
-                        <form id="deleteProductForm-{{idProduct}}" method="post" action="./products/delete">
+                        <form id="deleteProductForm-{{idProduct}}" method="post" action="/account/admin/products/delete">
                             <input type="hidden" name="idProduct" value="{{idProduct}}">
                             <td class="table-plus">{{idProduct}}</td>
                             <td>{{name}}</td>
