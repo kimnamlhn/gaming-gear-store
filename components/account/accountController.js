@@ -1,7 +1,4 @@
 const productService = require('../products/productService');
-const path = require('path');
-const formidable = require('formidable');
-const fs = require('fs');
 
 const login = async (req, res) => {
 	try {

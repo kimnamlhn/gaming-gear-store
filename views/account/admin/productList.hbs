@@ -42,7 +42,7 @@
                 <tbody>
                     {{#each products}}
                     <tr>
-                        <form id="deleteProductForm-{{idProduct}}" method="post" action="./delete">
+                        <form id="deleteProductForm-{{idProduct}}" method="post" action="/account/admin/products/delete">
                             <input type="hidden" name="idProduct" value="{{idProduct}}">
                             <td class="table-plus">{{idProduct}}</td>
                             <td>{{name}}</td>
