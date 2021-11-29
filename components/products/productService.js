@@ -215,19 +215,16 @@ const deleteProduct = async (id) => {
 	// });
 
 	// await product.destroy();
-	try {
-		let product = await models.product.findOne({
-			where: { idProduct: id },
-		});
-		product.destroy().then(function () {
-			// res.status(200).json({
-			// 	message: 'User deleted.',
-			// });
-			console.log('Deleted');
-		});
-	} catch (e) {
-		res.render('error', { e });
-	}
+
+	let product = await models.product.findOne({
+		where: { idProduct: id },
+	});
+	product.destroy().then(function () {
+		// res.status(200).json({
+		// 	message: 'User deleted.',
+		// });
+		console.log('Deleted');
+	});
 };
 
 const createProduct = async (entity) => {
