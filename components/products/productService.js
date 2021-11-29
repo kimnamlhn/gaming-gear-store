@@ -209,11 +209,46 @@ const getAllProductsAdmin = () => {
 	});
 };
 
+const deleteProductComment = async (id) => {
+	models.product_comments
+		.destroy({ where: { idProduct: id } })
+		.then(function () {
+			console.log('Deleted');
+		});
+};
+
 const deleteProductImage = async (id) => {
+	const imageurls = await models.product_images.findAll({
+		raw: true,
+		attributes: ['imageurl'],
+		where: { product: id },
+	});
+	const thumbnail_url = await models.product.findOne({
+		raw: true,
+		attributes: ['thumbnail'],
+		where: { idProduct: id },
+	});
+	fs.unlink(
+		path.join(
+			__dirname,
+			`../../public/store/img/${thumbnail_url.thumbnail}`
+		),
+		function (err) {
+			if (err) console.log(err);
+			console.log('Deleted ', thumbnail_url.thumbnail);
+		}
+	);
+	for (let e of imageurls) {
+		fs.unlink(
+			path.join(__dirname, `../../public/store/img/${e.imageurl}`),
+			function (err) {
+				if (err) console.log(err);
+				console.log('Deleted ', e.imageurl);
+			}
+		);
+	}
+
 	models.product_images.destroy({ where: { product: id } }).then(function () {
-		// res.status(200).json({
-		// 	message: 'User deleted.',
-		// });
 		console.log('Deleted');
 	});
 };
@@ -334,10 +369,15 @@ const uploadImage = async (req, id) => {
 						'\\' +
 						files.product_images.originalFilename;
 					let rawData = fs.readFileSync(oldPath);
-
 					fs.writeFile(newPath, rawData, function (err) {
 						if (err) console.log(err);
 					});
+					let image = await models.product_images.build({
+						idImages: null,
+						product: id,
+						imageurl: files.product_images.originalFilename,
+					});
+					image.save();
 				}
 			});
 		} else {
@@ -362,6 +402,7 @@ module.exports = {
 	getDetailsCommentsCount,
 	getDetailRelatedProducts,
 	getAllProductsAdmin,
+	deleteProductComment,
 	deleteProductImage,
 	deleteProduct,
 	createProduct,

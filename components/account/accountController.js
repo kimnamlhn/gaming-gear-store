@@ -76,6 +76,7 @@ const addProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
 	try {
 		const idProduct = req.body.idProduct;
+		await productService.deleteProductComment(idProduct);
 		await productService.deleteProductImage(idProduct);
 		await productService.deleteProduct(idProduct);
 		res.redirect(req.headers.referer);
@@ -121,8 +122,8 @@ const editProductPost = async (req, res) => {
 			brand: req.body.product_brand,
 			stock: req.body.product_stock,
 			price: req.body.product_price,
-			thumbnail: req.body.product_thumbnail,
-			images: req.body.product_images,
+			// thumbnail: req.body.product_thumbnail,
+			// images: req.body.product_images,
 			generalInfo: req.body.product_generalinfo,
 			desciption: req.body.product_desciption,
 		};
@@ -138,11 +139,6 @@ const getEditProductPage = async (req, res) => {
 		const id = Number(req.params.productID);
 		const product = await productService.getDetails(id);
 		const image = await productService.getDetailImages(id);
-		({ count, rows: comments } = await productService.getDetailComments(
-			id
-		));
-		({ result: numRatings, ratingAvg } =
-			await productService.getDetailsCommentsCount(id, count));
 
 		console.log('DATA TEST:', id, product, image);
 
@@ -151,10 +147,6 @@ const getEditProductPage = async (req, res) => {
 			title: 'Edit a product',
 			product,
 			image,
-			count,
-			comments,
-			numRatings,
-			ratingAvg,
 		});
 	} catch (error) {
 		res.render('error', { error });
