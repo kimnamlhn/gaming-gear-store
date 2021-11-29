@@ -1,6 +1,7 @@
 const { models } = require('../../models');
 const sequelize = require('sequelize');
 const product = require('../../models/product');
+const moment = require('moment');
 
 // Product List Page
 const pageValidation = (page) => {
@@ -231,7 +232,7 @@ const deleteProduct = async (id) => {
 
 const createProduct = async (entity) => {
 	try {
-		console.log('abc:', entity);
+		console.log('trying to add:', entity);
 
 		const product = models.product.build({
 			idProduct: null,
@@ -241,13 +242,13 @@ const createProduct = async (entity) => {
 			stock: entity.stock,
 			price: entity.price,
 			thumbnail: entity.thumbnail,
-			images: entity.images,
+			// images: entity.images,
 			generalInfo: entity.generalInfo,
 			desciption: entity.desciption,
-			creationDate: '2021/1/1', //test truoc da
+			creationDate: moment(), //test truoc da
 		});
 
-		console.log('abc', product);
+		console.log('trying to add row:', product);
 		await product.save();
 	} catch (e) {
 		console.log('err:', e);

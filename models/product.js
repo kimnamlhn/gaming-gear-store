@@ -43,10 +43,6 @@ module.exports = function(sequelize, DataTypes) {
         key: 'idCategory'
       }
     },
-    images: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     creationDate: {
       type: DataTypes.DATEONLY,
       allowNull: false
