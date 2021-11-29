@@ -76,13 +76,20 @@ const addProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
 	try {
 		const idProduct = req.body.idProduct;
-		console.log('id body', idProduct);
+		await productService.deleteProductImage(idProduct);
 		await productService.deleteProduct(idProduct);
 		res.redirect(req.headers.referer);
 	} catch (error) {
 		res.render('error', { error });
 	}
 };
+
+const uploadImagePost = async (req, res) => {
+	const id = req.params.productID;
+	await productService.uploadImage(req, id);
+	res.redirect('/account/admin/products');
+};
+
 const addProductPost = async (req, res) => {
 	try {
 		const entity = {
@@ -97,8 +104,8 @@ const addProductPost = async (req, res) => {
 			generalInfo: req.body.product_generalinfo,
 			detailedDescription: req.body.product_detailed_desciption,
 		};
-		await productService.createProduct(entity);
-		res.redirect('/account/admin/products');
+		const id = await productService.createProduct(entity);
+		res.redirect(`/account/admin/products/add/${id}`);
 	} catch (error) {
 		res.render('error', { error });
 	}
@@ -165,5 +172,6 @@ module.exports = {
 	deleteProduct,
 	addProductPost,
 	getEditProductPage,
-	editProductPost
+	editProductPost,
+	uploadImagePost,
 };

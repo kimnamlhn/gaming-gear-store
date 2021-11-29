@@ -22,21 +22,21 @@
     <div class="pd-20 card-box mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h4 class="text-blue h4">Dropzone</h4>
+                <h4 class="text-blue h4">Upload image for product</h4>
             </div>
         </div>
-        <form method="post" action="/account/admin/products/add/upload" enctype="multipart/form-data">
+        <form method="post" action="/account/admin/products/add/{{id}}" enctype="multipart/form-data">
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="product_thumbnail">Thumbnail</label>
-                    <input id="product_thumbnail" name="product_thumbnail" type="file" class="form-control-file form-control height-auto" accept="image/jpeg, image/png, image/gif">
+                    <input id="product_thumbnail" name="product_thumbnail" type="file" class="form-control-file form-control height-auto" accept="image/jpeg, image/png, image/gif" required>
                 </div>
             </div>
             <!--Images-->
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="product_images">Product Images</label>
-                    <input id="product_images" name="product_images" type="file" class="form-control-file form-control height-auto" accept="image/jpeg, image/png, image/gif" multiple="multiple">
+                    <input id="product_images" name="product_images" type="file" class="form-control-file form-control height-auto" accept="image/jpeg, image/png, image/gif" multiple="multiple" required>
                 </div>
             </div>
             <div class="row">

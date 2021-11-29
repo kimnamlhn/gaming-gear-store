@@ -2,6 +2,9 @@ const { models } = require('../../models');
 const sequelize = require('sequelize');
 const product = require('../../models/product');
 const moment = require('moment');
+const formidable = require('formidable');
+const path = require('path');
+const fs = require('fs');
 
 // Product List Page
 const pageValidation = (page) => {
@@ -206,6 +209,15 @@ const getAllProductsAdmin = () => {
 	});
 };
 
+const deleteProductImage = async (id) => {
+	models.product_images.destroy({ where: { product: id } }).then(function () {
+		// res.status(200).json({
+		// 	message: 'User deleted.',
+		// });
+		console.log('Deleted');
+	});
+};
+
 const deleteProduct = async (id) => {
 	let product = await models.product.findOne({
 		where: { idProduct: id },
@@ -238,6 +250,7 @@ const createProduct = async (entity) => {
 
 		// console.log('trying to add row:', product);
 		await product.save();
+		return product.idProduct;
 	} catch (e) {
 		console.log('err:', e);
 	}
@@ -272,6 +285,70 @@ const updateProduct = async (entity) => {
 	}
 };
 
+const uploadImage = async (req, id) => {
+	try {
+		const product = await models.product.findOne({
+			where: { idProduct: id },
+		});
+		if (product) {
+			const form = formidable({ multiples: true });
+			form.parse(req, async (err, fields, files) => {
+				// Product Thumbnail
+				let oldPath = files.product_thumbnail.filepath;
+				let newPath =
+					path.join(__dirname, '../../public/store/img') +
+					'\\' +
+					files.product_thumbnail.originalFilename;
+				let rawData = fs.readFileSync(oldPath);
+
+				fs.writeFile(newPath, rawData, function (err) {
+					if (err) console.log(err);
+				});
+				product.set({
+					thumbnail: files.product_thumbnail.originalFilename,
+				});
+				product.save();
+				if (files.product_images.length > 1) {
+					for (let i of files.product_images) {
+						let oldPath = i.filepath;
+						let newPath =
+							path.join(__dirname, '../../public/store/img') +
+							'\\' +
+							i.originalFilename;
+						let rawData = fs.readFileSync(oldPath);
+
+						fs.writeFile(newPath, rawData, function (err) {
+							if (err) console.log(err);
+						});
+						let image = await models.product_images.build({
+							idImages: null,
+							product: id,
+							imageurl: i.originalFilename,
+						});
+						image.save();
+					}
+				} else {
+					let oldPath = files.product_images.filepath;
+					let newPath =
+						path.join(__dirname, '../../public/store/img') +
+						'\\' +
+						files.product_images.originalFilename;
+					let rawData = fs.readFileSync(oldPath);
+
+					fs.writeFile(newPath, rawData, function (err) {
+						if (err) console.log(err);
+					});
+				}
+			});
+		} else {
+			return false;
+		}
+	} catch (err) {
+		console.log(err);
+		return false;
+	}
+};
+
 module.exports = {
 	pageValidation,
 	getProductCount,
@@ -285,7 +362,9 @@ module.exports = {
 	getDetailsCommentsCount,
 	getDetailRelatedProducts,
 	getAllProductsAdmin,
+	deleteProductImage,
 	deleteProduct,
 	createProduct,
-	updateProduct
+	updateProduct,
+	uploadImage,
 };
