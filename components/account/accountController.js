@@ -95,7 +95,7 @@ const addProductPost = async (req, res) => {
 				stock: req.body.product_stock,
 				price: req.body.product_price,
 				thumbnail: req.body.product_thumbnail,
-				images: null,
+				images: req.body.product_images,
 				generalInfo: req.body.product_generalinfo,
 				desciption: req.body.product_desciption,
 			};

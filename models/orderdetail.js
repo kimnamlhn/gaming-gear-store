@@ -50,6 +50,15 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
+        name: "orderdetail_product_idProduct_order_idOrder_unique",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "product_idProduct" },
+          { name: "order_idOrder" },
+        ]
+      },
+      {
         name: "fk_orderDetail_product1_idx",
         using: "BTREE",
         fields: [
