@@ -155,6 +155,33 @@ const addProductPost = async (req, res) => {
 	}
 };
 
+
+const getEditProductPage = async (req, res) => {
+    try {
+        const id = Number(req.params.productID);
+        const product = await productService.getDetails(id);
+        const image = await productService.getDetailImages(id);
+        ({count,rows:comments} = await productService.getDetailComments(id));
+        ({result: numRatings, ratingAvg} = await productService.getDetailsCommentsCount(id,count));
+
+		console.log("DATA TEST:",  id, product,image);
+
+        res.render('account/admin/editProduct', { 			
+		layout: 'admin/account',
+		title: 'Edit a product',
+        product,
+        image,
+        count,
+        comments,
+        numRatings,
+        ratingAvg,
+    });
+    } catch (error) {
+        res.render('error',{error});
+    }
+}
+
+
 module.exports = {
 	login,
 	register,
@@ -165,4 +192,5 @@ module.exports = {
 	addProduct,
 	deleteProduct,
 	addProductPost,
+	getEditProductPage,
 };
