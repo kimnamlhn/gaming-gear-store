@@ -87,16 +87,16 @@
                     <div class="form-group">
                         <label for="product_generalinfo">General Info</label>
                         <div class="html-editor">
-                            <textarea id="product_generalinfo" class="form-control border-radius-0" value="{{product.generalInfo}}"  placeholder="Enter text..." name="product_generalinfo"></textarea>
+                            <textarea id="product_generalinfo" name="product_generalinfo" class="form-control border-radius-0" value="{{{product.generalInfo}}}"></textarea>
                         </div>
                     </div>
                 </div>
                 <!--Description-->
                 <div class="col-md-7 col-sm-12">
                     <div class="form-group">
-                        <label for="product_desciption">Description</label>
+                        <label for="product_detailed_desciption">Detailed Description</label>
                         <div class="html-editor mb-30">
-                            <textarea id="product_desciption" class="textarea_editor form-control border-radius-0" value="{{product.description}}"  placeholder="Enter text..." name="product_desciption"></textarea>
+                            <textarea id="product_detailed_desciption" class="textarea_editor form-control border-radius-0" name="product_detailed_desciption">{{{product.detailedDescription}}}</textarea>
                         </div>
                     </div>
                 </div>

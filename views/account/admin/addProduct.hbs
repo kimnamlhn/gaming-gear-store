@@ -21,7 +21,7 @@
     {{>account/page-header}}
     <div class="pd-20 card-box mb-30">
         <h4 class="text-blue h4">Add a product</h4>
-        <form id="addProductForm" method="post" action="./add">
+        <form id="addProductForm" method="post" action="/account/admin/products/add">
             <div class="row">
                 <!--Name-->
                 <div class="col-md-4 col-sm-12">
@@ -94,9 +94,9 @@
                 <!--Description-->
                 <div class="col-md-7 col-sm-12">
                     <div class="form-group">
-                        <label for="product_desciption">Description</label>
+                        <label for="product_detailed_desciption">Detailed Description</label>
                         <div class="html-editor mb-30">
-                            <textarea id="product_desciption" class="textarea_editor form-control border-radius-0" placeholder="Enter text..." name="product_desciption"></textarea>
+                            <textarea id="product_detailed_desciption" class="textarea_editor form-control border-radius-0" placeholder="Enter text..." name="product_detailed_desciption"></textarea>
                         </div>
                     </div>
                 </div>
