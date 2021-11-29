@@ -42,26 +42,26 @@
                 <tbody>
                     {{#each products}}
                     <tr>
-                        <form id="deleteProductForm" method="post" action="products/delete">
-                        <input type="hidden" name="idProduct" value="{{idProduct}}">
-                        <td class="table-plus">{{idProduct}}</td>
-                        <td>{{name}}</td>
-                        <td>{{'category_category.nameCategory'}}</td>
-                        <td>{{price}}</td>
-                        <td>{{stock}}</td>
-                        <td>{{creationDate}}</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="/products/{{idProduct}}"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="products/edit/{{idProduct}}"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" onclick="document.getElementById('deleteProductForm').submit();"><i class="dw dw-delete-3"></i> Delete</a>
+                        <form id="deleteProductForm-{{idProduct}}" method="post" action="products/delete">
+                            <input type="hidden" name="idProduct" value="{{idProduct}}">
+                            <td class="table-plus">{{idProduct}}</td>
+                            <td>{{name}}</td>
+                            <td>{{'category_category.nameCategory'}}</td>
+                            <td>{{price}}</td>
+                            <td>{{stock}}</td>
+                            <td>{{creationDate}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                        <i class="dw dw-more"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                        <a class="dropdown-item" href="/products/{{idProduct}}"><i class="dw dw-eye"></i> View</a>
+                                        <a class="dropdown-item" href="products/edit/{{idProduct}}"><i class="dw dw-edit2"></i> Edit</a>
+                                        <a class="dropdown-item" onclick="document.getElementById('deleteProductForm-{{idProduct}}').submit();"><i class="dw dw-delete-3"></i> Delete</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
                        </form>
                     </tr>
                     {{/each}}
