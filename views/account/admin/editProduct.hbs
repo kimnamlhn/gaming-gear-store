@@ -1,0 +1,111 @@
+{{#section "image-drop-zone-css"}}
+<link rel="stylesheet" type="text/css" href="/account/src/plugins/dropzone/src/dropzone.css">
+{{/section}}
+
+{{#section "image-drop-zone-js"}}
+<script src="/account/src/plugins/dropzone/src/dropzone.js"></script>
+<script>
+    Dropzone.autoDiscover = false;
+    $(".dropzone").dropzone({
+        addRemoveLinks: true,
+        removedfile: function(file) {
+            var name = file.name;
+            var _ref;
+            return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+        }
+    });
+</script>
+{{/section}}
+
+<div class="min-height-200px">
+    {{>account/page-header}}
+    <div class="pd-20 card-box mb-30">
+        <h4 class="text-blue h4">Edit a product</h4>
+        <form id="editProductForm" method="post" action="products/edit">
+            <div class="row">
+                <!--Name-->
+                <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label for="product_name">Product Name</label>
+                        <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter product name">
+                    </div>
+                </div>
+                <!--Category-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="product_category">Category</label>
+                        <select class="custom-select2 form-control" id="product_category" name="product_category" style="width:100%">
+                            <option value="1">Laptop</option>
+                            <option value="2">Phone</option>
+                            <option value="3">Mouse</option>
+                            <option value="4">Gaming Devices</option>
+                            <option value="5">Headphone</option>
+                        </select>
+                    </div>
+                </div>
+                <!--Brand-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="product_brand">Brand</label>
+                        <input type="text" class="form-control" id="product_brand" name="product_brand" placeholder="Enter product brand">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--Stock-->
+                <div class="col-md-2 col-sm-6">
+                    <div class="form-group">
+                        <label for="product_stock">Stock</label>
+                        <input type="text" class="form-control" id="product_stock" name="product_stock" placeholder="Enter product stock">
+                    </div>
+                </div>
+                <!--Price-->
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="product_price">Price</label>
+                        <input type="text" class="form-control" id="product_price" name="product_price" placeholder="Enter product price">
+                    </div>
+                </div>
+                <!--Thumbnail-->
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="product_thumbnail">Thumbnail</label>
+                        <input id="product_thumbnail" name="product_thumbnail" type="file" class="form-control-file form-control height-auto" accept="image/jpeg, image/png, image/gif">
+                    </div>
+                </div>
+                <!--Images-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="product_images">Product Images</label>
+                        <input id="product_images" name="product_images" type="file" class="form-control-file form-control height-auto" accept="image/jpeg, image/png, image/gif" multiple="multiple">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--General Info-->
+                <div class="col-md-5 col-sm-12">
+                    <div class="form-group">
+                        <label for="product_generalinfo">General Info</label>
+                        <div class="html-editor">
+                            <textarea id="product_generalinfo" class="form-control border-radius-0" placeholder="Enter text..." name="product_generalinfo"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <!--Description-->
+                <div class="col-md-7 col-sm-12">
+                    <div class="form-group">
+                        <label for="product_desciption">Description</label>
+                        <div class="html-editor mb-30">
+                            <textarea id="product_desciption" class="textarea_editor form-control border-radius-0" placeholder="Enter text..." name="product_desciption"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
