@@ -25,6 +25,7 @@ router.get('/admin/products', accountController.list);
 router.get('/admin/products/add', accountController.addProduct);
 router.post('/admin/products/delete', accountController.deleteProduct);
 router.post('/admin/products/add', accountController.addProductPost);
+router.get('/admin/products/edit/:productID', accountController.getEditProductPage);
 
 
 module.exports = router;
