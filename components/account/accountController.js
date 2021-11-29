@@ -90,44 +90,6 @@ const addProductPost = async (req, res) => {
 	try {
 		if (req.body.product_name != null && req.body.product_brand != null) {
 			//can check lai dieu kien validation
-			// Formidable Setup
-			const form = new formidable.IncomingForm();
-			const uploadFolder = path.join(__dirname, '../../public/store/img');
-			// Formidable config
-			form.multiple = true;
-			form.uploadDir = uploadFolder;
-			form.maxFileSize = 50 * 1024 * 1024; // 5MB
-			console.log(form);
-			form.parse(req, async (err, fields, files) => {
-				// if (err) {
-				// 	console.log('Error parsing the files.');
-				// 	return res.status(400).json({
-				// 		status: 'Fail',
-				// 		message: 'There was an error parsing the files.',
-				// 		error: err,
-				// 	});
-				// }
-				// if (!files.product_thumbnail.length) {
-				// 	const file = files.product_thumbnail;
-				// 	const fileName = encodeURIComponent(
-				// 		file.name.replace(/\s/g, '-')
-				// 	);
-				// 	try {
-				// 		fs.renameSync(file.path, join(uploadFolder, fileName));
-				// 	} catch (error) {
-				// 		console.log(error);
-				// 	}
-				// }
-				// try {
-				// 	const newFile = await File.create({
-				// 		name: `img/${fileName}`,
-				// 	});
-				// } catch (error) {
-				// 	res.json({ error });
-				// }
-			});
-
-			//const form = formidable({ multiple: true });
 			const entity = {
 				idProduct: null,
 				name: req.body.product_name,
@@ -140,13 +102,6 @@ const addProductPost = async (req, res) => {
 				generalInfo: req.body.product_generalinfo,
 				desciption: req.body.product_desciption,
 			};
-			// form.parse(req, (err, fields, files) => {
-			// 	if (err) {
-			// 		next(err);
-			// 		return;
-			// 	}
-			// 	res.json({ fields, files });
-			// });
 			await productService.createProduct(entity);
 		}
 		res.redirect(req.headers.referer);
@@ -155,32 +110,33 @@ const addProductPost = async (req, res) => {
 	}
 };
 
-
 const getEditProductPage = async (req, res) => {
-    try {
-        const id = Number(req.params.productID);
-        const product = await productService.getDetails(id);
-        const image = await productService.getDetailImages(id);
-        ({count,rows:comments} = await productService.getDetailComments(id));
-        ({result: numRatings, ratingAvg} = await productService.getDetailsCommentsCount(id,count));
+	try {
+		const id = Number(req.params.productID);
+		const product = await productService.getDetails(id);
+		const image = await productService.getDetailImages(id);
+		({ count, rows: comments } = await productService.getDetailComments(
+			id
+		));
+		({ result: numRatings, ratingAvg } =
+			await productService.getDetailsCommentsCount(id, count));
 
-		console.log("DATA TEST:",  id, product,image);
+		console.log('DATA TEST:', id, product, image);
 
-        res.render('account/admin/editProduct', { 			
-		layout: 'admin/account',
-		title: 'Edit a product',
-        product,
-        image,
-        count,
-        comments,
-        numRatings,
-        ratingAvg,
-    });
-    } catch (error) {
-        res.render('error',{error});
-    }
-}
-
+		res.render('account/admin/editProduct', {
+			layout: 'admin/account',
+			title: 'Edit a product',
+			product,
+			image,
+			count,
+			comments,
+			numRatings,
+			ratingAvg,
+		});
+	} catch (error) {
+		res.render('error', { error });
+	}
+};
 
 module.exports = {
 	login,
