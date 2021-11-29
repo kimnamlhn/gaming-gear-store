@@ -30,6 +30,42 @@ router.get('/admin/products/add/upload', (req, res) => {
 		title: 'Upload',
 	});
 });
+const formidable = require('formidable');
+const path = require('path');
+const fs = require('fs');
+router.post('/admin/products/add/upload', (req, res) => {
+	const form = formidable({ multiples: true });
+
+	form.parse(req, (err, fields, files) => {
+		// var oldPath = files.product_images.filepath;
+		// var newPath =
+		// 	path.join(__dirname, '../../public/store/img') +
+		// 	'/' +
+		// 	files.product_images.originalFilename;
+		res.json({ fields, files });
+		for (let i of files.product_images) {
+			let oldPath = i.filepath;
+			let newPath =
+				path.join(__dirname, '../../public/store/img') +
+				'\\' +
+				i.originalFilename;
+			console.log(oldPath);
+			console.log(newPath);
+			let rawData = fs.readFileSync(oldPath);
+
+			fs.writeFile(newPath, rawData, function (err) {
+				if (err) console.log(err);
+				res.send('Uploaded');
+			});
+		}
+		// var rawData = fs.readFileSync(oldPath);
+
+		// fs.writeFile(newPath, rawData, function (err) {
+		// 	if (err) console.log(err);
+		// 	return res.send('Successfully uploaded');
+		// });
+	});
+});
 // test
 
 router.get(
