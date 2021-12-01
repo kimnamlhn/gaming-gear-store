@@ -9,9 +9,14 @@ require('dotenv').config();
 const exphbs = require('express-handlebars');
 const helpers = require('./views/helpers/index');
 const session = require('express-session');
-
+const passport = require('./components/account/passport');
 const app = express();
-
+// Router
+const storeIndexRouter = require('./components/index/index');
+const storeProductsRouter = require('./components/products/productRouter');
+const accountRouter = require('./components/account/accountRouter');
+// Database
+const db = require('./models');
 app.use(express.json());
 app.use(
 	express.urlencoded({
@@ -19,12 +24,6 @@ app.use(
 	})
 );
 
-// Router
-const storeIndexRouter = require('./components/index/index');
-const storeProductsRouter = require('./components/products/productRouter');
-const accountRouter = require('./components/account/accountRouter');
-// Database
-const db = require('./models');
 db.sequelize.sync();
 
 // Views
@@ -42,13 +41,20 @@ app.engine(
 // app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 // Middlewares
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// Sessions
+// Authentication
 app.use(session({ secret: process.env.SESSION_SECRET }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(function (req, res, next) {
+	res.locals.user = req.user;
+	next();
+});
 // Routes
 app.use('/', storeIndexRouter);
 app.use('/products', storeProductsRouter);

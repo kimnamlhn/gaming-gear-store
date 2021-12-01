@@ -2,7 +2,9 @@ const productService = require('../products/productService');
 
 const login = async (req, res) => {
 	try {
-		res.render('account/login', { layout: 'auth', title: 'Login' });
+		if(!req.user)
+			res.render('account/login', { layout: 'auth', title: 'Login', wrongPassword:req.query.wrongPassword !== undefined });
+		else res.redirect('/')
 	} catch (error) {
 		res.render('error', { error });
 	}

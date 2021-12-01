@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     role: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TINYINT,
       allowNull: true
     }
   }, {
