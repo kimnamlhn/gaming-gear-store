@@ -71,11 +71,13 @@ const forgotPassword = async (req, res) => {
 
 const userIndex = async (req, res) => {
 	try {
-		if (req.user) res.render('account/user/index', {
+		if (!req.user) res.redirect('/');
+		const profile = await accountService.getProfile(req.user.idAccount);
+		res.render('account/profile', {
 			layout: 'account',
 			title: 'Main',
+			profile
 		});
-		else res.redirect('/');
 	} catch (error) {
 		res.render('error', {
 			error
@@ -86,10 +88,12 @@ const userIndex = async (req, res) => {
 const adminIndex = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
-			res.render('account/admin/index', {
-				layout: 'account',
-				title: 'Main',
-			});
+		const profile = await accountService.getProfile(req.user.idAccount);
+		res.render('account/profile', {
+			layout: 'account',
+			title: 'Main',
+			profile
+		});
 	} catch (error) {
 		res.render('error', {
 			error

@@ -35,7 +35,20 @@ const createAccount = async (entity) => {
     }
 }
 
+const getProfile = async (id) => {
+    return models.account.findOne({
+        where: {
+            idAccount: id,
+        },
+        attributes: {
+            exclude: ['password','role','locked']
+        },
+        raw:true,
+    })
+}
+
 module.exports = {
     listAdminAccounts,
     createAccount,
+    getProfile,
 };
