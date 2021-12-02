@@ -30,6 +30,10 @@ module.exports = function(sequelize, DataTypes) {
     role: {
       type: DataTypes.TINYINT,
       allowNull: true
+    },
+    locked: {
+      type: DataTypes.TINYINT,
+      allowNull: false
     }
   }, {
     sequelize,

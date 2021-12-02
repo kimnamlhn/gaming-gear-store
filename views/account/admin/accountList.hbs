@@ -1,0 +1,60 @@
+<div class="min-height-200px">
+    {{>account/page-header}}
+    <div class="card-box mb-30">
+        <div class="pd-20">
+            {{#if (checkIfEqual list 'admin')}}
+                <h4 class="text-blue h4">{{title}}<a href="/account/admin/admin-acc/add" style="float:right;"><i
+                            class="fa fa-plus"></i> Add an Admin account</a></h4>
+            {{else}}
+                <h4 class="text-blue h4">{{title}}<a href="/account/admin/acc/add" style="float:right;"><i
+                            class="fa fa-plus"></i> Add an account</a></h4>
+            {{/if}}
+        </div>
+        <div class="pb-20">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Creation Date</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each accounts}}
+                        <tr>
+                            <form id="deleteAccountForm-{{idProduct}}" method="post" action="/account/admin/acc/delete">
+                                <th scope="row">{{idAccount}}</th>
+                                <td>{{email}}</td>
+                                <td>{{name}}</td>
+                                <td>{{phone}}</td>
+                                <td>{{createdAt}}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#"
+                                            role="button" data-toggle="dropdown">
+                                            <i class="dw dw-more"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                            <a class="dropdown-item" href="/account/{{idAccount}}"><i
+                                                    class="dw dw-eye"></i> View</a>
+                                            <a class="dropdown-item" href="/account/admin/acc/edit/{{idAccount}}"><i
+                                                    class="dw dw-edit2"></i> Edit</a>
+                                            <a class="dropdown-item"
+                                                onclick="document.getElementById('deleteAccountForm-{{idAccount}}').submit();"><i
+                                                    class="dw dw-delete-3"></i> Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </form>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 const productService = require('../products/productService');
+const accountService = require('./accountService');
 
 const login = async (req, res) => {
 	try {
@@ -18,10 +19,12 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
 	try {
-		res.render('account/register', {
-			layout: 'auth',
-			title: 'Register'
-		});
+		if(req.user) res.redirect('/')
+		else
+			res.render('account/register', {
+				layout: 'auth',
+				title: 'Register'
+			});
 	} catch (error) {
 		res.render('error', {
 			error
@@ -29,12 +32,32 @@ const register = async (req, res) => {
 	}
 };
 
-const registerPost = async(req,res) => {
-
+const createAccount = async(req,res) => {
+	try {
+		const entity = {
+			email: req.body.user_email,
+			password: req.body.user_cfm_password,
+			name: req.body.user_name,
+			phone: req.body.user_phone,
+			address: req.body.user_address,
+			role: 0,
+		}
+		const user = await accountService.createAccount(entity);
+		req.login(user, function(err) {
+			if (!err) {
+				res.redirect('/')
+			}
+			else console.log(err)
+		})
+		res.redirect('/account/login');
+	} catch (err) {
+		res.render('error', {err});
+	}
 }
 
 const forgotPassword = async (req, res) => {
 	try {
+		if(req.user) res.redirect('/');
 		res.render('account/forgot-password', {
 			layout: 'auth',
 			title: 'Forgot Password',
@@ -62,12 +85,11 @@ const userIndex = async (req, res) => {
 
 const adminIndex = async (req, res) => {
 	try {
-		// if (req.user)
+		if(!req.user || !req.user.role) res.redirect('/');
 			res.render('account/admin/index', {
 				layout: 'account',
 				title: 'Main',
 			});
-		// else res.redirect('/');
 	} catch (error) {
 		res.render('error', {
 			error
@@ -75,8 +97,73 @@ const adminIndex = async (req, res) => {
 	}
 };
 
+const accountListAdmin = async (req, res) => {
+	try {
+		if(!req.user || !req.user.role) res.redirect('/');
+		let {count,rows:accounts} = await accountService.listAdminAccounts()
+		res.render('account/admin/accountList', {
+			layout: 'account',
+			title: 'Admin Account List',
+			list: 'admin',
+			accounts
+		})
+	} catch (error) {
+		res.render('error', {error});
+	}
+}
+
+const addAdminAccount = async (req, res) => {
+	try {
+		if(!req.user || !req.user.role) res.redirect('/');
+		res.render('account/admin/addAccount', {
+			layout: 'account',
+			title: 'Add an Admin Account',
+			type: 'admin'
+		})
+	} catch (error) {
+		res.render('error', {error});
+	}
+}
+
+const addAdminAccountPost = async (req, res) => {
+	try {
+		const entity = {
+			email: req.body.user_email,
+			password: req.body.user_cfm_password,
+			name: req.body.user_name,
+			phone: req.body.user_phone,
+			address: req.body.user_address,
+			role: 1,
+		}
+		const user = await accountService.createAccount(entity);
+		req.login(user, function(err) {
+			if (!err) {
+				res.redirect('/')
+			}
+			else console.log(err)
+		})
+		res.redirect('/account/login');
+	} catch (err) {
+		res.render('error', {err});
+	}
+}
+
+const accountListUser = async (req, res) => {
+	try {
+		if(!req.user || !req.user.role) res.redirect('/');
+		res.render('account/admin/accountList', {
+			layout: 'account',
+			title: 'User Account List',
+			list: 'user'
+		})
+	} catch (error) {
+		res.render('error', {error});
+	}
+}
+
 const list = async (req, res) => {
 	try {
+		if(!req.user || !req.user.role) res.redirect('/');
 		const products = await productService.getAllProductsAdmin();
 		res.render('account/admin/productList', {
 			layout: 'account',
@@ -92,6 +179,7 @@ const list = async (req, res) => {
 
 const addProduct = async (req, res) => {
 	try {
+		if(!req.user || !req.user.role) res.redirect('/');
 		res.render('account/admin/addProduct', {
 			layout: 'account',
 			title: 'Add a product',
@@ -172,11 +260,10 @@ const editProductPost = async (req, res) => {
 
 const getEditProductPage = async (req, res) => {
 	try {
+		if(!req.user || !req.user.role) res.redirect('/');
 		const id = Number(req.params.productID);
 		const product = await productService.getDetails(id);
 		const image = await productService.getDetailImages(id);
-
-		console.log('DATA TEST:', id, product, image);
 
 		res.render('account/admin/editProduct', {
 			layout: 'account',
@@ -194,10 +281,14 @@ const getEditProductPage = async (req, res) => {
 module.exports = {
 	login,
 	register,
-	registerPost,
+	createAccount,
 	forgotPassword,
 	userIndex,
 	adminIndex,
+	addAdminAccount,
+	addAdminAccountPost,
+	accountListAdmin,
+	accountListUser,
 	list,
 	addProduct,
 	deleteProduct,

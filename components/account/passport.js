@@ -1,17 +1,17 @@
 const { models } = require('../../models');
+const bcrypt = require('bcrypt');
 const passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy;
 
 passport.use(
 	new LocalStrategy(
 		{
-			usernameField: 'email',
-			passwordField: 'password',
+			usernameField: 'user_email',
+			passwordField: 'user_password',
 		},
 		async function (username, password, done) {
 			const account = await models.account.findOne({
 				where: { email: username },
-				//raw: true,
 			});
 			try {
 				if (!account) {
@@ -19,7 +19,10 @@ passport.use(
 						message: 'Incorrect username.',
 					});
 				}
-				if (!validPassword(account, password)) {
+				if (account.locked) {
+					return done(null, false, {message: 'This account is locked.'})
+				}
+				if (!bcrypt.compareSync(password,account.password)) {
 					return done(null, false, {
 						message: 'Incorrect password.',
 					});
@@ -41,6 +44,7 @@ passport.deserializeUser(function (user, done) {
 });
 
 function validPassword(user, password) {
+
 	return user.password === password;
 }
 

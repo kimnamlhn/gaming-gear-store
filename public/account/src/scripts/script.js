@@ -14,7 +14,7 @@ const matching_check = () => {
     else {
         password.style = 'background-color: #ff6b6b;'
         confirm_password.style = 'background-color: #ff6b6b;'
-        message.textContent = `The passwords you typed aren't match.`
+        message.textContent = `The passwords you typed aren't matching.`
     }
 }
 password.addEventListener('keyup', matching_check)
@@ -22,10 +22,10 @@ confirm_password.addEventListener('keyup', matching_check)
 submit_register.addEventListener('click', function(){
     if(password.value === confirm_password.value && 
         confirm_password.value.length > 0 && 
-        document.querySelector('#user_email').value > 0 &&
-        document.querySelector('#user_name').value > 0 &&
-        document.querySelector('#user_phone').value > 0 &&
-        document.querySelector('#user_address').value > 0){
+        document.querySelector('#user_email').value.length > 0 &&
+        document.querySelector('#user_name').value.length > 0 &&
+        document.querySelector('#user_phone').value.length > 0 &&
+        document.querySelector('#user_address').value.length > 0){
         warning_message.textContent = ``;
         register_form.submit();
     }
