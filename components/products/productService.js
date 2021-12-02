@@ -20,8 +20,11 @@ const getProductCount = () => {
 const getAllProducts = (categoryId, page = 0, itemsPerPage = 9) => {
 	let where = {};
 	if (!isNaN(categoryId)) {
-		where = { category: categoryId };
+		// where = { category: categoryId };
+		where.category = categoryId;
+
 	}
+	console.log('where',where)
 	return models.product.findAll({
 		raw: true,
 		where,

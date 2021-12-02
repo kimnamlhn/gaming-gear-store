@@ -2,19 +2,30 @@ const productService = require('../products/productService');
 
 const login = async (req, res) => {
 	try {
-		if(!req.user)
-			res.render('account/login', { layout: 'auth', title: 'Login', wrongPassword:req.query.wrongPassword !== undefined });
+		if (!req.user)
+			res.render('account/login', {
+				layout: 'auth',
+				title: 'Login',
+				wrongPassword: req.query.wrongPassword !== undefined
+			});
 		else res.redirect('/')
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 const register = async (req, res) => {
 	try {
-		res.render('account/register', { layout: 'auth', title: 'Register' });
+		res.render('account/register', {
+			layout: 'auth',
+			title: 'Register'
+		});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
@@ -25,29 +36,38 @@ const forgotPassword = async (req, res) => {
 			title: 'Forgot Password',
 		});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 const userIndex = async (req, res) => {
 	try {
-		res.render('account/user/index', {
-			layout: 'user/account',
+		if (req.user) res.render('account/user/index', {
+			layout: 'account',
 			title: 'Main',
 		});
+		else res.redirect('/');
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 const adminIndex = async (req, res) => {
 	try {
-		res.render('account/admin/index', {
-			layout: 'admin/account',
-			title: 'Main',
-		});
+		// if (req.user)
+			res.render('account/admin/index', {
+				layout: 'account',
+				title: 'Main',
+			});
+		// else res.redirect('/');
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
@@ -55,23 +75,27 @@ const list = async (req, res) => {
 	try {
 		const products = await productService.getAllProductsAdmin();
 		res.render('account/admin/productList', {
-			layout: 'admin/account',
+			layout: 'account',
 			title: 'Product List',
 			products,
 		});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 const addProduct = async (req, res) => {
 	try {
 		res.render('account/admin/addProduct', {
-			layout: 'admin/account',
+			layout: 'account',
 			title: 'Add a product',
 		});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
@@ -83,7 +107,9 @@ const deleteProduct = async (req, res) => {
 		await productService.deleteProduct(idProduct);
 		res.redirect(req.headers.referer);
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
@@ -110,7 +136,9 @@ const addProductPost = async (req, res) => {
 		const id = await productService.createProduct(entity);
 		res.redirect(`/account/admin/products/add/${id}`);
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
@@ -132,7 +160,9 @@ const editProductPost = async (req, res) => {
 		await productService.updateProduct(entity);
 		res.redirect(req.headers.referer);
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
@@ -145,13 +175,15 @@ const getEditProductPage = async (req, res) => {
 		console.log('DATA TEST:', id, product, image);
 
 		res.render('account/admin/editProduct', {
-			layout: 'admin/account',
+			layout: 'account',
 			title: 'Edit a product',
 			product,
 			image,
 		});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 

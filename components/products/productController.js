@@ -3,6 +3,10 @@ const productService = require('./productService');
 
 const list = async (req,res) => {
     try {
+        const filter = {
+            currentCategory: Number(req.query.category),
+            currentBrand: req.query.brand
+        }
         let currentCategory = Number(req.query.category);
         let page = req.query.page;
         const itemsPerPage = 12;
