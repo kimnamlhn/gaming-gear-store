@@ -1885,6 +1885,12 @@ textarea.input {
 	margin-bottom: 15px;
 }
 
+.review-form .input:read-only {
+	background-color: rgb(204, 204, 204);
+	cursor: default;
+	color: rgb(99, 99, 99);
+}
+
 .review-form .input-rating {
 	margin-bottom: 15px;
 }

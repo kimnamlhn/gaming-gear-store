@@ -146,7 +146,7 @@ DROP TABLE IF EXISTS `product_comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_comments` (
-  `idComment` int NOT NULL,
+  `idComment` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `rating` int NOT NULL,
   `content` text,
@@ -158,7 +158,7 @@ CREATE TABLE `product_comments` (
   KEY `fk_comment_product_idx` (`idProduct`) USING BTREE,
   CONSTRAINT `product_comments_ibfk_1` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `product_comments_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,4 +187,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-02  9:49:05
+-- Dump completed on 2021-12-02 10:39:39

@@ -41,7 +41,6 @@ app.engine(
 // app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 // Middlewares
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
