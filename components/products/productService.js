@@ -20,9 +20,12 @@ const getProductCount = () => {
 const getAllProducts = (categoryId, page = 0, itemsPerPage = 9) => {
 	let where = {};
 	if (!isNaN(categoryId)) {
-		where = { category: categoryId };
+		// where = { category: categoryId };
+		where.category = categoryId;
+
 	}
-	return models.product.findAll({
+	
+	return models.product.findAndCountAll({
 		raw: true,
 		where,
 		attributes: ['idProduct', 'name', 'brand', 'price', 'thumbnail'],
@@ -123,55 +126,6 @@ const getDetailImages = (id) => {
 		},
 		raw: true,
 	});
-};
-
-const getDetailComments = (id, page = 0) => {
-	return models.product_comments.findAndCountAll({
-		offset: page * 3,
-		limit: 3,
-		attributes: [
-			'name',
-			'content',
-			'rating',
-			[
-				sequelize.fn(
-					'date_format',
-					sequelize.col('creationAt'),
-					'%d %b %Y, %h:%i %p'
-				),
-				'creationAt',
-			],
-		],
-		include: [
-			{
-				model: models.account,
-				attributes: ['name'],
-				as: 'idAccount_account',
-			},
-		],
-		where: {
-			idProduct: id,
-		},
-		raw: true,
-	});
-};
-
-const getDetailsCommentsCount = async (id, count) => {
-	let result = await models.product_comments.findAll({
-		where: {
-			idProduct: id,
-		},
-		attributes: [
-			'rating',
-			[sequelize.fn('COUNT', sequelize.col('rating')), 'ratingcount'],
-		],
-		group: ['rating'],
-		raw: true,
-	});
-	let ratingAvg = 0;
-	for (let e of result) ratingAvg += e.rating * e.ratingcount;
-	ratingAvg /= count;
-	return { result, ratingAvg };
 };
 
 const getDetailRelatedProducts = (id, idCategory) => {
@@ -398,8 +352,6 @@ module.exports = {
 	getProductSortByRating,
 	getDetails,
 	getDetailImages,
-	getDetailComments,
-	getDetailsCommentsCount,
 	getDetailRelatedProducts,
 	getAllProductsAdmin,
 	deleteProductComment,

@@ -1,35 +1,51 @@
-// const passport = require('passport')
-//   , LocalStrategy = require('passport-local').Strategy;
+const { models } = require('../../models');
+const bcrypt = require('bcrypt');
+const passport = require('passport'),
+	LocalStrategy = require('passport-local').Strategy;
 
-// passport.use(new LocalStrategy({
-//     usernameField: 'email',
-//     passwordField: 'password',
-//     function(username, password, done) {
-//     User.findOne({ username: username }, function(err, user) {
-//     if (err) { return done(err); }
-//     if (!user) {
-//         return done(null, false, { message: 'Incorrect username.' });
-//     }
-//     if (!user.validPassword(password)) {
-//         return done(null, false, { message: 'Incorrect password.' });
-//     }
-//     return done(null, user);
-//     });
-// }
-// }));
+passport.use(
+	new LocalStrategy(
+		{
+			usernameField: 'user_email',
+			passwordField: 'user_password',
+		},
+		async function (username, password, done) {
+			const account = await models.account.findOne({
+				where: { email: username },
+			});
+			try {
+				if (!account) {
+					return done(null, false, {
+						message: 'Incorrect username.',
+					});
+				}
+				if (account.locked) {
+					return done(null, false, {message: 'This account is locked.'})
+				}
+				if (!bcrypt.compareSync(password,account.password)) {
+					return done(null, false, {
+						message: 'Incorrect password.',
+					});
+				}
+				return done(null, account);
+			} catch (err) {
+				return done(err);
+			}
+		}
+	)
+);
 
-// passport.serializeUser(function(user, done) {
-//     done(null, user.id);
-//   });
-  
-// passport.deserializeUser(function(id, done) {
-//     User.findById(id, function(err, user) {
-//         done(err, user);
-//         });
-// });
+passport.serializeUser(function (user, done) {
+	done(null, { idAccount: user.idAccount, name: user.name, role: user.role });
+});
 
-// function validPassword(user,password) {
-//     return user.password === password;
-// }
+passport.deserializeUser(function (user, done) {
+	return done(null, user);
+});
 
-// module.exports = passport;
+function validPassword(user, password) {
+
+	return user.password === password;
+}
+
+module.exports = passport;

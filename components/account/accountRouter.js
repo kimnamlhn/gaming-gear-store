@@ -1,38 +1,41 @@
 const express = require('express');
-// const passport = require('../../auth/passport');
+const passport = require('./passport');
 const router = express.Router();
 
 const accountController = require('./accountController');
 
 router.get('/login', accountController.login);
+router.post('/login', passport.authenticate('local', {
+	successRedirect: '/',
+	failureRedirect: '/account/login?wrongPassword'
+})); // Login POST
 router.get('/register', accountController.register);
+router.post('/register', accountController.createAccount);
 router.get('/forgot-password', accountController.forgotPassword);
-// router.post('/login',
-//     passport.authenticate('local'),
-//     function(req, res) {
-//         if(req.user) res.redirect('/login');
-//         else res.redirect('/login');
-//     }
-// );
-// router.get('/', accountController.index);
-// router.get('/admin'. accountController.adminIndex);
+
+router.get('/logout', function (req, res) {
+	req.logout();
+	res.redirect('/');
+})
+
 router.get('/', accountController.userIndex);
 router.get('/admin', accountController.adminIndex);
 
+router.get('/admin/admin-acc', accountController.accountListAdmin); // Admin Account List
+router.get('/admin/admin-acc/add', accountController.addAdminAccount); // Add admin account
+router.post('/admin/admin-acc/add', accountController.addAdminAccountPost); // Add admin account POST
+router.get('/admin/acc', accountController.accountListUser); // User Account List
+
 router.get('/admin/products', accountController.list); // Product list
 router.get('/admin/products/add', accountController.addProduct); // Add a Product
-router.post('/admin/products/delete', accountController.deleteProduct); // Delete a product
 router.post('/admin/products/add', accountController.addProductPost); // Add a product POST
-router.post(
-	'/admin/products/edit/:productID',
-	accountController.editProductPost
-); // Edit a product POST
-router.get(
-	'/admin/products/edit/:productID',
-	accountController.getEditProductPage
-); // Edit a product
+router.post('/admin/products/delete', accountController.deleteProduct); // Delete a product
+router.get('/admin/products/edit/:productID', accountController.getEditProductPage); // Edit a product
+router.post('/admin/products/edit/:productID', accountController.editProductPost); // Edit a product POST
+
 router.get('/admin/products/add/:productID', (req, res) => {
 	const id = Number(req.params.productID);
+	if(!req.user || !req.user.role) res.redirect('/');
 	res.render('account/admin/upload', {
 		layout: 'admin/account',
 		title: 'Upload',

@@ -258,8 +258,12 @@
                                 <!-- Review Form -->
                                 <div class="col-md-3">
                                     <div id="review-form">
-                                        <form class="review-form" method="post">
+                                        <form class="review-form" method="post" action="/products/{{product.idProduct}}/submitcomment">
+                                            {{#if user}}
+                                            <input class="input" type="text" name="review_name" placeholder="Your Name" value="{{user.name}}" readonly>
+                                            {{else}}
                                             <input class="input" type="text" name="review_name" placeholder="Your Name">
+                                            {{/if}}
                                             <textarea class="input" name="review_content" placeholder="Your Review"></textarea>
                                             <div class="input-rating">
                                                 <span>Your Rating: </span>

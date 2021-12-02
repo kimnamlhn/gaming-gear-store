@@ -19,13 +19,21 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: true
     },
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
     phone: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
     role: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TINYINT,
       allowNull: true
+    },
+    locked: {
+      type: DataTypes.TINYINT,
+      allowNull: false
     }
   }, {
     sequelize,

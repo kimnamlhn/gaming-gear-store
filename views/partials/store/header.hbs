@@ -9,9 +9,20 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> 227 Nguyen Van Cu</a></li>
             </ul>
             <ul class="header-links pull-right">
-                <li><a href="/account/login"><i class="fa fa-user" aria-hidden="true"></i> Login</a></li>
-                <li><a href="/account/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
-                <li><a href="/account"><i class="fa fa-user-o"></i> My Account</a></li>
+                {{#if user}}
+                    {{#if user.role}}
+                    <li><a href="/account/admin"><i class="fa fa-user-o"></i> Admin Panel</a></li>
+                    {{else}}
+                    <li><a href="/account"><i class="fa fa-user-o"></i> My Account</a></li>
+                    {{/if}}
+
+                    <li><a href="/account/logout"><i class="fa fa-user-o"></i> Logout</a></li>
+                {{else}}
+                    <li><a href="/account/login"><i class="fa fa-user" aria-hidden="true"></i> Login</a></li>
+                    <li><a href="/account/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
+                {{/if}}
+
+                
             </ul>
         </div>
     </div>

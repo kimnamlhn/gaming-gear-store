@@ -1,75 +1,193 @@
 const productService = require('../products/productService');
+const accountService = require('./accountService');
 
 const login = async (req, res) => {
 	try {
-		res.render('account/login', { layout: 'auth', title: 'Login' });
+		if (!req.user)
+			res.render('account/login', {
+				layout: 'auth',
+				title: 'Login',
+				wrongPassword: req.query.wrongPassword !== undefined
+			});
+		else res.redirect('/')
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 const register = async (req, res) => {
 	try {
-		res.render('account/register', { layout: 'auth', title: 'Register' });
+		if(req.user) res.redirect('/')
+		else
+			res.render('account/register', {
+				layout: 'auth',
+				title: 'Register'
+			});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
+const createAccount = async(req,res) => {
+	try {
+		const entity = {
+			email: req.body.user_email,
+			password: req.body.user_cfm_password,
+			name: req.body.user_name,
+			phone: req.body.user_phone,
+			address: req.body.user_address,
+			role: 0,
+		}
+		const user = await accountService.createAccount(entity);
+		req.login(user, function(err) {
+			if (!err) {
+				res.redirect('/')
+			}
+			else console.log(err)
+		})
+		res.redirect('/account/login');
+	} catch (err) {
+		res.render('error', {err});
+	}
+}
+
 const forgotPassword = async (req, res) => {
 	try {
+		if(req.user) res.redirect('/');
 		res.render('account/forgot-password', {
 			layout: 'auth',
 			title: 'Forgot Password',
 		});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 const userIndex = async (req, res) => {
 	try {
-		res.render('account/user/index', {
-			layout: 'user/account',
+		if (req.user) res.render('account/user/index', {
+			layout: 'account',
 			title: 'Main',
 		});
+		else res.redirect('/');
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 const adminIndex = async (req, res) => {
 	try {
-		res.render('account/admin/index', {
-			layout: 'admin/account',
-			title: 'Main',
-		});
+		if(!req.user || !req.user.role) res.redirect('/');
+			res.render('account/admin/index', {
+				layout: 'account',
+				title: 'Main',
+			});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
+const accountListAdmin = async (req, res) => {
+	try {
+		if(!req.user || !req.user.role) res.redirect('/');
+		let {count,rows:accounts} = await accountService.listAdminAccounts()
+		res.render('account/admin/accountList', {
+			layout: 'account',
+			title: 'Admin Account List',
+			list: 'admin',
+			accounts
+		})
+	} catch (error) {
+		res.render('error', {error});
+	}
+}
+
+const addAdminAccount = async (req, res) => {
+	try {
+		if(!req.user || !req.user.role) res.redirect('/');
+		res.render('account/admin/addAccount', {
+			layout: 'account',
+			title: 'Add an Admin Account',
+			type: 'admin'
+		})
+	} catch (error) {
+		res.render('error', {error});
+	}
+}
+
+const addAdminAccountPost = async (req, res) => {
+	try {
+		const entity = {
+			email: req.body.user_email,
+			password: req.body.user_cfm_password,
+			name: req.body.user_name,
+			phone: req.body.user_phone,
+			address: req.body.user_address,
+			role: 1,
+		}
+		const user = await accountService.createAccount(entity);
+		req.login(user, function(err) {
+			if (!err) {
+				res.redirect('/')
+			}
+			else console.log(err)
+		})
+		res.redirect('/account/login');
+	} catch (err) {
+		res.render('error', {err});
+	}
+}
+
+const accountListUser = async (req, res) => {
+	try {
+		if(!req.user || !req.user.role) res.redirect('/');
+		res.render('account/admin/accountList', {
+			layout: 'account',
+			title: 'User Account List',
+			list: 'user'
+		})
+	} catch (error) {
+		res.render('error', {error});
+	}
+}
+
 const list = async (req, res) => {
 	try {
+		if(!req.user || !req.user.role) res.redirect('/');
 		const products = await productService.getAllProductsAdmin();
 		res.render('account/admin/productList', {
-			layout: 'admin/account',
+			layout: 'account',
 			title: 'Product List',
 			products,
 		});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 const addProduct = async (req, res) => {
 	try {
+		if(!req.user || !req.user.role) res.redirect('/');
 		res.render('account/admin/addProduct', {
-			layout: 'admin/account',
+			layout: 'account',
 			title: 'Add a product',
 		});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
@@ -81,7 +199,9 @@ const deleteProduct = async (req, res) => {
 		await productService.deleteProduct(idProduct);
 		res.redirect(req.headers.referer);
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
@@ -108,7 +228,9 @@ const addProductPost = async (req, res) => {
 		const id = await productService.createProduct(entity);
 		res.redirect(`/account/admin/products/add/${id}`);
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
@@ -130,35 +252,43 @@ const editProductPost = async (req, res) => {
 		await productService.updateProduct(entity);
 		res.redirect(req.headers.referer);
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 const getEditProductPage = async (req, res) => {
 	try {
+		if(!req.user || !req.user.role) res.redirect('/');
 		const id = Number(req.params.productID);
 		const product = await productService.getDetails(id);
 		const image = await productService.getDetailImages(id);
 
-		console.log('DATA TEST:', id, product, image);
-
 		res.render('account/admin/editProduct', {
-			layout: 'admin/account',
+			layout: 'account',
 			title: 'Edit a product',
 			product,
 			image,
 		});
 	} catch (error) {
-		res.render('error', { error });
+		res.render('error', {
+			error
+		});
 	}
 };
 
 module.exports = {
 	login,
 	register,
+	createAccount,
 	forgotPassword,
 	userIndex,
 	adminIndex,
+	addAdminAccount,
+	addAdminAccountPost,
+	accountListAdmin,
+	accountListUser,
 	list,
 	addProduct,
 	deleteProduct,

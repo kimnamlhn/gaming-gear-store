@@ -27,12 +27,13 @@ CREATE TABLE `account` (
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(60) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
+  `address` mediumtext,
   `phone` int DEFAULT NULL,
-  `role` blob,
+  `role` tinyint DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idAccount`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +136,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`idProduct`),
   KEY `fk_category_product_idx` (`category`) USING BTREE,
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,11 +147,11 @@ DROP TABLE IF EXISTS `product_comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_comments` (
-  `idComment` int NOT NULL,
+  `idComment` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `rating` int NOT NULL,
   `content` text,
-  `creationAt` datetime DEFAULT NULL,
+  `creationAt` date DEFAULT NULL,
   `idAccount` int DEFAULT NULL,
   `idProduct` int NOT NULL,
   PRIMARY KEY (`idComment`),
@@ -158,7 +159,7 @@ CREATE TABLE `product_comments` (
   KEY `fk_comment_product_idx` (`idProduct`) USING BTREE,
   CONSTRAINT `product_comments_ibfk_1` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `product_comments_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +176,7 @@ CREATE TABLE `product_images` (
   PRIMARY KEY (`idImages`,`product`),
   KEY `product_idx` (`product`) USING BTREE,
   CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product`) REFERENCES `product` (`idProduct`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -187,4 +188,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-29 22:31:13
+-- Dump completed on 2021-12-02 16:01:30
