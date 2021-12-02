@@ -21,7 +21,7 @@
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'admin@gmail.com','123456','Admin',1358685356,1,'2019-06-17 17:00:00','2019-06-17 17:00:00'),(2,'user@gmail.com','123','User',123123,0,'2019-06-17 17:00:00','2019-06-17 17:00:00');
+INSERT INTO `account` VALUES (1,'admin@gmail.com','123456','Admin','23 Mercer Street',1358685356,1,'2019-06-17 17:00:00','2019-06-17 17:00:00'),(2,'user@gmail.com','123','User','312321',123123,0,'2019-06-17 17:00:00','2019-06-17 17:00:00');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +81,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `product_comments` WRITE;
 /*!40000 ALTER TABLE `product_comments` DISABLE KEYS */;
-INSERT INTO `product_comments` VALUES (1,NULL,5,'asd','2019-11-05 20:45:00',1,1),(2,NULL,2,'dsa','2020-01-23 00:00:00',2,1),(4,'ss',5,'sss','2019-11-05 20:45:00',NULL,3),(5,'dd',4,'aweaw','2020-01-23 00:00:00',NULL,3);
+INSERT INTO `product_comments` VALUES (1,NULL,5,'asd','2019-11-05',1,1),(2,NULL,2,'dsa','2020-01-23',2,1),(4,'ss',5,'sss','2019-11-05',NULL,3),(5,'dd',4,'aweaw','2020-01-23',NULL,3),(6,':3',5,':3','2021-12-02',NULL,1),(7,'User',3,'test review','2021-12-02',2,1),(8,':3',4,':x','2021-12-02',NULL,4),(9,'test',5,'test','2021-12-02',NULL,5),(10,'test 2',1,'test 2','2021-12-02',NULL,5),(11,'test 3',3,'test 3','2021-12-02',NULL,5),(15,'asd',3,'asd','2021-12-02',NULL,6),(16,'dsa',4,'def','2021-12-02',NULL,6);
 /*!40000 ALTER TABLE `product_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,4 +104,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-02  9:48:55
+-- Dump completed on 2021-12-02 16:01:23

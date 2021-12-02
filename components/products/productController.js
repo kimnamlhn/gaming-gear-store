@@ -10,6 +10,7 @@ const list = async (req,res) => {
         }
         let currentCategory = Number(req.query.category);
         let page = req.query.page;
+        // console.log(req.query)
         const itemsPerPage = 12;
         page = productService.pageValidation(page);
         let {count:pageCount,rows:products} = await productService.getAllProducts(currentCategory, page, itemsPerPage);

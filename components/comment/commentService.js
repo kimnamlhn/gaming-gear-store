@@ -14,7 +14,7 @@ const getDetailComments = (id, page = 0) => {
 				sequelize.fn(
 					'date_format',
 					sequelize.col('creationAt'),
-					'%d %b %Y, %h:%i %p'
+					'%d %b %Y'
 				),
 				'creationAt',
 			],

@@ -29,6 +29,10 @@ const register = async (req, res) => {
 	}
 };
 
+const registerPost = async(req,res) => {
+
+}
+
 const forgotPassword = async (req, res) => {
 	try {
 		res.render('account/forgot-password', {
@@ -190,6 +194,7 @@ const getEditProductPage = async (req, res) => {
 module.exports = {
 	login,
 	register,
+	registerPost,
 	forgotPassword,
 	userIndex,
 	adminIndex,

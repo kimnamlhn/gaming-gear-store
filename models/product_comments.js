@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     creationAt: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: true
     },
     idAccount: {

@@ -27,6 +27,7 @@ CREATE TABLE `account` (
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(60) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
+  `address` mediumtext,
   `phone` int DEFAULT NULL,
   `role` tinyint DEFAULT NULL,
   `createdAt` datetime NOT NULL,
@@ -150,7 +151,7 @@ CREATE TABLE `product_comments` (
   `name` varchar(45) DEFAULT NULL,
   `rating` int NOT NULL,
   `content` text,
-  `creationAt` datetime DEFAULT NULL,
+  `creationAt` date DEFAULT NULL,
   `idAccount` int DEFAULT NULL,
   `idProduct` int NOT NULL,
   PRIMARY KEY (`idComment`),
@@ -158,7 +159,7 @@ CREATE TABLE `product_comments` (
   KEY `fk_comment_product_idx` (`idProduct`) USING BTREE,
   CONSTRAINT `product_comments_ibfk_1` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `product_comments_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,4 +188,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-02 10:39:39
+-- Dump completed on 2021-12-02 16:01:30
