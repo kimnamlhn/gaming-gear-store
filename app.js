@@ -9,8 +9,11 @@ require('dotenv').config();
 const exphbs = require('express-handlebars');
 const helpers = require('./views/helpers/index');
 const session = require('express-session');
-const passport = require('./components/account/passport');
+const passport = require('./components/middlewares/passport');
+const sessionHandler = require('./components/middlewares/sessionHandler')
+const _logger = require('./components/middlewares/logger')
 const app = express();
+
 // Router
 const storeIndexRouter = require('./components/index/index');
 const storeProductsRouter = require('./components/products/productRouter');
@@ -47,17 +50,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // Authentication
-app.use(session({ secret: process.env.SESSION_SECRET }));
+
+app.use(session({ cookie:{maxAge:100*60*60*24*365},secret: process.env.SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(function (req, res, next) {
 	res.locals.user = req.user;
 	next();
 });
+
 // Routes
+app.use(sessionHandler);
+// app.use(_logger);
 app.use('/', storeIndexRouter);
 app.use('/products', storeProductsRouter);
 app.use('/account', accountRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
 	next(createError(404));
