@@ -16,6 +16,9 @@ router.get('/register', accountController.register);
 router.post('/register', accountController.createAccount);
 // Password
 router.get('/forgot-password', accountController.forgotPassword);
+router.post('/forgot-password', accountController.forgotPasswordPost);
+router.get('/reset-password', accountController.resetPassword);
+router.post('/reset-password', accountController.resetPasswordPost);
 // Logout
 router.get('/logout', function (req, res) {
 	req.logout();

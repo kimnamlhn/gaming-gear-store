@@ -78,6 +78,55 @@ const forgotPassword = async (req, res) => {
 	}
 };
 
+const forgotPasswordPost = async (req, res) => {
+	try {
+		const message = await accountService.forgotPassword(req.body.user_email);
+		res.render('account/forgot-password', {
+			layout: 'auth',
+			title: 'Forgot Password',
+			message
+		});
+	} catch (error) {
+		res.render('error',{error});
+	}
+}
+
+const resetPassword = async (req, res) => {
+	try {
+		if (req.user) res.redirect('/');
+		const valid = await accountService.resetPasswordCheck(req.query.token);
+		res.render('account/reset-password', {
+			layout: 'auth',
+			title: 'Reset Password',
+			valid
+		});
+	} catch (error) {
+		res.render('error', {
+			error
+		});
+	}
+}
+
+const resetPasswordPost = async (req, res) => {
+	try {
+		const entity = {
+			token: req.query.token,
+			password: req.body.user_password,
+			cfm_password: req.body.user_cfm_password
+		}
+		const {valid,done,message} = await accountService.resetPassword(entity);
+		res.render('account/reset-password', {
+			layout: 'auth',
+			title: 'Reset Password',
+			valid,
+			done,
+			message
+		});
+	} catch (error) {
+		res.render('error', {error});
+	}
+}
+
 const userIndex = async (req, res) => {
 	try {
 		if (!req.user) res.redirect('/');
@@ -302,6 +351,9 @@ module.exports = {
 	register,
 	createAccount,
 	forgotPassword,
+	forgotPasswordPost,
+	resetPassword,
+	resetPasswordPost,
 	userIndex,
 	adminIndex,
 	addAdminAccount,

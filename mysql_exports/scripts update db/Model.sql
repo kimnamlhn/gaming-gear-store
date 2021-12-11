@@ -33,8 +33,10 @@ CREATE TABLE `account` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `locked` tinyint NOT NULL,
+  `token` varchar(45) DEFAULT NULL,
+  `tokenExpire` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idAccount`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,4 +191,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-02 20:05:33
+-- Dump completed on 2021-12-11 22:14:51

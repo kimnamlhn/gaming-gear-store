@@ -34,6 +34,14 @@ module.exports = function(sequelize, DataTypes) {
     locked: {
       type: DataTypes.TINYINT,
       allowNull: false
+    },
+    token: {
+      type: DataTypes.STRING(45),
+      allowNull: true
+    },
+    tokenExpire: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     sequelize,
