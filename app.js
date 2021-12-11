@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const flash = require('connect-flash');
 
 require('dotenv').config();
 
@@ -49,6 +50,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
 // Authentication
 
 app.use(session({ cookie:{maxAge:100*60*60*24*365},secret: process.env.SESSION_SECRET }));
@@ -59,10 +61,9 @@ app.use(function (req, res, next) {
 	res.locals.user = req.user;
 	next();
 });
-
 // Routes
 app.use(sessionHandler);
-// app.use(_logger);
+app.use(_logger);
 app.use('/', storeIndexRouter);
 app.use('/products', storeProductsRouter);
 app.use('/account', accountRouter);

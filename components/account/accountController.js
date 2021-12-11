@@ -7,7 +7,7 @@ const login = async (req, res) => {
 			res.render('account/login', {
 				layout: 'auth',
 				title: 'Login',
-				wrongPassword: req.query.wrongPassword !== undefined
+				error : req.flash('error')
 			});
 		else res.redirect('/')
 	} catch (error) {

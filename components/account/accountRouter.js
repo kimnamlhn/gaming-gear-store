@@ -1,13 +1,14 @@
 const express = require('express');
 const passport = require('../middlewares/passport');
 const router = express.Router();
-
 const accountController = require('./accountController');
 
 router.get('/login', accountController.login);
 router.post('/login', passport.authenticate('local', {
 	successRedirect: '/',
-	failureRedirect: '/account/login?wrongPassword'
+	failureRedirect: '/account/login',
+	badRequestMessage: 'Please fill all the missing fields.',
+	failureFlash: true,
 })); // Login POST
 router.get('/register', accountController.register);
 router.post('/register', accountController.createAccount);
@@ -47,4 +48,5 @@ router.post(
 	'/admin/products/add/:productID',
 	accountController.uploadImagePost
 ); // Upload images POST
+
 module.exports = router;
