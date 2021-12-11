@@ -1,6 +1,6 @@
 const commentService = require('./commentService');
 
-const addComment = async (req,res) => {
+exports.addComment = async (req,res) => {
     try {
         let userid = null;
         if(req.user) userid = req.user.idAccount;
@@ -17,7 +17,3 @@ const addComment = async (req,res) => {
         res.render('error',{error});
     }
 }
-
-module.exports = {
-    addComment,
-};

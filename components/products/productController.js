@@ -1,8 +1,7 @@
-const { response } = require('express');
 const productService = require('./productService');
 const commentService = require('../comment/commentService');
 
-const list = async (req,res) => {
+exports.list = async (req,res) => {
     try {
         const filter = {
             currentCategory: Number(req.query.category),
@@ -41,7 +40,7 @@ const list = async (req,res) => {
     }
 }
 
-const details = async (req, res) => {
+exports.details = async (req, res) => {
     try {
         const id = Number(req.params.productID);
         const product = await productService.getDetails(id);
@@ -63,16 +62,10 @@ const details = async (req, res) => {
     }
 }
 
-const checkout = async (req, res) => {
+exports.checkout = async (req, res) => {
     try {
         res.render('store/checkout', { title: 'Electro - Checkout' });
     } catch (error) {
         res.render('error',{error});
     }
-};
-
-module.exports = {
-    list, 
-    details, 
-    checkout
 };
