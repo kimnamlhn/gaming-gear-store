@@ -21,33 +21,34 @@
 							<h5 class="text-center">Register an Account</h5>
 							<div class="form-group">
 								<label for="user_email">Email (*)</label>
-								<input class="form-control" type="email" placeholder="dragonborn@gmail.com" id="user_email" name="user_email" required>
+								<input class="form-control" type="email" placeholder="dragonborn@gmail.com" id="user_email" name="user_email" value="{{email}}">
 							</div>
 							<div class="form-group">
 								<label for="user_password">Password (*)</label>
-								<input class="form-control" type="password" placeholder="**********" id="user_password" name="user_password" required>
+								<input class="form-control" type="password" placeholder="**********" id="user_password" name="user_password">
 							</div>
 							<div class="form-group">
 								<label for="user_cfm_password">Confirm Password (*)</label>
-								<input class="form-control" type="password" placeholder="**********" id="user_cfm_password" name="user_cfm_password" required>
-								<p class="text-center message" style="color:red;"></p>
+								<input class="form-control" type="password" placeholder="**********" id="user_cfm_password" name="user_cfm_password">
 							</div>
 							<div class="form-group">
 								<label for="user_name">Name (*)</label>
-								<input class="form-control" type="text" placeholder="Thancred Waters" id="user_name" name="user_name" required>
+								<input class="form-control" type="text" placeholder="Thancred Waters" id="user_name" name="user_name" value="{{name}}">
 							</div>
 							<div class="form-group">
 								<label for="user_phone">Phone Number (*)</label>
-								<input class="form-control" type="text" placeholder="0986465741" id="user_phone" name="user_phone" required>
+								<input class="form-control" type="text" placeholder="0986465741" id="user_phone" name="user_phone" value="{{phone}}">
 							</div>
 							<div class="form-group">
 								<label for="user_address">Address (*)</label>
-								<input class="form-control" type="text" placeholder="38 Mercer Street" id="user_address" name="user_address" required>
+								<input class="form-control" type="text" placeholder="38 Mercer Street" id="user_address" name="user_address" value="{{address}}">
 							</div>
+							<p class="text-center warning-message" style="color:red;">{{error}}</p>
+							<button id="submit-register" class="btn btn-primary btn-lg btn-block">Submit</button>
 						</form>
 						<div class="pd-20">
-							<p class="text-center warning-message" style="color:red;"></p>
-							<button id="submit-register" class="btn btn-primary btn-lg btn-block">Submit</button>
+							
+							
 						</div>
 					</div>
 				</div>

@@ -13,21 +13,21 @@
                 <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         <label for="user_email">Email</label>
-                        <input type="email" class="form-control" id="user_email" name="user_email" placeholder="Enter email" required>
+                        <input type="email" class="form-control" id="user_email" name="user_email" placeholder="Enter email" value="{{email}}">
                     </div>
                 </div>
                 <!--Name-->
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="user_name">Name</label>
-                        <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter name" required>
+                        <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter name" value="{{name}}">
                     </div>
                 </div>
                 <!--Phone-->
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="user_phone">Phone</label>
-                        <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Enter phone number" required>
+                        <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Enter phone number" value="{{phone}}">
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="user_address">Address</label>
-                        <input type="text" class="form-control" id="user_address" name="user_address" placeholder="Enter address" required>
+                        <input type="text" class="form-control" id="user_address" name="user_address" placeholder="Enter address" value="{{address}}">
                     </div>
                 </div>
             </div>
@@ -45,25 +45,25 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="user_password">Password</label>
-                        <input type="password" class="form-control" id="user_password" name="user_password" placeholder="**********" required>
+                        <input type="password" class="form-control" id="user_password" name="user_password" placeholder="**********">
                     </div>
                 </div>
                 <!--Confirm Password-->
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="user_cfm_password">Confirm Password</label>
-                        <input type="password" class="form-control" id="user_cfm_password" name="user_cfm_password" placeholder="**********" required>
+                        <input type="password" class="form-control" id="user_cfm_password" name="user_cfm_password" placeholder="**********">
                     </div>
                     
                 </div>
             </div>
-        </form>
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <button id="submit-register" class="btn btn-primary">Next</button>
-                <p class="message" style="color:red;float:left;"></p>
-                <p class="warning-message" style="color:red;float:left;"></p>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button id="submit-register" class="btn btn-primary">Next</button>
+                    <p class="message" style="color:red;float:left;">{{error}}</p>
+                </div>
             </div>
-        </div>
+        </form>
+
     </div>
 </div>

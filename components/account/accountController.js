@@ -26,9 +26,7 @@ const register = async (req, res) => {
 				title: 'Register'
 			});
 	} catch (error) {
-		res.render('error', {
-			error
-		});
+		res.render('error', {error});
 	}
 };
 
@@ -36,20 +34,31 @@ const createAccount = async(req,res) => {
 	try {
 		const entity = {
 			email: req.body.user_email,
-			password: req.body.user_cfm_password,
+			password: req.body.user_password,
+			cfm_password: req.body.user_cfm_password,
 			name: req.body.user_name,
 			phone: req.body.user_phone,
 			address: req.body.user_address,
 			role: 0,
 		}
-		const user = await accountService.createAccount(entity);
-		req.login(user, function(err) {
-			if (!err) {
-				res.redirect('/')
-			}
-			else console.log(err)
-		})
-		res.redirect('/account/login');
+		const {error,user} = await accountService.createAccount(entity);
+		if(user)
+			req.login(user, function(err) {
+				if (!err) {
+					res.redirect('/')
+				}
+				else console.log(err)
+			})
+		res.render('account/register', {
+			layout: 'auth',
+			title: 'Register',
+			email: req.body.user_email,
+			name: req.body.user_name,
+			phone: req.body.user_phone,
+			address: req.body.user_address,
+			error
+		});
+
 	} catch (err) {
 		res.render('error', {err});
 	}
@@ -104,7 +113,7 @@ const adminIndex = async (req, res) => {
 const accountListAdmin = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
-		let {count,rows:accounts} = await accountService.listAdminAccounts()
+		let {count,rows:accounts} = await accountService.listAccounts(1)
 		res.render('account/admin/accountList', {
 			layout: 'account',
 			title: 'Admin Account List',
@@ -122,7 +131,6 @@ const addAdminAccount = async (req, res) => {
 		res.render('account/admin/addAccount', {
 			layout: 'account',
 			title: 'Add an Admin Account',
-			type: 'admin'
 		})
 	} catch (error) {
 		res.render('error', {error});
@@ -133,20 +141,25 @@ const addAdminAccountPost = async (req, res) => {
 	try {
 		const entity = {
 			email: req.body.user_email,
-			password: req.body.user_cfm_password,
+			password: req.body.user_password,
+			cfm_password: req.body.user_cfm_password,
 			name: req.body.user_name,
 			phone: req.body.user_phone,
 			address: req.body.user_address,
 			role: 1,
 		}
-		const user = await accountService.createAccount(entity);
-		req.login(user, function(err) {
-			if (!err) {
-				res.redirect('/')
-			}
-			else console.log(err)
-		})
-		res.redirect('/account/login');
+		const {error,user} = await accountService.createAccount(entity);
+		if(user)
+			res.redirect('/account/admin/admin-acc')
+		res.render('account/admin/addAccount', {
+			layout: 'account',
+			title: 'Add an Admin Account',
+			email: req.body.user_email,
+			name: req.body.user_name,
+			phone: req.body.user_phone,
+			address: req.body.user_address,
+			error
+		});
 	} catch (err) {
 		res.render('error', {err});
 	}
@@ -155,10 +168,12 @@ const addAdminAccountPost = async (req, res) => {
 const accountListUser = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
+		let {count,rows:accounts} = await accountService.listAccounts(0)
 		res.render('account/admin/accountList', {
 			layout: 'account',
 			title: 'User Account List',
-			list: 'user'
+			list: 'user',
+			accounts
 		})
 	} catch (error) {
 		res.render('error', {error});

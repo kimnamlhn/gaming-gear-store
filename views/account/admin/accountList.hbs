@@ -6,8 +6,7 @@
                 <h4 class="text-blue h4">{{title}}<a href="/account/admin/admin-acc/add" style="float:right;"><i
                             class="fa fa-plus"></i> Add an Admin account</a></h4>
             {{else}}
-                <h4 class="text-blue h4">{{title}}<a href="/account/admin/acc/add" style="float:right;"><i
-                            class="fa fa-plus"></i> Add an account</a></h4>
+                <h4 class="text-blue h4">{{title}}</h4>
             {{/if}}
         </div>
         <div class="pb-20">
@@ -20,6 +19,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Phone</th>
                             <th scope="col">Creation Date</th>
+                            <th scope="col">Locked</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -32,6 +32,7 @@
                                 <td>{{name}}</td>
                                 <td>{{phone}}</td>
                                 <td>{{createdAt}}</td>
+                                <td>{{#if locked}}True{{else}}False{{/if}}</td>
                                 <td>
                                     <div class="dropdown">
                                         <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#"
@@ -42,7 +43,7 @@
                                             <a class="dropdown-item" href="/account/{{idAccount}}"><i
                                                     class="dw dw-eye"></i> View</a>
                                             <a class="dropdown-item" href="/account/admin/acc/edit/{{idAccount}}"><i
-                                                    class="dw dw-edit2"></i> Edit</a>
+                                                    class="dw dw-lock"></i> Lock</a>
                                             <a class="dropdown-item"
                                                 onclick="document.getElementById('deleteAccountForm-{{idAccount}}').submit();"><i
                                                     class="dw dw-delete-3"></i> Delete</a>
