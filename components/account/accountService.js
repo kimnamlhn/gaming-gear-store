@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const {v4:uuidv4, validate:uuidValidate} = require('uuid');
 const { models } = require('../../models');
 
-const listAccounts = async(type) => {
+exports.listAccounts = async(type) => {
     const {count,rows} = await models.account.findAndCountAll({
         where: {role:type},
         raw:true,
@@ -14,7 +14,7 @@ const listAccounts = async(type) => {
     return {count,rows}
 }
 
-const createAccount = async (entity) => {
+exports.createAccount = async (entity) => {
     try {
         const account = await models.account.findOne({where:{email: entity.email}})
         if (account) {
@@ -57,7 +57,7 @@ const createAccount = async (entity) => {
     }
 }
 
-const forgotPassword = async (user_email) => {
+exports.forgotPassword = async (user_email) => {
     if (!validator.isEmail(user_email)) return 'Please enter a valid email address.';
     const token = uuidv4();
     const account = await models.account.findOne({
@@ -79,7 +79,7 @@ const forgotPassword = async (user_email) => {
         from: process.env.MAIL_USERNAME,
         to: user_email,
         //to: process.env.MAIL_USERNAME,
-        subject: `Reset password của bạn`,
+        subject: `Link to reset password`,
         html: `<p>Click this link to reset your password. <a href="http://localhost:3000/account/reset-password?token=${token}">Click here.</a> This link will expires in 15 minutes.</p>`
     };
     transporter.sendMail(mailOptions, function (error, info) {
@@ -93,7 +93,7 @@ const forgotPassword = async (user_email) => {
     return 'Check your email inbox for the link to reset your password.'
 }
 
-const resetPasswordCheck = async (_token) => {
+exports.resetPasswordCheck = async (_token) => {
     if(!uuidValidate(_token)) return false; // Check if token is valid
     const account = await models.account.findOne({
         where: {token: _token}
@@ -107,7 +107,7 @@ const resetPasswordCheck = async (_token) => {
 
 }
 
-const resetPassword = async (entity) => {
+exports.resetPassword = async (entity) => {
     if(!uuidValidate(entity.token)) return {valid:false}; // Check if token is valid
     const account = await models.account.findOne({
         where: {token: entity.token}
@@ -134,7 +134,7 @@ const resetPassword = async (entity) => {
     else return {valid:false};
 }
 
-const getProfile = async (id) => {
+exports.getProfile = async (id) => {
     return models.account.findOne({
         where: {
             idAccount: id,
@@ -145,12 +145,3 @@ const getProfile = async (id) => {
         raw:true,
     })
 }
-
-module.exports = {
-    listAccounts,
-    createAccount,
-    forgotPassword,
-    resetPasswordCheck,
-    resetPassword,
-    getProfile,
-};

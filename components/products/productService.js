@@ -7,17 +7,17 @@ const path = require('path');
 const fs = require('fs');
 
 // Product List Page
-const pageValidation = (page) => {
+exports.pageValidation = (page) => {
 	page = isNaN(page) ? 0 : Number(page);
 	page = page >= 0 ? page : 0;
 	return page;
 };
 
-const getProductCount = () => {
+exports.getProductCount = () => {
 	return models.product.count();
 };
 
-const getAllProducts = (categoryId, page = 0, itemsPerPage = 9) => {
+exports.getAllProducts = (categoryId, page = 0, itemsPerPage = 9) => {
 	let where = {};
 	if (!isNaN(categoryId)) {
 		// where = { category: categoryId };
@@ -51,7 +51,7 @@ const getAllProducts = (categoryId, page = 0, itemsPerPage = 9) => {
 	});
 };
 
-const getProductBrandsCount = () => {
+exports.getProductBrandsCount = () => {
 	return models.product.findAll({
 		attributes: [
 			'brand',
@@ -62,7 +62,7 @@ const getProductBrandsCount = () => {
 	});
 };
 
-const getProductCategoriesCount = () => {
+exports.getProductCategoriesCount = () => {
 	return models.product.findAll({
 		include: [
 			{
@@ -80,7 +80,7 @@ const getProductCategoriesCount = () => {
 	});
 };
 
-const getProductSortByRating = () => {
+exports.getProductSortByRating = () => {
 	return models.product.findAll({
 		raw: true,
 		attributes: ['idProduct', 'name', 'brand', 'price', 'thumbnail'],
@@ -103,7 +103,7 @@ const getProductSortByRating = () => {
 	});
 };
 // Product Details Page
-const getDetails = (id) => {
+exports.getDetails = (id) => {
 	return models.product.findOne({
 		where: {
 			idProduct: id,
@@ -119,7 +119,7 @@ const getDetails = (id) => {
 	});
 };
 
-const getDetailImages = (id) => {
+exports.getDetailImages = (id) => {
 	return models.product_images.findAll({
 		where: {
 			product: id,
@@ -128,7 +128,7 @@ const getDetailImages = (id) => {
 	});
 };
 
-const getDetailRelatedProducts = (id, idCategory) => {
+exports.getDetailRelatedProducts = (id, idCategory) => {
 	return models.product.findAll({
 		where: {
 			idProduct: {
@@ -150,7 +150,7 @@ const getDetailRelatedProducts = (id, idCategory) => {
 };
 
 // Admin Product List Page
-const getAllProductsAdmin = () => {
+exports.getAllProductsAdmin = () => {
 	return models.product.findAll({
 		raw: true,
 		include: [
@@ -163,7 +163,7 @@ const getAllProductsAdmin = () => {
 	});
 };
 
-const deleteProductComment = async (id) => {
+exports.deleteProductComment = async (id) => {
 	models.product_comments
 		.destroy({ where: { idProduct: id } })
 		.then(function () {
@@ -171,7 +171,7 @@ const deleteProductComment = async (id) => {
 		});
 };
 
-const deleteProductImage = async (id) => {
+exports.deleteProductImage = async (id) => {
 	const imageurls = await models.product_images.findAll({
 		raw: true,
 		attributes: ['imageurl'],
@@ -207,7 +207,7 @@ const deleteProductImage = async (id) => {
 	});
 };
 
-const deleteProduct = async (id) => {
+exports.deleteProduct = async (id) => {
 	let product = await models.product.findOne({
 		where: { idProduct: id },
 	});
@@ -219,7 +219,7 @@ const deleteProduct = async (id) => {
 	});
 };
 
-const createProduct = async (entity) => {
+exports.createProduct = async (entity) => {
 	try {
 		// console.log('trying to add:', entity);
 
@@ -245,7 +245,7 @@ const createProduct = async (entity) => {
 	}
 };
 
-const updateProduct = async (entity) => {
+exports.updateProduct = async (entity) => {
 	try {
 		console.log('trying to update:', entity);
 
@@ -274,7 +274,7 @@ const updateProduct = async (entity) => {
 	}
 };
 
-const uploadImage = async (req, id) => {
+exports.uploadImage = async (req, id) => {
 	try {
 		const product = await models.product.findOne({
 			where: { idProduct: id },
@@ -341,23 +341,4 @@ const uploadImage = async (req, id) => {
 		console.log(err);
 		return false;
 	}
-};
-
-module.exports = {
-	pageValidation,
-	getProductCount,
-	getAllProducts,
-	getProductBrandsCount,
-	getProductCategoriesCount,
-	getProductSortByRating,
-	getDetails,
-	getDetailImages,
-	getDetailRelatedProducts,
-	getAllProductsAdmin,
-	deleteProductComment,
-	deleteProductImage,
-	deleteProduct,
-	createProduct,
-	updateProduct,
-	uploadImage,
 };

@@ -1,7 +1,7 @@
 const productService = require('../products/productService');
 const accountService = require('./accountService');
 
-const login = async (req, res) => {
+exports.login = async (req, res) => {
 	try {
 		if (!req.user)
 			res.render('account/login', {
@@ -17,7 +17,7 @@ const login = async (req, res) => {
 	}
 };
 
-const register = async (req, res) => {
+exports.register = async (req, res) => {
 	try {
 		if(req.user) res.redirect('/')
 		else
@@ -30,7 +30,7 @@ const register = async (req, res) => {
 	}
 };
 
-const createAccount = async(req,res) => {
+exports.createAccount = async(req,res) => {
 	try {
 		const entity = {
 			email: req.body.user_email,
@@ -64,7 +64,7 @@ const createAccount = async(req,res) => {
 	}
 }
 
-const forgotPassword = async (req, res) => {
+exports.forgotPassword = async (req, res) => {
 	try {
 		if(req.user) res.redirect('/');
 		res.render('account/forgot-password', {
@@ -78,7 +78,7 @@ const forgotPassword = async (req, res) => {
 	}
 };
 
-const forgotPasswordPost = async (req, res) => {
+exports.forgotPasswordPost = async (req, res) => {
 	try {
 		const message = await accountService.forgotPassword(req.body.user_email);
 		res.render('account/forgot-password', {
@@ -91,7 +91,7 @@ const forgotPasswordPost = async (req, res) => {
 	}
 }
 
-const resetPassword = async (req, res) => {
+exports.resetPassword = async (req, res) => {
 	try {
 		if (req.user) res.redirect('/');
 		const valid = await accountService.resetPasswordCheck(req.query.token);
@@ -107,7 +107,7 @@ const resetPassword = async (req, res) => {
 	}
 }
 
-const resetPasswordPost = async (req, res) => {
+exports.resetPasswordPost = async (req, res) => {
 	try {
 		const entity = {
 			token: req.query.token,
@@ -127,7 +127,7 @@ const resetPasswordPost = async (req, res) => {
 	}
 }
 
-const userIndex = async (req, res) => {
+exports.userIndex = async (req, res) => {
 	try {
 		if (!req.user) res.redirect('/');
 		const profile = await accountService.getProfile(req.user.idAccount);
@@ -143,7 +143,7 @@ const userIndex = async (req, res) => {
 	}
 };
 
-const adminIndex = async (req, res) => {
+exports.adminIndex = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
 		const profile = await accountService.getProfile(req.user.idAccount);
@@ -159,7 +159,7 @@ const adminIndex = async (req, res) => {
 	}
 };
 
-const accountListAdmin = async (req, res) => {
+exports.accountListAdmin = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
 		let {count,rows:accounts} = await accountService.listAccounts(1)
@@ -174,7 +174,7 @@ const accountListAdmin = async (req, res) => {
 	}
 }
 
-const addAdminAccount = async (req, res) => {
+exports.addAdminAccount = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
 		res.render('account/admin/addAccount', {
@@ -186,7 +186,7 @@ const addAdminAccount = async (req, res) => {
 	}
 }
 
-const addAdminAccountPost = async (req, res) => {
+exports.addAdminAccountPost = async (req, res) => {
 	try {
 		const entity = {
 			email: req.body.user_email,
@@ -214,7 +214,7 @@ const addAdminAccountPost = async (req, res) => {
 	}
 }
 
-const accountListUser = async (req, res) => {
+exports.accountListUser = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
 		let {count,rows:accounts} = await accountService.listAccounts(0)
@@ -229,7 +229,7 @@ const accountListUser = async (req, res) => {
 	}
 }
 
-const list = async (req, res) => {
+exports.list = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
 		const products = await productService.getAllProductsAdmin();
@@ -245,7 +245,7 @@ const list = async (req, res) => {
 	}
 };
 
-const addProduct = async (req, res) => {
+exports.addProduct = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
 		res.render('account/admin/addProduct', {
@@ -259,7 +259,7 @@ const addProduct = async (req, res) => {
 	}
 };
 
-const deleteProduct = async (req, res) => {
+exports.deleteProduct = async (req, res) => {
 	try {
 		const idProduct = req.body.idProduct;
 		await productService.deleteProductComment(idProduct);
@@ -273,13 +273,13 @@ const deleteProduct = async (req, res) => {
 	}
 };
 
-const uploadImagePost = async (req, res) => {
+exports.uploadImagePost = async (req, res) => {
 	const id = req.params.productID;
 	await productService.uploadImage(req, id);
 	res.redirect('/account/admin/products');
 };
 
-const addProductPost = async (req, res) => {
+exports.addProductPost = async (req, res) => {
 	try {
 		const entity = {
 			idProduct: null,
@@ -302,7 +302,7 @@ const addProductPost = async (req, res) => {
 	}
 };
 
-const editProductPost = async (req, res) => {
+exports.editProductPost = async (req, res) => {
 	try {
 		const idProduct = Number(req.params.productID);
 		const entity = {
@@ -326,7 +326,7 @@ const editProductPost = async (req, res) => {
 	}
 };
 
-const getEditProductPage = async (req, res) => {
+exports.getEditProductPage = async (req, res) => {
 	try {
 		if(!req.user || !req.user.role) res.redirect('/');
 		const id = Number(req.params.productID);
@@ -344,27 +344,4 @@ const getEditProductPage = async (req, res) => {
 			error
 		});
 	}
-};
-
-module.exports = {
-	login,
-	register,
-	createAccount,
-	forgotPassword,
-	forgotPasswordPost,
-	resetPassword,
-	resetPasswordPost,
-	userIndex,
-	adminIndex,
-	addAdminAccount,
-	addAdminAccountPost,
-	accountListAdmin,
-	accountListUser,
-	list,
-	addProduct,
-	deleteProduct,
-	addProductPost,
-	getEditProductPage,
-	editProductPost,
-	uploadImagePost,
 };
