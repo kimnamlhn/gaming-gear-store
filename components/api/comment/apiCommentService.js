@@ -1,8 +1,8 @@
-const { models } = require('../../models');
+const { models } = require('../../../models');
 const sequelize = require('sequelize');
 const moment = require('moment');
 
-const getDetailComments = (id, page = 0) => {
+exports.getComments = (id, page = 0) => {
 	return models.product_comments.findAndCountAll({
 		offset: page * 3,
 		limit: 3,
@@ -30,11 +30,12 @@ const getDetailComments = (id, page = 0) => {
 			idProduct: id,
 		},
 		raw: true,
+		order: [['creationAt', 'DESC']]
 	});
 };
 
-const getDetailsCommentsCount = async (id, count) => {
-	let result = await models.product_comments.findAll({
+exports.getCommentsCount = async (id, count) => {
+	let countPerRating = await models.product_comments.findAll({
 		where: {
 			idProduct: id,
 		},
@@ -46,13 +47,14 @@ const getDetailsCommentsCount = async (id, count) => {
 		raw: true,
 	});
 	let ratingAvg = 0;
-	for (let e of result) ratingAvg += e.rating * e.ratingcount;
+	for (let e of countPerRating) ratingAvg += e.rating * e.ratingcount;
 	ratingAvg /= count;
     if(isNaN(ratingAvg)) ratingAvg = 0;
-	return { result, ratingAvg };
+	ratingAvg = +(ratingAvg).toFixed(2);
+	return { countPerRating, ratingAvg };
 };
 
-const addComment = async (entity) => {
+exports.addComment = async (entity) => {
     try {
         const comment = models.product_comments.build({
             idComment: null,
@@ -64,13 +66,8 @@ const addComment = async (entity) => {
             idProduct: entity.idProduct,
         })
         await comment.save();
+		return comment;
     } catch (err) {
         console.log('err:', err);
     }
-};
-
-module.exports = {
-    getDetailComments,
-    getDetailsCommentsCount,
-    addComment,
 };

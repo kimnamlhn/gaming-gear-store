@@ -1,5 +1,4 @@
 const productService = require('./productService');
-const commentService = require('../comment/commentService');
 
 exports.list = async (req,res) => {
     try {
@@ -46,17 +45,19 @@ exports.details = async (req, res) => {
         const product = await productService.getDetails(id);
         const relatedProducts = await productService.getDetailRelatedProducts(product.idProduct, product.category);
         const image = await productService.getDetailImages(id);
-        ({count,rows:comments} = await commentService.getDetailComments(id));
-        ({result: numRatings, ratingAvg} = await commentService.getDetailsCommentsCount(id,count));
+        // ({count,rows:comments} = await commentService.getDetailComments(id));
+        // ({result: numRatings, ratingAvg} = await commentService.getDetailsCommentsCount(id,count));
+
         res.render('store/productDetails', { title: `${product.name} | Electro`, 
         product,
         image,
         relatedProducts,
-        count,
-        comments,
-        numRatings,
-        ratingAvg,
+        // count,
+        // comments,
+        // numRatings,
+        // ratingAvg,
     });
+
     } catch (error) {
         res.render('error',{error});
     }
