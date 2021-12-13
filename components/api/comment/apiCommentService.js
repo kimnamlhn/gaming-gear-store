@@ -2,10 +2,10 @@ const { models } = require('../../../models');
 const sequelize = require('sequelize');
 const moment = require('moment');
 
-exports.getComments = (id, page = 0) => {
+exports.getComments = (id, page = 0, itemsPerPage) => {
 	return models.product_comments.findAndCountAll({
-		offset: page * 3,
-		limit: 3,
+		offset: page * itemsPerPage,
+		limit: itemsPerPage,
 		attributes: [
 			'name',
 			'content',

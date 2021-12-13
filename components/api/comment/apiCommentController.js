@@ -26,11 +26,17 @@ exports.addComment = async (req,res) => {
 }
 
 exports.getComments = async (req,res) => {
-    const idProduct = req.params.productID
+    const idProduct = req.params.productID;
+    const page = parseInt(req.query.page);
+    const itemsPerPage = 3;
     try {
-        const comments = await apiCommentService.getComments(idProduct);
+        const comments = await apiCommentService.getComments(idProduct,page,itemsPerPage);
         const commentsCount = await apiCommentService.getCommentsCount(idProduct,comments.count);
-        const obj = {comments,commentsCount};
+        const obj = {
+            comments,
+            commentsCount
+        };
+        obj.limit = itemsPerPage;
         res.status(201).json(obj);
     } catch (error) {
         res.status(500).json({
