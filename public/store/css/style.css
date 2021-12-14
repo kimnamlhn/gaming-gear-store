@@ -1771,7 +1771,7 @@ textarea.input {
 }
 
 .rating-avg .rating-stars > i.fa-star,
-.rating .rating-stars > i.fa-star {
+.rating .rating-stars > i.fa-star, .star-red {
 	color: #d10024;
 }
 
@@ -1861,6 +1861,7 @@ textarea.input {
 	border: 1px solid #e4e7ed;
 	-webkit-transition: 0.2s all;
 	transition: 0.2s all;
+	cursor: pointer;
 }
 
 .reviews-pagination li:hover {

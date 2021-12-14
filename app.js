@@ -19,6 +19,7 @@ const app = express();
 const storeIndexRouter = require('./components/index/index');
 const storeProductsRouter = require('./components/products/productRouter');
 const accountRouter = require('./components/account/accountRouter');
+const apiCommentRouter = require('./components/api/comment/apiCommentRouter');
 // Database
 const db = require('./models');
 app.use(express.json());
@@ -61,12 +62,14 @@ app.use(function (req, res, next) {
 	res.locals.user = req.user;
 	next();
 });
-// Routes
+
 app.use(sessionHandler);
 app.use(_logger);
+// Routes
 app.use('/', storeIndexRouter);
 app.use('/products', storeProductsRouter);
 app.use('/account', accountRouter);
+app.use('/api/comment', apiCommentRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

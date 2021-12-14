@@ -132,7 +132,7 @@
                     <!-- product tab nav -->
                     <ul class="tab-nav">
                         <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Reviews ({{count}})</a></li>
+                        <li><a data-toggle="tab" href="#tab2" id="rating-tab-count"></a></li>
                     </ul>
                     <!-- /product tab nav -->
 
@@ -158,9 +158,8 @@
                                 <div class="col-md-3">
                                     <div id="rating">
                                         <div class="rating-avg">
-                                            <span>{{ratingAvg}}</span>
-                                            <div class="rating-stars">
-                                                {{{rating_star ratingAvg}}}
+                                            <span id="rating-avg-number"></span>
+                                            <div id="rating-avg-stars" class="rating-stars">
                                             </div>
                                         </div>
                                         <ul class="rating">
@@ -172,7 +171,7 @@
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                 </div>
-                                                {{{rating_count numRatings 5 count}}}
+                                                <span class="rating-count"></span>
                                             </li>
                                             <li>
                                                 <div class="rating-stars">
@@ -182,7 +181,7 @@
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star-o"></i>
                                                 </div>
-                                                {{{rating_count numRatings 4 count}}}
+                                                <span class="rating-count"></span>
                                             </li>
                                             <li>
                                                 <div class="rating-stars">
@@ -192,7 +191,7 @@
                                                     <i class="fa fa-star-o"></i>
                                                     <i class="fa fa-star-o"></i>
                                                 </div>
-                                                {{{rating_count numRatings 3 count}}}
+                                                <span class="rating-count"></span>
                                             </li>
                                             <li>
                                                 <div class="rating-stars">
@@ -202,7 +201,7 @@
                                                     <i class="fa fa-star-o"></i>
                                                     <i class="fa fa-star-o"></i>
                                                 </div>
-                                                {{{rating_count numRatings 2 count}}}
+                                                <span class="rating-count"></span>
                                             </li>
                                             <li>
                                                 <div class="rating-stars">
@@ -212,7 +211,7 @@
                                                     <i class="fa fa-star-o"></i>
                                                     <i class="fa fa-star-o"></i>
                                                 </div>
-                                                {{{rating_count numRatings 1 count}}}
+                                                <span class="rating-count"></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -223,33 +222,9 @@
                                 <div class="col-md-6">
                                     <div id="reviews">
                                         <ul class="reviews">
-                                            {{#each comments}}
-                                            <li>
-                                                <div class="review-heading">
-                                                    <h5 class="name">
-                                                        {{#if name}}
-                                                        {{name}}
-                                                        {{else}}
-                                                        {{'idAccount_account.name'}}
-                                                        {{/if}}
-                                                        </h5>
-                                                    <p class="date">{{creationAt}}</p>
-                                                    <div class="review-rating">
-                                                        {{{rating_star rating}}}
-                                                    </div>
-                                                </div>
-                                                <div class="review-body">
-                                                    <p>{{content}}</p>
-                                                </div>
-                                            </li>
-                                            {{/each}}
+
                                         </ul>
                                         <ul class="reviews-pagination">
-                                            <li class="active">1</li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -258,9 +233,10 @@
                                 <!-- Review Form -->
                                 <div class="col-md-3">
                                     <div id="review-form">
-                                        <form class="review-form" method="post" action="/products/{{product.idProduct}}/submitcomment">
+                                        <form class="review-form" method="post">
+                                            <input type="hidden" name="idProduct" value="{{product.idProduct}}">
                                             {{#if user}}
-                                            <input class="input" type="text" name="review_name" placeholder="Your Name" value="{{user.name}}" readonly>
+                                            <input class="input" type="text" name="review_name" placeholder="Your Name" value="{{user.name}}"readonly>
                                             {{else}}
                                             <input class="input" type="text" name="review_name" placeholder="Your Name">
                                             {{/if}}
@@ -272,10 +248,11 @@
                                                     <input id="star4" name="review_rating" value="4" type="radio"><label for="star4"></label>
                                                     <input id="star3" name="review_rating" value="3" type="radio"><label for="star3"></label>
                                                     <input id="star2" name="review_rating" value="2" type="radio"><label for="star2"></label>
-                                                    <input id="star1" name="review_rating" value="1" type="radio"><label for="star1"></label>
+                                                    <input id="star1" name="review_rating" value="1" type="radio" checked><label for="star1"></label>
                                                 </div>
                                             </div>
-                                            <button class="primary-btn" type="submit">Submit</button>
+                                            <p id="warning-message" style="color:red;"></p>
+                                            <button class="primary-btn" type="submit" id="submit-comment">Submit</button>
                                         </form>
                                     </div>
                                 </div>
@@ -351,3 +328,84 @@
     <!-- /container -->
 </div>
 <!-- /Section -->
+{{#section "fetch"}}
+<script src="/store/js/helper.js"></script>
+<script>
+    const idProduct = $('input[name=idProduct]').val();
+    const getComments = async (page) => {
+        try {
+            const res = await fetch(`/api/comment/${idProduct}?page=${page}`)
+            if(!res.ok) {
+                const message = "Error with status code: " + res.status;
+                throw new Error(message);
+            }
+            res.json().then(api => {
+                //console.log(api);
+                $('#rating-tab-count').text(`Reviews (${api.comments.count})`)
+                $('#rating-avg-number').text(api.commentsCount.ratingAvg);
+                $('#rating-avg-stars').html(rating_star(api.commentsCount.ratingAvg));
+                $('.rating-count').each(function(i, el){
+                    $(this).html(rating_count(api.commentsCount.countPerRating,5-i,api.comments.count))
+                });
+                $('.reviews').empty();
+                if(!api.comments.count) $('.reviews').html('<div class="text-center"><p>No comment for this product.</p><p>Be the first one now!</p></div>')
+                for(let e of api.comments.rows)
+                    $('.reviews').append(`
+                    <li>
+                        <div class="review-heading">
+                            <h5 class="name">
+                                ${e.name}
+                            </h5>
+                            <p class="date">${e.creationAt}</p>
+                            <div class="review-rating">
+                                ${rating_star(e.rating)}
+                            </div>
+                        </div>
+                        <div class="review-body">
+                            <p>${e.content}</p>
+                        </div>
+                    </li>
+                    `);
+                const count = Math.ceil(api.comments.count/api.limit);
+                $('.reviews-pagination').html(paginationComment(page,count))
+                
+            })
+    } catch (error) {
+        console.log(error);
+    }
+    };
+    getComments(0);
+    const submit_comment = document.getElementById("submit-comment");
+    submit_comment.addEventListener("click", async function(e) {
+        e.preventDefault();  
+        const commentData = {
+        review_name: $('input[name=review_name]').val(),
+        review_content: $('textarea[name=review_content]').val(),
+        review_rating: $("input[name=review_rating]:checked").val()
+        }
+        try {
+            const res = await fetch(`/api/comment/submit/${idProduct}`, {
+                method: "post",
+                headers: {
+                "Content-Type": "application/json"
+                },
+                body: JSON.stringify(commentData)
+            });
+            if(!res.ok) {
+                const message = "Error with status code: " + res.status;
+                res.json().then(message => document.querySelector('#warning-message').textContent = message.message);
+                throw new Error(message);
+            }
+            getComments(0);
+            if(!$('input[name=review_name]').attr('readonly'))
+                $('input[name=review_name]').val('');
+            $('textarea[name=review_content]').val('');
+            $("input[name=review_rating]:checked").prop('checked', false);
+            $("input[id=star1]").prop('checked', true);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+</script>
+{{/section}}
