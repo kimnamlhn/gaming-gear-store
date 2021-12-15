@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('store/index', { title: 'Index | Electro' });
+router.get('/', function (req, res, next) {
+	res.render('store/index', { title: 'Index | Electro' });
 });
 
 module.exports = router;

@@ -5,12 +5,15 @@ const accountController = require('./accountController');
 
 // Login
 router.get('/login', accountController.login);
-router.post('/login', passport.authenticate('local', {
-	successRedirect: '/',
-	failureRedirect: '/account/login',
-	badRequestMessage: 'Please fill all the missing fields.',
-	failureFlash: true,
-}));
+router.post(
+	'/login',
+	passport.authenticate('local', {
+		successRedirect: '/',
+		failureRedirect: '/account/login',
+		badRequestMessage: 'Please fill all the missing fields.',
+		failureFlash: true,
+	})
+);
 //Register
 router.get('/register', accountController.register);
 router.post('/register', accountController.createAccount);
@@ -23,7 +26,7 @@ router.post('/reset-password', accountController.resetPasswordPost);
 router.get('/logout', function (req, res) {
 	req.logout();
 	res.redirect('/');
-})
+});
 // Account Pages
 router.get('/', accountController.userIndex);
 router.get('/admin', accountController.adminIndex);
@@ -42,17 +45,14 @@ router.post('/admin/products/edit/:productID', accountController.editProductPost
 
 router.get('/admin/products/add/:productID', (req, res) => {
 	const id = Number(req.params.productID);
-	if(!req.user || !req.user.role) res.redirect('/');
+	if (!req.user || !req.user.role) res.redirect('/');
 	res.render('account/admin/upload', {
-		layout: 'admin/account',
+		layout: 'account',
 		title: 'Upload',
 		id,
 	});
 }); // Upload images
 
-router.post(
-	'/admin/products/add/:productID',
-	accountController.uploadImagePost
-); // Upload images POST
+router.post('/admin/products/add/:productID', accountController.uploadImagePost); // Upload images POST
 
 module.exports = router;

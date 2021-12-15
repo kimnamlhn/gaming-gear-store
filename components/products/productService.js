@@ -7,62 +7,19 @@ const path = require('path');
 const fs = require('fs');
 
 // Product List Page
-exports.pageValidation = (page) => {
-	page = isNaN(page) ? 0 : Number(page);
-	page = page >= 0 ? page : 0;
-	return page;
-};
-
 exports.getProductCount = () => {
 	return models.product.count();
 };
 
-exports.getAllProducts = (categoryId, page = 0, itemsPerPage = 9) => {
-	let where = {};
-	if (!isNaN(categoryId)) {
-		// where = { category: categoryId };
-		where.category = categoryId;
-
-	}
-	
-	return models.product.findAndCountAll({
-		raw: true,
-		where,
-		attributes: ['idProduct', 'name', 'brand', 'price', 'thumbnail'],
-		include: [
-			{
-				model: models.category,
-				attributes: ['nameCategory'],
-				as: 'category_category',
-			},
-			{
-				model: models.product_comments,
-				attributes: [
-					[sequelize.fn('AVG', sequelize.col('rating')), 'AvgRating'],
-				],
-				as: 'product_comments',
-			},
-		],
-		distinct: true,
-		group: ['idProduct'],
-		limit: itemsPerPage,
-		offset: page * itemsPerPage,
-		subQuery: false,
-	});
-};
-
-exports.getProductBrandsCount = () => {
+exports.getProductBrands = () => {
 	return models.product.findAll({
-		attributes: [
-			'brand',
-			[sequelize.fn('COUNT', sequelize.col('brand')), 'numProducts'],
-		],
+		attributes: ['brand'],
 		group: ['brand'],
 		raw: true,
 	});
 };
 
-exports.getProductCategoriesCount = () => {
+exports.getProductCategories = () => {
 	return models.product.findAll({
 		include: [
 			{
@@ -71,10 +28,7 @@ exports.getProductCategoriesCount = () => {
 				as: 'category_category',
 			},
 		],
-		attributes: [
-			'category',
-			[sequelize.fn('COUNT', sequelize.col('category')), 'numProducts'],
-		],
+		attributes: ['category'],
 		group: ['category'],
 		raw: true,
 	});
@@ -92,9 +46,7 @@ exports.getProductSortByRating = () => {
 			},
 			{
 				model: models.product_comments,
-				attributes: [
-					[sequelize.fn('AVG', sequelize.col('rating')), 'AvgRating'],
-				],
+				attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'AvgRating']],
 				as: 'product_comments',
 			},
 		],
@@ -164,11 +116,9 @@ exports.getAllProductsAdmin = () => {
 };
 
 exports.deleteProductComment = async (id) => {
-	models.product_comments
-		.destroy({ where: { idProduct: id } })
-		.then(function () {
-			console.log('Deleted');
-		});
+	models.product_comments.destroy({ where: { idProduct: id } }).then(function () {
+		console.log('Deleted');
+	});
 };
 
 exports.deleteProductImage = async (id) => {
@@ -183,23 +133,17 @@ exports.deleteProductImage = async (id) => {
 		where: { idProduct: id },
 	});
 	fs.unlink(
-		path.join(
-			__dirname,
-			`../../public/store/img/${thumbnail_url.thumbnail}`
-		),
+		path.join(__dirname, `../../public/store/img/${thumbnail_url.thumbnail}`),
 		function (err) {
 			if (err) console.log(err);
 			console.log('Deleted ', thumbnail_url.thumbnail);
 		}
 	);
 	for (let e of imageurls) {
-		fs.unlink(
-			path.join(__dirname, `../../public/store/img/${e.imageurl}`),
-			function (err) {
-				if (err) console.log(err);
-				console.log('Deleted ', e.imageurl);
-			}
-		);
+		fs.unlink(path.join(__dirname, `../../public/store/img/${e.imageurl}`), function (err) {
+			if (err) console.log(err);
+			console.log('Deleted ', e.imageurl);
+		});
 	}
 
 	models.product_images.destroy({ where: { product: id } }).then(function () {

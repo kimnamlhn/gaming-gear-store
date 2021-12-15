@@ -7,30 +7,30 @@ exports.login = async (req, res) => {
 			res.render('account/login', {
 				layout: 'auth',
 				title: 'Login',
-				error : req.flash('error')
+				error: req.flash('error'),
 			});
-		else res.redirect('/')
+		else res.redirect('/');
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
 
 exports.register = async (req, res) => {
 	try {
-		if(req.user) res.redirect('/')
+		if (req.user) res.redirect('/');
 		else
 			res.render('account/register', {
 				layout: 'auth',
-				title: 'Register'
+				title: 'Register',
 			});
 	} catch (error) {
-		res.render('error', {error});
+		res.render('error', { error });
 	}
 };
 
-exports.createAccount = async(req,res) => {
+exports.createAccount = async (req, res) => {
 	try {
 		const entity = {
 			email: req.body.user_email,
@@ -40,15 +40,14 @@ exports.createAccount = async(req,res) => {
 			phone: req.body.user_phone,
 			address: req.body.user_address,
 			role: 0,
-		}
-		const {error,user} = await accountService.createAccount(entity);
-		if(user)
-			req.login(user, function(err) {
+		};
+		const { error, user } = await accountService.createAccount(entity);
+		if (user)
+			req.login(user, function (err) {
 				if (!err) {
-					res.redirect('/')
-				}
-				else console.log(err)
-			})
+					res.redirect('/');
+				} else console.log(err);
+			});
 		res.render('account/register', {
 			layout: 'auth',
 			title: 'Register',
@@ -56,24 +55,23 @@ exports.createAccount = async(req,res) => {
 			name: req.body.user_name,
 			phone: req.body.user_phone,
 			address: req.body.user_address,
-			error
+			error,
 		});
-
 	} catch (err) {
-		res.render('error', {err});
+		res.render('error', { err });
 	}
-}
+};
 
 exports.forgotPassword = async (req, res) => {
 	try {
-		if(req.user) res.redirect('/');
+		if (req.user) res.redirect('/');
 		res.render('account/forgot-password', {
 			layout: 'auth',
 			title: 'Forgot Password',
 		});
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
@@ -84,12 +82,12 @@ exports.forgotPasswordPost = async (req, res) => {
 		res.render('account/forgot-password', {
 			layout: 'auth',
 			title: 'Forgot Password',
-			message
+			message,
 		});
 	} catch (error) {
-		res.render('error',{error});
+		res.render('error', { error });
 	}
-}
+};
 
 exports.resetPassword = async (req, res) => {
 	try {
@@ -98,34 +96,34 @@ exports.resetPassword = async (req, res) => {
 		res.render('account/reset-password', {
 			layout: 'auth',
 			title: 'Reset Password',
-			valid
+			valid,
 		});
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
-}
+};
 
 exports.resetPasswordPost = async (req, res) => {
 	try {
 		const entity = {
 			token: req.query.token,
 			password: req.body.user_password,
-			cfm_password: req.body.user_cfm_password
-		}
-		const {valid,done,message} = await accountService.resetPassword(entity);
+			cfm_password: req.body.user_cfm_password,
+		};
+		const { valid, done, message } = await accountService.resetPassword(entity);
 		res.render('account/reset-password', {
 			layout: 'auth',
 			title: 'Reset Password',
 			valid,
 			done,
-			message
+			message,
 		});
 	} catch (error) {
-		res.render('error', {error});
+		res.render('error', { error });
 	}
-}
+};
 
 exports.userIndex = async (req, res) => {
 	try {
@@ -134,57 +132,57 @@ exports.userIndex = async (req, res) => {
 		res.render('account/profile', {
 			layout: 'account',
 			title: 'Main',
-			profile
+			profile,
 		});
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
 
 exports.adminIndex = async (req, res) => {
 	try {
-		if(!req.user || !req.user.role) res.redirect('/');
+		if (!req.user || !req.user.role) res.redirect('/');
 		const profile = await accountService.getProfile(req.user.idAccount);
 		res.render('account/profile', {
 			layout: 'account',
 			title: 'Main',
-			profile
+			profile,
 		});
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
 
 exports.accountListAdmin = async (req, res) => {
 	try {
-		if(!req.user || !req.user.role) res.redirect('/');
-		let {count,rows:accounts} = await accountService.listAccounts(1)
+		if (!req.user || !req.user.role) res.redirect('/');
+		let { count, rows: accounts } = await accountService.listAccounts(1);
 		res.render('account/admin/accountList', {
 			layout: 'account',
 			title: 'Admin Account List',
 			list: 'admin',
-			accounts
-		})
+			accounts,
+		});
 	} catch (error) {
-		res.render('error', {error});
+		res.render('error', { error });
 	}
-}
+};
 
 exports.addAdminAccount = async (req, res) => {
 	try {
-		if(!req.user || !req.user.role) res.redirect('/');
+		if (!req.user || !req.user.role) res.redirect('/');
 		res.render('account/admin/addAccount', {
 			layout: 'account',
 			title: 'Add an Admin Account',
-		})
+		});
 	} catch (error) {
-		res.render('error', {error});
+		res.render('error', { error });
 	}
-}
+};
 
 exports.addAdminAccountPost = async (req, res) => {
 	try {
@@ -196,10 +194,9 @@ exports.addAdminAccountPost = async (req, res) => {
 			phone: req.body.user_phone,
 			address: req.body.user_address,
 			role: 1,
-		}
-		const {error,user} = await accountService.createAccount(entity);
-		if(user)
-			res.redirect('/account/admin/admin-acc')
+		};
+		const { error, user } = await accountService.createAccount(entity);
+		if (user) res.redirect('/account/admin/admin-acc');
 		res.render('account/admin/addAccount', {
 			layout: 'account',
 			title: 'Add an Admin Account',
@@ -207,31 +204,31 @@ exports.addAdminAccountPost = async (req, res) => {
 			name: req.body.user_name,
 			phone: req.body.user_phone,
 			address: req.body.user_address,
-			error
+			error,
 		});
 	} catch (err) {
-		res.render('error', {err});
+		res.render('error', { err });
 	}
-}
+};
 
 exports.accountListUser = async (req, res) => {
 	try {
-		if(!req.user || !req.user.role) res.redirect('/');
-		let {count,rows:accounts} = await accountService.listAccounts(0)
+		if (!req.user || !req.user.role) res.redirect('/');
+		let { count, rows: accounts } = await accountService.listAccounts(0);
 		res.render('account/admin/accountList', {
 			layout: 'account',
 			title: 'User Account List',
 			list: 'user',
-			accounts
-		})
+			accounts,
+		});
 	} catch (error) {
-		res.render('error', {error});
+		res.render('error', { error });
 	}
-}
+};
 
 exports.list = async (req, res) => {
 	try {
-		if(!req.user || !req.user.role) res.redirect('/');
+		if (!req.user || !req.user.role) res.redirect('/');
 		const products = await productService.getAllProductsAdmin();
 		res.render('account/admin/productList', {
 			layout: 'account',
@@ -240,21 +237,21 @@ exports.list = async (req, res) => {
 		});
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
 
 exports.addProduct = async (req, res) => {
 	try {
-		if(!req.user || !req.user.role) res.redirect('/');
+		if (!req.user || !req.user.role) res.redirect('/');
 		res.render('account/admin/addProduct', {
 			layout: 'account',
 			title: 'Add a product',
 		});
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
@@ -268,7 +265,7 @@ exports.deleteProduct = async (req, res) => {
 		res.redirect(req.headers.referer);
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
@@ -297,7 +294,7 @@ exports.addProductPost = async (req, res) => {
 		res.redirect(`/account/admin/products/add/${id}`);
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
@@ -321,14 +318,14 @@ exports.editProductPost = async (req, res) => {
 		res.redirect(req.headers.referer);
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
 
 exports.getEditProductPage = async (req, res) => {
 	try {
-		if(!req.user || !req.user.role) res.redirect('/');
+		if (!req.user || !req.user.role) res.redirect('/');
 		const id = Number(req.params.productID);
 		const product = await productService.getDetails(id);
 		const image = await productService.getDetailImages(id);
@@ -341,7 +338,7 @@ exports.getEditProductPage = async (req, res) => {
 		});
 	} catch (error) {
 		res.render('error', {
-			error
+			error,
 		});
 	}
 };
