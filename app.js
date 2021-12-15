@@ -20,6 +20,7 @@ const storeIndexRouter = require('./components/index/index');
 const storeProductsRouter = require('./components/products/productRouter');
 const accountRouter = require('./components/account/accountRouter');
 const apiCommentRouter = require('./components/api/comment/apiCommentRouter');
+const apiProductRouter = require('./components/api/product/apiProductRouter');
 // Database
 const db = require('./models');
 app.use(express.json());
@@ -69,7 +70,8 @@ app.use(_logger);
 app.use('/', storeIndexRouter);
 app.use('/products', storeProductsRouter);
 app.use('/account', accountRouter);
-app.use('/api/comment', apiCommentRouter)
+app.use('/api/comment', apiCommentRouter);
+app.use('/api/product', apiProductRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
