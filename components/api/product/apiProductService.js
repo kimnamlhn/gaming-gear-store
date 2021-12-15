@@ -1,9 +1,10 @@
 const { models } = require('../../../models');
 const sequelize = require('sequelize');
 
-exports.getProducts = async (filter) => {
+exports.getProducts = async (filter, _order) => {
 	let where = {};
 	let having = {};
+	let order = [];
     if (isNaN(filter.page)) {
         filter.page = 0;
     }
@@ -29,12 +30,25 @@ exports.getProducts = async (filter) => {
 	if(!isNaN(filter.priceMin)&&!isNaN(filter.priceMax)) {
 		where.price = {[sequelize.Op.between]: [filter.priceMin,filter.priceMax]}
 	}
+	if(_order===1)
+		order.push(sequelize.literal('max(price) DESC'))
+	if(_order===2)
+		order.push(sequelize.literal('min(price) ASC'))
+	if(_order===3)
+		order.push(sequelize.literal('`product_comments.AvgRating` DESC'))
+	if(_order===4)
+		order.push(sequelize.literal('`product_comments.AvgRating` ASC'))
+	if(_order===5)
+		order.push(sequelize.literal('max(creationDate) DESC'))
+	if(_order===6)
+		order.push(sequelize.literal('min(creationDate) ASC'))
     let {count,rows} = await models.product.findAndCountAll({
 		limit: filter.limit,
 		offset: filter.page * filter.limit,
 		raw: true,
 		where,
-		attributes: ['idProduct', 'name', 'brand', 'price', 'thumbnail',[sequelize.fn('AVG', sequelize.col('product_comments.rating')), 'test']],
+		order,
+		attributes: ['idProduct', 'name', 'brand', 'price', 'thumbnail'],
 		include: [
 			{
 				model: models.category,

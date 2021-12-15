@@ -11,7 +11,9 @@ exports.getProducts = async (req,res) => {
             priceMax: parseInt(req.query.pricemax),
             limit: parseInt(req.query.limit)
         }
-        const products = await apiProductService.getProducts(filter);
+        // 1: Price down, 2: Price up, 3: Rating down:, 4: Rating up, 5: Date down, 6: Date up
+        const order = parseInt(req.query.sorting);
+        const products = await apiProductService.getProducts(filter, order);
         products.limit = filter.limit;
         res.status(201).json(products);
         
