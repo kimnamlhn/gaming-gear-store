@@ -10,14 +10,7 @@ exports.getComments = (id, page = 0, itemsPerPage) => {
 			'name',
 			'content',
 			'rating',
-			[
-				sequelize.fn(
-					'date_format',
-					sequelize.col('creationAt'),
-					'%d %b %Y'
-				),
-				'creationAt',
-			],
+			[sequelize.fn('date_format', sequelize.col('creationAt'), '%d %b %Y'), 'creationAt'],
 		],
 		include: [
 			{
@@ -30,7 +23,7 @@ exports.getComments = (id, page = 0, itemsPerPage) => {
 			idProduct: id,
 		},
 		raw: true,
-		order: [['creationAt', 'DESC']]
+		order: [['creationAt', 'DESC']],
 	});
 };
 
@@ -39,35 +32,32 @@ exports.getCommentsCount = async (id, count) => {
 		where: {
 			idProduct: id,
 		},
-		attributes: [
-			'rating',
-			[sequelize.fn('COUNT', sequelize.col('rating')), 'ratingcount'],
-		],
+		attributes: ['rating', [sequelize.fn('COUNT', sequelize.col('rating')), 'ratingcount']],
 		group: ['rating'],
 		raw: true,
 	});
 	let ratingAvg = 0;
 	for (let e of countPerRating) ratingAvg += e.rating * e.ratingcount;
 	ratingAvg /= count;
-    if(isNaN(ratingAvg)) ratingAvg = 0;
-	ratingAvg = +(ratingAvg).toFixed(2);
+	if (isNaN(ratingAvg)) ratingAvg = 0;
+	ratingAvg = +ratingAvg.toFixed(2);
 	return { countPerRating, ratingAvg };
 };
 
 exports.addComment = async (entity) => {
-    try {
-        const comment = models.product_comments.build({
-            idComment: null,
-            name: entity.name,
-            rating: entity.rating,
-            content: entity.content,
-            creationAt: moment(),
-            idAccount: entity.idAccount,
-            idProduct: entity.idProduct,
-        })
-        await comment.save();
+	try {
+		const comment = models.product_comments.build({
+			idComment: null,
+			name: entity.name,
+			rating: entity.rating,
+			content: entity.content,
+			creationAt: moment(),
+			idAccount: entity.idAccount,
+			idProduct: entity.idProduct,
+		});
+		await comment.save();
 		return comment;
-    } catch (err) {
-        console.log('err:', err);
-    }
+	} catch (err) {
+		console.log('err:', err);
+	}
 };

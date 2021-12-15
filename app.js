@@ -11,8 +11,8 @@ const exphbs = require('express-handlebars');
 const helpers = require('./views/helpers/index');
 const session = require('express-session');
 const passport = require('./components/middlewares/passport');
-const sessionHandler = require('./components/middlewares/sessionHandler')
-const _logger = require('./components/middlewares/logger')
+const sessionHandler = require('./components/middlewares/sessionHandler');
+const _logger = require('./components/middlewares/logger');
 const app = express();
 
 // Router
@@ -56,7 +56,9 @@ app.use(express.static(path.join(__dirname, 'components')));
 app.use(flash());
 // Authentication
 
-app.use(session({ cookie:{maxAge:100*60*60*24*365},secret: process.env.SESSION_SECRET }));
+app.use(
+	session({ cookie: { maxAge: 100 * 60 * 60 * 24 * 365 }, secret: process.env.SESSION_SECRET })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 

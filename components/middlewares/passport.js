@@ -11,8 +11,8 @@ passport.use(
 			passwordField: 'user_password',
 		},
 		async function (username, password, done) {
-			if(!validator.isEmail(username))
-				return done(null,false,{message: 'Please enter a valid email address.'})
+			if (!validator.isEmail(username))
+				return done(null, false, { message: 'Please enter a valid email address.' });
 			const account = await models.account.findOne({
 				where: { email: username },
 			});
@@ -23,9 +23,9 @@ passport.use(
 					});
 				}
 				if (account.locked) {
-					return done(null, false, {message: 'This account is locked.'})
+					return done(null, false, { message: 'This account is locked.' });
 				}
-				if (!bcrypt.compareSync(password,account.password)) {
+				if (!bcrypt.compareSync(password, account.password)) {
 					return done(null, false, {
 						message: 'Incorrect password.',
 					});
@@ -47,7 +47,6 @@ passport.deserializeUser(function (user, done) {
 });
 
 function validPassword(user, password) {
-
 	return user.password === password;
 }
 
