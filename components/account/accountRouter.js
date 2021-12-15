@@ -44,7 +44,7 @@ router.get('/admin/products/add/:productID', (req, res) => {
 	const id = Number(req.params.productID);
 	if(!req.user || !req.user.role) res.redirect('/');
 	res.render('account/admin/upload', {
-		layout: 'admin/account',
+		layout: 'account',
 		title: 'Upload',
 		id,
 	});
