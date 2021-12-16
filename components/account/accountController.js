@@ -157,6 +157,34 @@ exports.adminIndex = async (req, res) => {
 	}
 };
 
+exports.profileUpdate = async (req, res) => {
+	try {
+		if (req.body.changing === 'info') {
+			const entity = {
+				idAccount: req.user.idAccount,
+				email: req.body.user_email,
+				name: req.body.user_name,
+				phone: req.body.user_phone,
+				address: req.body.user_address,
+			};
+			const message = await accountService.updateProfileInfo(entity);
+			const profile = await accountService.getProfile(req.user.idAccount);
+			req.user.name = profile.name;
+			res.render('account/profile', {
+				layout: 'account',
+				title: 'Main',
+				profile,
+				message,
+			});
+		}
+		if (req.body.changing === 'password') {
+			console.log('changing password');
+		}
+	} catch (error) {
+		res.render('error', { error });
+	}
+};
+
 exports.accountListAdmin = async (req, res) => {
 	try {
 		if (!req.user || !req.user.role) res.redirect('/');
@@ -285,8 +313,8 @@ exports.addProductPost = async (req, res) => {
 			brand: req.body.product_brand,
 			stock: req.body.product_stock,
 			price: req.body.product_price,
-			thumbnail: req.body.product_thumbnail,
-			images: req.body.product_images,
+			// thumbnail: req.body.product_thumbnail,
+			// images: req.body.product_images,
 			generalInfo: req.body.product_generalinfo,
 			detailedDescription: req.body.product_detailed_desciption,
 		};

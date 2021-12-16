@@ -1,6 +1,6 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
-25/47 (Trừ các chức năng nâng cao)
+28/47 (Trừ các chức năng nâng cao)
 
 ### Tổng quát
 
@@ -41,8 +41,8 @@
 
 ### Chức năng khi đã đăng nhập
 
-⬜ Cập nhật thông tin cá nhân của tài khoản  
-⬜ Kiểm tra các ràng buộc  
+✅ Cập nhật thông tin cá nhân của tài khoản  
+✅ Kiểm tra các ràng buộc  
 ⬜ Yêu cầu nhập lại mật khẩu cũ khi thay đổi mật khẩu  
 ⬜ Đặt hàng siêu thị và thanh toán  
 ⬜ Điền các thông tin về giao hàng  
@@ -50,7 +50,7 @@
 
 ### Chức năng của quản trị viên
 
-⬜ Thay đổi thông tin cá nhân của chính mình  
+✅ Thay đổi thông tin cá nhân của chính mình  
 ✅ Xem danh sách các tài khoản của người dùng  
 ⬜ Phân trang danh sách người dùng  
 ⬜ Xem thông tin chi tiết của người dùng  
