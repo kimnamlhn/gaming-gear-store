@@ -29,7 +29,9 @@ router.get('/logout', function (req, res) {
 });
 // Account Pages
 router.get('/', accountController.userIndex);
+router.post('/', accountController.profileUpdate);
 router.get('/admin', accountController.adminIndex);
+router.post('/admin', accountController.profileUpdate);
 
 router.get('/admin/admin-acc', accountController.accountListAdmin); // Admin Account List
 router.get('/admin/admin-acc/add', accountController.addAdminAccount); // Add admin account

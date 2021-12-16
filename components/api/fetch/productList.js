@@ -1,10 +1,11 @@
 const urlSearchParams = new URLSearchParams(window.location.search);
-const getProducts = async (page) => {
+const getProducts = async (page, search) => {
 	try {
 		const params = Object.fromEntries(urlSearchParams.entries()); // Get filter from Search Params
 		params.page = page;
+		if (search) params.search = search;
 		const res = await fetch(
-			`/api/product/?sorting=${params.sorting}&limit=${params.limit}&page=${params.page}&category=${params.category}&brand=${params.brand}&rating=${params.rating}&pricemin=${params.pricemin}&pricemax=${params.pricemax}`
+			`/api/product/?sorting=${params.sorting}&limit=${params.limit}&page=${params.page}&category=${params.category}&brand=${params.brand}&rating=${params.rating}&pricemin=${params.pricemin}&pricemax=${params.pricemax}&search=${params.search}`
 		);
 		if (!res.ok) {
 			const message = 'Error with status code: ' + res.status;
@@ -70,6 +71,18 @@ const getProducts = async (page) => {
 	}
 };
 getProducts(0);
+
+const queryManagement = (params) => {
+	var newurl =
+		window.location.protocol +
+		'//' +
+		window.location.host +
+		window.location.pathname +
+		'?' +
+		params;
+	window.history.pushState({ path: newurl }, '', newurl);
+};
+
 const reset_button = document.querySelector('#reset-btn');
 reset_button.addEventListener('click', function (e) {
 	urlSearchParams.delete('sorting');
@@ -80,6 +93,7 @@ reset_button.addEventListener('click', function (e) {
 	urlSearchParams.delete('page');
 	urlSearchParams.delete('pricemin');
 	urlSearchParams.delete('pricemax');
+	urlSearchParams.delete('search');
 	var newurl =
 		window.location.protocol +
 		'//' +
@@ -96,32 +110,31 @@ reset_button.addEventListener('click', function (e) {
 	$('#show-limit').val(12);
 	getProducts(0);
 });
+
+const search_filter = document.querySelector('#search');
+const params = Object.fromEntries(urlSearchParams.entries());
+if (params.search) search_filter.value = params.search;
+search_filter.addEventListener('keypress', function (e) {
+	urlSearchParams.set('search', search_filter.value);
+	urlSearchParams.delete('page');
+	queryManagement(urlSearchParams);
+	if (e.keyCode === 13) {
+		getProducts(0, search_filter.value);
+	}
+});
+
 const sort_method = document.querySelector('#sort-method');
 sort_method.addEventListener('change', function (e) {
 	urlSearchParams.set('sorting', sort_method.value);
 	urlSearchParams.delete('page');
-	var newurl =
-		window.location.protocol +
-		'//' +
-		window.location.host +
-		window.location.pathname +
-		'?' +
-		urlSearchParams;
-	window.history.pushState({ path: newurl }, '', newurl);
+	queryManagement(urlSearchParams);
 	getProducts(0);
 });
 const limit_filter = document.querySelector('#show-limit');
 limit_filter.addEventListener('change', function (e) {
 	urlSearchParams.set('limit', limit_filter.value);
 	urlSearchParams.delete('page');
-	var newurl =
-		window.location.protocol +
-		'//' +
-		window.location.host +
-		window.location.pathname +
-		'?' +
-		urlSearchParams;
-	window.history.pushState({ path: newurl }, '', newurl);
+	queryManagement(urlSearchParams);
 	getProducts(0);
 });
 const category_filter = document.querySelectorAll('.category-filter');
@@ -129,14 +142,7 @@ category_filter.forEach((element) =>
 	element.addEventListener('change', function (e) {
 		urlSearchParams.set('category', element.value);
 		urlSearchParams.delete('page');
-		var newurl =
-			window.location.protocol +
-			'//' +
-			window.location.host +
-			window.location.pathname +
-			'?' +
-			urlSearchParams;
-		window.history.pushState({ path: newurl }, '', newurl);
+		queryManagement(urlSearchParams);
 		getProducts(0);
 	})
 );
@@ -145,14 +151,7 @@ brand_filter.forEach((element) =>
 	element.addEventListener('change', function (e) {
 		urlSearchParams.set('brand', element.value);
 		urlSearchParams.delete('page');
-		var newurl =
-			window.location.protocol +
-			'//' +
-			window.location.host +
-			window.location.pathname +
-			'?' +
-			urlSearchParams;
-		window.history.pushState({ path: newurl }, '', newurl);
+		queryManagement(urlSearchParams);
 		getProducts(0);
 	})
 );
@@ -161,14 +160,7 @@ rating_filter.forEach((element) =>
 	element.addEventListener('change', function (e) {
 		urlSearchParams.set('rating', element.value);
 		urlSearchParams.delete('page');
-		var newurl =
-			window.location.protocol +
-			'//' +
-			window.location.host +
-			window.location.pathname +
-			'?' +
-			urlSearchParams;
-		window.history.pushState({ path: newurl }, '', newurl);
+		queryManagement(urlSearchParams);
 		getProducts(0);
 	})
 );
@@ -176,40 +168,19 @@ const pricemin_filter = document.querySelector('#price-min');
 pricemin_filter.addEventListener('blur', function (e) {
 	urlSearchParams.set('pricemin', pricemin_filter.value);
 	urlSearchParams.delete('page');
-	var newurl =
-		window.location.protocol +
-		'//' +
-		window.location.host +
-		window.location.pathname +
-		'?' +
-		urlSearchParams;
-	window.history.pushState({ path: newurl }, '', newurl);
+	queryManagement(urlSearchParams);
 	getProducts(0);
 });
 const pricemax_filter = document.querySelector('#price-max');
 pricemax_filter.addEventListener('blur', function (e) {
 	urlSearchParams.set('pricemax', pricemax_filter.value);
 	urlSearchParams.delete('page');
-	var newurl =
-		window.location.protocol +
-		'//' +
-		window.location.host +
-		window.location.pathname +
-		'?' +
-		urlSearchParams;
-	window.history.pushState({ path: newurl }, '', newurl);
+	queryManagement(urlSearchParams);
 	getProducts(0);
 });
 const getProductsPage = (page) => {
 	$('#top-header')[0].scrollIntoView();
 	urlSearchParams.set('page', page);
-	var newurl =
-		window.location.protocol +
-		'//' +
-		window.location.host +
-		window.location.pathname +
-		'?' +
-		urlSearchParams;
-	window.history.pushState({ path: newurl }, '', newurl);
+	queryManagement(urlSearchParams);
 	getProducts(page);
 };
