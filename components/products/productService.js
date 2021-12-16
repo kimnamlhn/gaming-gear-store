@@ -34,26 +34,6 @@ exports.getProductCategories = () => {
 	});
 };
 
-exports.getProductSortByRating = () => {
-	return models.product.findAll({
-		raw: true,
-		attributes: ['idProduct', 'name', 'brand', 'price', 'thumbnail'],
-		include: [
-			{
-				model: models.category,
-				attributes: ['nameCategory'],
-				as: 'category_category',
-			},
-			{
-				model: models.product_comments,
-				attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'AvgRating']],
-				as: 'product_comments',
-			},
-		],
-		order: [[sequelize.literal('`product_comments.AvgRating`'), 'DESC']],
-		group: ['idProduct'],
-	});
-};
 // Product Details Page
 exports.getDetails = (id) => {
 	return models.product.findOne({
@@ -176,7 +156,7 @@ exports.createProduct = async (entity) => {
 			brand: entity.brand,
 			stock: entity.stock,
 			price: entity.price,
-			thumbnail: entity.thumbnail,
+			// thumbnail: entity.thumbnail,
 			// images: entity.images,
 			creationDate: moment(), //test truoc da
 		});
@@ -204,7 +184,7 @@ exports.updateProduct = async (entity) => {
 			brand: entity.brand,
 			stock: entity.stock,
 			price: entity.price,
-			thumbnail: entity.thumbnail,
+			// thumbnail: entity.thumbnail,
 			// images: entity.images,
 			generalInfo: entity.generalInfo,
 			desciption: entity.desciption,
