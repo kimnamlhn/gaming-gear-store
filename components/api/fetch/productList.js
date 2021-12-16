@@ -112,6 +112,8 @@ reset_button.addEventListener('click', function (e) {
 });
 
 const search_filter = document.querySelector('#search');
+const params = Object.fromEntries(urlSearchParams.entries());
+if (params.search) search_filter.value = params.search;
 search_filter.addEventListener('keypress', function (e) {
 	urlSearchParams.set('search', search_filter.value);
 	urlSearchParams.delete('page');

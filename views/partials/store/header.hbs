@@ -45,14 +45,9 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
-                            <input id="search-box" class="input" placeholder="Search here" autocomplete="off">
-                            <section id="search-result">
-                                <ul class="store-pagination search-pagination">
-                                    <li>asd</li>
-                                    <li>asd</li>
-                                    <li>asd</li>
-                                </ul>
+                        <form method="get" action="/products">
+                            <input id="search-box" name="search" class="input" placeholder="Search here" autocomplete="off">
+                            <section id="search-result" class="hidden">
                             </section>
                             <button class="search-btn">Search</button>
                         </form>

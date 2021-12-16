@@ -32,7 +32,7 @@ exports.searchProducts = async (req, res) => {
 			page: parseInt(req.query.page),
 		};
 		const search = req.body.data.trim();
-		if (search.length === 0) return res.status(201).json([]);
+		if (search.length === 0) return res.status(201).json({ count: 0 });
 		const products = await apiProductService.getProducts(filter, null, search);
 		products.limit = filter.limit;
 		res.status(201).json(products);

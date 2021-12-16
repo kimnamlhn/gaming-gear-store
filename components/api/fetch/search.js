@@ -3,6 +3,7 @@ const search_result = document.querySelector('#search-result');
 let result_hovered = false;
 
 search_box.addEventListener('focusin', function () {
+	search_result.classList.remove('hidden');
 	getSearchProducts();
 });
 
@@ -33,8 +34,8 @@ const getSearchProducts = async (page) => {
 		while (search_result.firstChild) {
 			search_result.removeChild(search_result.firstChild);
 		}
-		const length = result.length;
-		if (length === 0) {
+		console.log(result);
+		if (result.count === 0) {
 			const p = document.createElement('p');
 			p.appendChild(document.createTextNode('No results found.'));
 			search_result.appendChild(p);
