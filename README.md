@@ -1,5 +1,7 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
+25/47 (Trừ các chức năng nâng cao)
+
 ### Tổng quát
 
 ✅ Thiết kế CSDL  
@@ -64,7 +66,7 @@
 
 ### Các chức năng nâng cao
 
-✅ Website đã được đăng và hoạt động tốt trên host thực tế  
+✅ Website đã được đăng và hoạt động tốt trên host thực tế (0.5đ)  
 ⬜ AJAX: Done: phân trang tìm kiếm, phân trang comment, phân trang DS sản phẩm, tìm kiếm sản phẩm  
 ⬜ Sử dụng memory cache để tăng tốc độ website  
 ⬜ Sử dụng Google Analytics  
