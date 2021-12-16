@@ -13,7 +13,8 @@ exports.getProducts = async (req, res) => {
 		};
 		// 1: Price down, 2: Price up, 3: Rating down:, 4: Rating up, 5: Date down, 6: Date up
 		const order = parseInt(req.query.sorting);
-		const products = await apiProductService.getProducts(filter, order);
+		const search = req.query.search.trim();
+		const products = await apiProductService.getProducts(filter, order, search);
 		products.limit = filter.limit;
 		res.status(201).json(products);
 	} catch (error) {
@@ -28,10 +29,11 @@ exports.searchProducts = async (req, res) => {
 	try {
 		const filter = {
 			limit: parseInt(req.query.limit),
+			page: parseInt(req.query.page),
 		};
 		const search = req.body.data.trim();
 		if (search.length === 0) return res.status(201).json([]);
-		const { rows: products } = await apiProductService.getProducts(filter, null, search);
+		const products = await apiProductService.getProducts(filter, null, search);
 		products.limit = filter.limit;
 		res.status(201).json(products);
 	} catch (error) {

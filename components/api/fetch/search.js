@@ -15,9 +15,10 @@ search_box.addEventListener('keyup', function () {
 	timeout = setTimeout(getSearchProducts, 200);
 });
 
-const getSearchProducts = async () => {
+const getSearchProducts = async (page) => {
 	try {
-		const res = await fetch(`/api/product/search/?limit=5`, {
+		if (!page) page = 0;
+		const res = await fetch(`/api/product/search/?limit=5&page=${page}`, {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json',
@@ -32,13 +33,14 @@ const getSearchProducts = async () => {
 		while (search_result.firstChild) {
 			search_result.removeChild(search_result.firstChild);
 		}
-		if (result.length === 0) {
+		const length = result.length;
+		if (length === 0) {
 			const p = document.createElement('p');
 			p.appendChild(document.createTextNode('No results found.'));
 			search_result.appendChild(p);
 		} else {
 			search_result.classList.remove('hidden');
-			for (product of result) {
+			for (product of result.rows) {
 				// Image
 				const img = document.createElement('img');
 				img.setAttribute('src', `/store/img/${product.thumbnail}`);
@@ -76,6 +78,18 @@ const getSearchProducts = async () => {
 				});
 				search_result.appendChild(a);
 			}
+			const ul = document.createElement('ul');
+			ul.classList.add('store-pagination');
+			ul.classList.add('search-pagination');
+			ul.addEventListener('mouseover', function () {
+				result_hovered = true;
+			});
+			ul.addEventListener('mouseout', function () {
+				result_hovered = false;
+			});
+			search_result.appendChild(ul);
+			const count = Math.ceil(result.count / result.limit);
+			$('.search-pagination').append(paginationSearch(page, count));
 		}
 	} catch (error) {
 		console.log(error);

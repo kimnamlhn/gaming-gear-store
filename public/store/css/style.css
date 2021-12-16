@@ -1392,6 +1392,15 @@ textarea.input {
 	width: calc(50% - 7px);
 }
 
+.search-filter input {
+	background-color: #fff;
+	height: 40px;
+	padding: 0 15px;
+	border: 1px solid #e4e7ed;
+	border-radius: 20px;
+	width: 90%;
+}
+
 /*----------------------------*\
 	Store
 \*----------------------------*/
@@ -1492,6 +1501,18 @@ textarea.input {
 
 .store-pagination li a {
 	display: block;
+}
+
+.search-pagination {
+	padding: 10px 0 10px 0;
+	float: unset;
+	text-align: center;
+}
+
+.search-pagination li {
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
 }
 
 .store-qty {
