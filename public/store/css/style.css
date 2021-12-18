@@ -719,6 +719,10 @@ textarea.input {
 	padding-bottom: 15px;
 }
 
+.billing-details input {
+	border-radius: 0;
+}
+
 /*=========================================================
 	03 -> Navigation
 ===========================================================*/
@@ -1980,6 +1984,7 @@ textarea.input {
 
 .review-form .input {
 	margin-bottom: 15px;
+	border-radius: 5px;
 }
 
 .review-form .input:read-only {
