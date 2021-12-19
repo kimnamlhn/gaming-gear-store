@@ -95,12 +95,12 @@
                         <div class="qty-label">
                             Qty
                             <div class="input-number">
-                                <input type="number" value="1" placeholder="0">
+                                <input name="qty" type="number" value="1" placeholder="0">
                                 <span class="qty-up">+</span>
                                 <span class="qty-down">-</span>
                             </div>
                         </div>
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        <button id="add-to-cart" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                     </div>
 
                     <ul class="product-btns">
@@ -306,6 +306,7 @@
                                 </div>
                             </div>
                             <div class="add-to-cart">
+                                <input type="hidden" value="{{idProduct}}">
                                 <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                             </div>
                         </div>
@@ -329,5 +330,6 @@
 </div>
 <!-- /Section -->
 {{#section "fetch"}}
-<script src="/api/fetch/productDetail.js"></script>
+<script src="/api/fetch/comment.js"></script>
+<script src="/api/fetch/productDetailsCart.js"></script>
 {{/section}}
