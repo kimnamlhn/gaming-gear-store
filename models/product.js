@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    detailedDescription: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: true
     },
@@ -42,6 +42,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'category',
         key: 'idCategory'
       }
+    },
+    images: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     },
     creationDate: {
       type: DataTypes.DATEONLY,
