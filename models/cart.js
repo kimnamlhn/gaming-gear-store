@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
         model: 'account',
         key: 'idAccount'
       },
-      unique: "fk_account_cart"
+      unique: "cart_ibfk_1"
     },
     idSession: {
       type: DataTypes.STRING(45),
@@ -32,6 +32,14 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "idCart" },
+        ]
+      },
+      {
+        name: "fk_account_cart",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "idAccount" },
         ]
       },
       {
