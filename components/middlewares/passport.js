@@ -19,7 +19,7 @@ passport.use(
 			try {
 				if (!account) {
 					return done(null, false, {
-						message: `This email address doesn't exist. Would you like to <a href="/account/register">create a new account?</a>`,
+						message: `This email address doesn't exist. Would you like to <a href="/auth/register">create a new account?</a>`,
 					});
 				}
 				if (account.locked) {
