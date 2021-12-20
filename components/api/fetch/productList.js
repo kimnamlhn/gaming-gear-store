@@ -44,6 +44,7 @@ const getProducts = async (page, search) => {
                                 </div>
                             </div>
                             <div class="add-to-cart">
+								<input type="hidden" value="${product.idProduct}">
                                 <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                             </div>
                         </div>
@@ -65,7 +66,8 @@ const getProducts = async (page, search) => {
 		}
 		const count = Math.ceil(api.count / api.limit);
 		$('.store-pagination').html(paginationProduct(page, count));
-		console.log('API: ', api);
+		const addToCart = document.querySelectorAll('.add-to-cart');
+		addToCartProcessing(addToCart);
 	} catch (error) {
 		console.log(error);
 	}
