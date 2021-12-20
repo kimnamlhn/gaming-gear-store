@@ -13,7 +13,8 @@ exports.getProducts = async (req, res) => {
 		};
 		// 1: Price down, 2: Price up, 3: Rating down:, 4: Rating up, 5: Date down, 6: Date up
 		const order = parseInt(req.query.sorting);
-		const search = req.query.search.trim();
+		let search;
+		if (req.query.search) search = req.query.search.trim();
 		const products = await apiProductService.getProducts(filter, order, search);
 		products.limit = filter.limit;
 		res.status(200).json(products);
