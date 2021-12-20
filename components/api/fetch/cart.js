@@ -59,10 +59,10 @@ const getCart = async () => {
 		}
 		document.querySelector('#cart-qty').textContent = sumQuantity;
 		document.querySelector('#cart-count').textContent = `${sumQuantity} Item(s) selected`;
+		sumPrice = +sumPrice.toFixed(2);
 		document.querySelector('#total-price').textContent = `SUBTOTAL: $${sumPrice}`;
 		// console.log(result.cartItems.rows[0]['idProduct_product.name']);
 	} catch (error) {
 		console.log(error);
 	}
 };
-getCart();

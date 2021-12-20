@@ -71,6 +71,7 @@ app.use(sessionHandler);
 app.use(_logger);
 app.use(function (req, res, next) {
 	res.locals.user = req.user;
+	res.locals.cart = req.session.cart;
 	next();
 });
 // Routes
