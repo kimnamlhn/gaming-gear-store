@@ -20,10 +20,23 @@ exports.getCart = async (idAccount, idSession) => {
 					});
 					await newCart.save();
 					return newCart;
+				} else {
+					if (sCart.idAccount === null) {
+						sCart.idAccount = idAccount;
+						await sCart.save();
+						return sCart;
+					} else {
+						const newCart = models.cart.build({
+							idCart: null,
+							idAccount: idAccount,
+							idSession: idSession,
+							createdAt: moment(),
+							updatedAt: moment(),
+						});
+						await newCart.save();
+						return newCart;
+					}
 				}
-				sCart.idAccount = idAccount;
-				await sCart.save();
-				return sCart;
 			}
 			if (!cart.idAccount) {
 				cart.idAccount = idAccount;
@@ -81,6 +94,26 @@ exports.addToCart = async (entity) => {
 			await cartItem.save();
 			return 'Updated cart item.';
 		}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+exports.delFromCart = async (entity) => {
+	try {
+		const cartItem = await models.cart_items.findOne({
+			where: { idCart: entity.idCart, idProduct: entity.idProduct },
+		});
+		if (cartItem) {
+			if (cartItem.quantity - entity.quantity <= 0) {
+				await cartItem.destroy();
+				return 'Deleted item instance.';
+			} else {
+				cartItem.decrement('quantity', { by: entity.quantity });
+				await cartItem.save();
+				return 'Delete some item.';
+			}
+		} else return 'Nothing to delete.';
 	} catch (error) {
 		console.log(error);
 	}

@@ -18,8 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     idSession: {
       type: DataTypes.STRING(45),
-      allowNull: true,
-      unique: "idSession_UNIQUE"
+      allowNull: true
     }
   }, {
     sequelize,
@@ -32,14 +31,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "idCart" },
-        ]
-      },
-      {
-        name: "idSession_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "idSession" },
         ]
       },
       {
