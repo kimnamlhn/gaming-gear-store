@@ -47,6 +47,7 @@ const getCart = async () => {
 				div_product_body.appendChild(h4);
 				const del_btn = document.createElement('button');
 				del_btn.classList.add('delete');
+				del_btn.setAttribute('value', item.idProduct);
 				const i = document.createElement('i');
 				i.classList.add('fa');
 				i.classList.add('fa-close');
@@ -61,8 +62,37 @@ const getCart = async () => {
 		document.querySelector('#cart-count').textContent = `${sumQuantity} Item(s) selected`;
 		sumPrice = +sumPrice.toFixed(2);
 		document.querySelector('#total-price').textContent = `SUBTOTAL: $${sumPrice}`;
-		// console.log(result.cartItems.rows[0]['idProduct_product.name']);
+		const del_btns = document.querySelectorAll('.delete');
+		delBtnProcessing(del_btns);
 	} catch (error) {
 		console.log(error);
 	}
 };
+getCart();
+const delBtnProcessing = (btns) => {
+	btns.forEach((btn) => {
+		btn.addEventListener('click', async (e) => {
+			e.preventDefault();
+			const cartItem = { idProduct: btn.value, quantity: 1 };
+			try {
+				const res = await fetch(`/api/cart/del-from-cart`, {
+					method: 'post',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(cartItem),
+				});
+				if (!res.ok) {
+					const message = 'Error with status code: ' + res.status;
+					throw new Error(message);
+				}
+				getCart();
+			} catch (error) {
+				console.log(error);
+			}
+		});
+	});
+};
+
+const del_from_cart = document.querySelectorAll('.delete');
+if (del_from_cart) delBtnProcessing(del_from_cart);
