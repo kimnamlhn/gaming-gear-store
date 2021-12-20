@@ -1,6 +1,6 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
-29/47 (Trừ các chức năng nâng cao)
+30/47 (Trừ các chức năng nâng cao)
 
 ### Tổng quát
 
@@ -14,7 +14,7 @@
 
 ### Chức năng khi chưa đăng nhập
 
-⬜ Nội dung trang chủ  
+✅ Nội dung trang chủ  
 ✅ Xem danh sách các sản phẩm theo từng loại sản phẩm/nhà sản xuất/phân loại  
 ✅ Hỗ trợ thay đổi thứ tự hiển thị, lọc sản phẩm  
 ✅ Phân trang danh sách sản phẩm  

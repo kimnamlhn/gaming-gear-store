@@ -22,11 +22,11 @@
                     <div class="footer">
                         <h3 class="footer-title">Categories</h3>
                         <ul class="footer-links">
-                            <li><a href="#">Hot deals</a></li>
-                            <li><a href="#">Laptops</a></li>
-                            <li><a href="#">Smartphones</a></li>
-                            <li><a href="#">Cameras</a></li>
-                            <li><a href="#">Accessories</a></li>
+                            <li><a href="/products/?category=1">Laptops</a></li>
+                            <li><a href="/products/?category=2">PCs</a></li>
+                            <li><a href="/products/?category=4">Consoles</a></li>
+                            <li><a href="/products/?category=3">Mouses</a></li>
+                            <li><a href="/products/?category=5">Headphone</a></li>
                         </ul>
                     </div>
                 </div>
@@ -50,10 +50,12 @@
                     <div class="footer">
                         <h3 class="footer-title">Service</h3>
                         <ul class="footer-links">
+                            {{#if user}}
                             <li><a href="#">My Account</a></li>
                             <li><a href="#">View Cart</a></li>
                             <li><a href="#">Wishlist</a></li>
                             <li><a href="#">Track My Order</a></li>
+                            {{/if}}
                             <li><a href="#">Help</a></li>
                         </ul>
                     </div>

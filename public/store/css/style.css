@@ -862,6 +862,8 @@ textarea.input {
 	position: relative;
 	background-color: #e4e7ed;
 	z-index: -1;
+	overflow: hidden;
+	height: 240px;
 }
 
 .shop .shop-img > img {
