@@ -34,7 +34,6 @@ const getSearchProducts = async (page) => {
 		while (search_result.firstChild) {
 			search_result.removeChild(search_result.firstChild);
 		}
-		console.log(result);
 		if (result.count === 0) {
 			const p = document.createElement('p');
 			p.appendChild(document.createTextNode('No results found.'));

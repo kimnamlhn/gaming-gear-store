@@ -25,7 +25,7 @@ passport.use(
 				if (account.locked) {
 					return done(null, false, { message: 'This account is locked.' });
 				}
-				if (!bcrypt.compare(password, account.password)) {
+				if (!bcrypt.compareSync(password, account.password)) {
 					return done(null, false, {
 						message: 'Incorrect password.',
 					});
