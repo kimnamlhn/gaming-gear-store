@@ -10,7 +10,7 @@ exports.addToCart = async (req, res) => {
 		} else {
 			cart = await apiCartService.getCart(null, req.session.unauthId);
 		}
-		req.session.cart = cart;
+
 		const entity = {
 			idCartItems: null,
 			idCart: cart.idCart,
@@ -19,6 +19,8 @@ exports.addToCart = async (req, res) => {
 		};
 		const message = await apiCartService.addToCart(entity);
 		const cartItems = await apiCartService.getCartItems(cart);
+		const obj = { idCart: cart.idCart, cartItems: cartItems };
+		req.session.cart = obj;
 		res.status(201).json({ cartItems, message });
 	} catch (error) {
 		res.status(500).json({
@@ -38,7 +40,7 @@ exports.getCart = async (req, res) => {
 		}
 		const cartItems = await apiCartService.getCartItems(cart);
 		const obj = { idCart: cart.idCart, cartItems: cartItems };
-		req.session.cart = cart;
+		req.session.cart = obj;
 		res.status(201).json(obj);
 	} catch (error) {
 		res.status(500).json({
