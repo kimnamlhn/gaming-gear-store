@@ -19,6 +19,7 @@ const app = express();
 const storeIndexRouter = require('./components/index/index');
 const storeProductsRouter = require('./components/products/productRouter');
 const accountRouter = require('./components/account/accountRouter');
+const authRouter = require('./components/auth/authRouter');
 const apiCommentRouter = require('./components/api/comment/apiCommentRouter');
 const apiProductRouter = require('./components/api/product/apiProductRouter');
 const apiCartRouter = require('./components/api/cart/apiCartRouter');
@@ -77,6 +78,7 @@ app.use(function (req, res, next) {
 // Routes
 app.use('/', storeIndexRouter);
 app.use('/products', storeProductsRouter);
+app.use('/auth', authRouter);
 app.use('/account', accountRouter);
 app.use('/api/comment', apiCommentRouter);
 app.use('/api/product', apiProductRouter);

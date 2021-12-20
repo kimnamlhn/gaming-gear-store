@@ -1,35 +1,11 @@
 const express = require('express');
-const passport = require('../middlewares/passport');
 const router = express.Router();
 const accountController = require('./accountController');
 
-// Login
-router.get('/login', accountController.login);
-router.post(
-	'/login',
-	passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: '/account/login',
-		badRequestMessage: 'Please fill all the missing fields.',
-		failureFlash: true,
-	})
-);
-//Register
-router.get('/register', accountController.register);
-router.post('/register', accountController.createAccount);
-// Password
-router.get('/forgot-password', accountController.forgotPassword);
-router.post('/forgot-password', accountController.forgotPasswordPost);
-router.get('/reset-password', accountController.resetPassword);
-router.post('/reset-password', accountController.resetPasswordPost);
-// Logout
-router.get('/logout', function (req, res) {
-	req.logout();
-	res.redirect('/');
-});
 // Account Pages
 router.get('/', accountController.userIndex);
 router.post('/', accountController.profileUpdate);
+
 router.get('/admin', accountController.adminIndex);
 router.post('/admin', accountController.profileUpdate);
 
