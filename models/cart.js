@@ -16,7 +16,7 @@ module.exports = function (sequelize, DataTypes) {
 					model: 'account',
 					key: 'idAccount',
 				},
-				unique: 'cart_ibfk_1',
+				unique: 'fk_account_cart',
 			},
 			idSession: {
 				type: DataTypes.STRING(45),
