@@ -8,4 +8,5 @@ module.exports = {
 	for: require('./forloop'),
 	sumPrice: require('./sumPrice'),
 	sumQuantity: require('./sumQuantity'),
+	ratingStar: require('./ratingStar'),
 };
