@@ -1,6 +1,6 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
-30/47 (Trừ các chức năng nâng cao)
+26/40 (Trừ các chức năng nâng cao và tổng quát)
 
 ### Tổng quát
 
@@ -27,7 +27,7 @@
 ✅ Tìm kiếm nâng cao  
 ✅ Phân trang tìm kiếm  
 ✅ Chọn sản phẩm vào giỏ hàng  
-⬜ Quản lý giỏ hàng
+✅ Quản lý giỏ hàng
 
 ### Xác thực và phân quyền
 

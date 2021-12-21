@@ -62,10 +62,13 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title">New Laptops</h3>
+                    <h3 class="title">New Products</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <li><a href="/products/?category=1">See more...</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab1-a">Laptops</a></li>
+                            <li><a data-toggle="tab" href="#tab2-a">PCs</a></li>
+                            <li><a data-toggle="tab" href="#tab3-a">Consoles</a></li>
+                            <li><a href="/products/?sorting=5">See more...</a></li>
                         </ul>
                     </div>
                 </div>
@@ -75,8 +78,120 @@
             <!-- New Product -->
             <div class="col-md-12">
                 <div class="row">
-                    <div id="new-laptops">
+                    <div class="products-tabs">
+                        <!-- tab -->
+                        <div id="tab1-a" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1-a">
+                                <!-- product -->
+                                {{#each newLaptops.rows}}
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="/store/img/{{thumbnail}}" alt="">
+                                        {{!-- <div class="product-label">
+                                            <span class="sale">-30%</span>
+                                            <span class="new">NEW</span>
+                                        </div> --}}
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">{{nameCategory}} - {{brand}}</p>
+                                        <h3 class="product-name"><a href="/products/{{idProduct}}">{{name}}</a></h3>
+                                        <h4 class="product-price">${{price}}</h4>
+                                        <div class="product-rating">
+                                            {{{ratingStar avgRating}}}
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <input type="hidden" value="{{idProduct}}">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                    </div>
+                                </div>
+                                {{/each}}
+                                <!-- /product -->
+                            </div>
+                            <div id="slick-nav-1-a" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
 
+                        <!-- tab -->
+                        <div id="tab2-a" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-2-a">
+                                <!-- product -->
+                                {{#each newPCs.rows}}
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="/store/img/{{thumbnail}}" alt="">
+                                        {{!-- <div class="product-label">
+                                            <span class="sale">-30%</span>
+                                            <span class="new">NEW</span>
+                                        </div> --}}
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">{{nameCategory}} - {{brand}}</p>
+                                        <h3 class="product-name"><a href="/products/{{idProduct}}">{{name}}</a></h3>
+                                        <h4 class="product-price">${{price}}</h4>
+                                        <div class="product-rating">
+                                            {{{ratingStar rating}}}
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <input type="hidden" value="{{idProduct}}">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                    </div>
+                                </div>
+                                {{/each}}
+                                <!-- /product -->
+                            </div>
+                            <div id="slick-nav-2-a" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
+
+                        <!-- tab -->
+                        <div id="tab3-a" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-3-a">
+                                <!-- product -->
+                                {{#each newConsoles.rows}}
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="/store/img/{{thumbnail}}" alt="">
+                                        {{!-- <div class="product-label">
+                                            <span class="sale">-30%</span>
+                                            <span class="new">NEW</span>
+                                        </div> --}}
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">{{nameCategory}} - {{brand}}</p>
+                                        <h3 class="product-name"><a href="/products/{{idProduct}}">{{name}}</a></h3>
+                                        <h4 class="product-price">${{price}}</h4>
+                                        <div class="product-rating">
+                                            {{{ratingStar rating}}}
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <input type="hidden" value="{{idProduct}}">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                    </div>
+                                </div>
+                                {{/each}}
+                                <!-- /product -->
+                            </div>
+                            <div id="slick-nav-3-a" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
                     </div>
                 </div>
             </div>
@@ -87,6 +202,159 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
+
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">Highest Rated</h3>
+                    <div class="section-nav">
+                        <ul class="section-tab-nav tab-nav">
+                            <li class="active"><a data-toggle="tab" href="#tab1-b">Laptops</a></li>
+                            <li><a data-toggle="tab" href="#tab2-b">PCs</a></li>
+                            <li><a data-toggle="tab" href="#tab3-b">Consoles</a></li>
+                            <li><a href="/products/?sorting=3">See more...</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /section title -->
+
+            <!-- New Product -->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        <!-- tab -->
+                        <div id="tab1-b" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1-b">
+                                <!-- product -->
+                                {{#each highestRatedLaptops.rows}}
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="/store/img/{{thumbnail}}" alt="">
+                                        {{!-- <div class="product-label">
+                                            <span class="sale">-30%</span>
+                                            <span class="new">NEW</span>
+                                        </div> --}}
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">{{nameCategory}} - {{brand}}</p>
+                                        <h3 class="product-name"><a href="/products/{{idProduct}}">{{name}}</a></h3>
+                                        <h4 class="product-price">${{price}}</h4>
+                                        <div class="product-rating">
+                                            {{{ratingStar avgRating}}}
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <input type="hidden" value="{{idProduct}}">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                    </div>
+                                </div>
+                                {{/each}}
+                                <!-- /product -->
+                            </div>
+                            <div id="slick-nav-1-b" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
+
+                        <!-- tab -->
+                        <div id="tab2-b" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-2-b">
+                                <!-- product -->
+                                {{#each highestRatedPCs.rows}}
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="/store/img/{{thumbnail}}" alt="">
+                                        {{!-- <div class="product-label">
+                                            <span class="sale">-30%</span>
+                                            <span class="new">NEW</span>
+                                        </div> --}}
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">{{nameCategory}} - {{brand}}</p>
+                                        <h3 class="product-name"><a href="/products/{{idProduct}}">{{name}}</a></h3>
+                                        <h4 class="product-price">${{price}}</h4>
+                                        <div class="product-rating">
+                                            {{{ratingStar rating}}}
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <input type="hidden" value="{{idProduct}}">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                    </div>
+                                </div>
+                                {{/each}}
+                                <!-- /product -->
+                            </div>
+                            <div id="slick-nav-2-b" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
+
+                        <!-- tab -->
+                        <div id="tab3-b" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-3-b">
+                                <!-- product -->
+                                {{#each highestRatedConsoles.rows}}
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="/store/img/{{thumbnail}}" alt="">
+                                        {{!-- <div class="product-label">
+                                            <span class="sale">-30%</span>
+                                            <span class="new">NEW</span>
+                                        </div> --}}
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">{{nameCategory}} - {{brand}}</p>
+                                        <h3 class="product-name"><a href="/products/{{idProduct}}">{{name}}</a></h3>
+                                        <h4 class="product-price">${{price}}</h4>
+                                        <div class="product-rating">
+                                            {{{ratingStar rating}}}
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <input type="hidden" value="{{idProduct}}">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                    </div>
+                                </div>
+                                {{/each}}
+                                <!-- /product -->
+                            </div>
+                            <div id="slick-nav-3-b" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
+                    </div>
+                </div>
+            </div>
+            <!-- New Product -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
 
 <!-- HOT DEAL SECTION -->
 {{!-- <div id="hot-deal" class="section">
@@ -140,79 +408,6 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-
-            <!-- section title -->
-            <div class="col-md-12">
-                <div class="section-title">
-                    <h3 class="title">New PCs</h3>
-                    <div class="section-nav">
-                        <ul class="section-tab-nav tab-nav">
-                            <li><a href="/products/?category=2">See more...</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- /section title -->
-
-            <!-- New Product -->
-            <div class="col-md-12">
-                <div class="row">
-                    <div id="new-pcs">
-
-                    </div>
-                </div>
-            </div>
-            <!-- New Product -->
-        </div>
-        <!-- /row -->
-    </div>
-    <!-- /container -->
-</div>
-<!-- /SECTION -->
-
-<!-- SECTION -->
-<div class="section">
-    <!-- container -->
-    <div class="container">
-        <!-- row -->
-        <div class="row">
-
-            <!-- section title -->
-            <div class="col-md-12">
-                <div class="section-title">
-                    <h3 class="title">New Consoles</h3>
-                    <div class="section-nav">
-                        <ul class="section-tab-nav tab-nav">
-                            <li><a href="/products/?category=4">See more...</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- /section title -->
-
-            <!-- New Product -->
-            <div class="col-md-12">
-                <div class="row">
-                    <div id="new-consoles">
-
-                    </div>
-                </div>
-            </div>
-            <!-- New Product -->
-        </div>
-        <!-- /row -->
-    </div>
-    <!-- /container -->
-</div>
-<!-- /SECTION -->
-
-<!-- SECTION -->
-<div class="section">
-    <!-- container -->
-    <div class="container">
-        <!-- row -->
-        <div class="row">
-
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
@@ -243,6 +438,6 @@
 <!-- /SECTION -->
 
 {{#section "fetch"}}
-<script src="/api/fetch/index.js"></script>
 <script src="/api/fetch/cartBtnProcessing.js"></script>
+<script src="/api/fetch/index.js"></script>
 {{/section}}
