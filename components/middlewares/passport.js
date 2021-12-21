@@ -19,13 +19,13 @@ passport.use(
 			try {
 				if (!account) {
 					return done(null, false, {
-						message: `This email address doesn't exist. Would you like to <a href="/account/register">create a new account?</a>`,
+						message: `This email address doesn't exist. Would you like to <a href="/auth/register">create a new account?</a>`,
 					});
 				}
 				if (account.locked) {
 					return done(null, false, { message: 'This account is locked.' });
 				}
-				if (!bcrypt.compare(password, account.password)) {
+				if (!bcrypt.compareSync(password, account.password)) {
 					return done(null, false, {
 						message: 'Incorrect password.',
 					});

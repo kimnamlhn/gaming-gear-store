@@ -15,11 +15,11 @@
                     {{else}}
                     <li><a href="/account"><i class="fa fa-user-o" aria-hidden="true"></i> My Account</a></li>
                     {{/if}}
-                    <li><a href="/account/logout"><i class="fa fa-user-o" aria-hidden="true"></i> Logout</a></li>
+                    <li><a href="/auth/logout"><i class="fa fa-user-o" aria-hidden="true"></i> Logout</a></li>
                 {{else}}
-                    <li><a href="/account/login"><i class="fa fa-user" aria-hidden="true"></i> Login</a></li>
-                    <li><a href="/account/forgot-password"><i class="fa fa-key" aria-hidden="true"></i> Forgot Password?</a></li>
-                    <li><a href="/account/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
+                    <li><a href="/auth/login"><i class="fa fa-user" aria-hidden="true"></i> Login</a></li>
+                    <li><a href="/auth/forgot-password"><i class="fa fa-key" aria-hidden="true"></i> Forgot Password?</a></li>
+                    <li><a href="/auth/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
                 {{/if}}
             </ul>
         </div>
@@ -73,35 +73,28 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
-                                <div class="qty">3</div>
+                                <div id="cart-qty" class="qty">{{sumQuantity cart.cartItems.rows}}</div>
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list">
+                                    {{#each cart.cartItems.rows}}
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="/store/img/product01.png" alt="">
+                                            <img src="/store/img/{{'idProduct_product.thumbnail'}}">
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+                                            <h3 class="product-name"><a href="/products/{{idProduct}}">{{'idProduct_product.name'}}</a></h3>
+                                            <h4 class="product-price"><span class="qty">{{quantity}}x</span>${{'idProduct_product.price'}}</h4>
                                         </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
+                                        <button class="delete" value="{{idProduct}}"><i class="fa fa-close"></i></button>
                                     </div>
-
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="/store/img/product02.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
+                                    {{else}}
+                                    <p>No item in cart.</p>
+                                    {{/each}}
                                 </div>
                                 <div class="cart-summary">
-                                    <small>3 Item(s) selected</small>
-                                    <h5>SUBTOTAL: $2940.00</h5>
+                                    <small id="cart-count">{{sumQuantity cart.cartItems.rows}} Item(s) selected</small>
+                                    <h5 id="total-price">SUBTOTAL: ${{sumPrice cart.cartItems.rows}}</h5>
                                 </div>
                                 <div class="cart-btns">
                                     <a href="/products/checkout">View Cart</a>

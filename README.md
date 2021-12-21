@@ -1,6 +1,6 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
-28/47 (Trừ các chức năng nâng cao)
+30/47 (Trừ các chức năng nâng cao)
 
 ### Tổng quát
 
@@ -14,7 +14,7 @@
 
 ### Chức năng khi chưa đăng nhập
 
-⬜ Nội dung trang chủ  
+✅ Nội dung trang chủ  
 ✅ Xem danh sách các sản phẩm theo từng loại sản phẩm/nhà sản xuất/phân loại  
 ✅ Hỗ trợ thay đổi thứ tự hiển thị, lọc sản phẩm  
 ✅ Phân trang danh sách sản phẩm  
@@ -26,7 +26,7 @@
 ✅ Tìm kiếm  
 ✅ Tìm kiếm nâng cao  
 ✅ Phân trang tìm kiếm  
-⬜ Chọn sản phẩm vào giỏ hàng  
+✅ Chọn sản phẩm vào giỏ hàng  
 ⬜ Quản lý giỏ hàng
 
 ### Xác thực và phân quyền
@@ -67,7 +67,7 @@
 ### Các chức năng nâng cao
 
 ✅ Website đã được đăng và hoạt động tốt trên host thực tế (0.5đ)  
-⬜ AJAX: Done: phân trang tìm kiếm, phân trang comment, phân trang DS sản phẩm, tìm kiếm sản phẩm  
+⬜ AJAX: Done: phân trang tìm kiếm, phân trang comment, phân trang DS sản phẩm, tìm kiếm sản phẩm, thêm item, delete item trong giỏ hàng  
 ⬜ Sử dụng memory cache để tăng tốc độ website  
 ⬜ Sử dụng Google Analytics  
 ⬜ Vẽ biểu đồ  

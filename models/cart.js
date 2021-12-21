@@ -14,12 +14,11 @@ module.exports = function(sequelize, DataTypes) {
         model: 'account',
         key: 'idAccount'
       },
-      unique: "cart_ibfk_1"
+      unique: "fk_account_cart"
     },
     idSession: {
       type: DataTypes.STRING(45),
-      allowNull: true,
-      unique: "idSession_UNIQUE"
+      allowNull: true
     }
   }, {
     sequelize,
@@ -32,22 +31,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "idCart" },
-        ]
-      },
-      {
-        name: "fk_account_cart",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "idAccount" },
-        ]
-      },
-      {
-        name: "idSession_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "idSession" },
         ]
       },
       {

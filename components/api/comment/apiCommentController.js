@@ -37,7 +37,7 @@ exports.getComments = async (req, res) => {
 			commentsCount,
 		};
 		obj.limit = itemsPerPage;
-		res.status(201).json(obj);
+		res.status(200).json(obj);
 	} catch (error) {
 		res.status(500).json({
 			status: 'fail',
