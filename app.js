@@ -19,8 +19,10 @@ const app = express();
 const storeIndexRouter = require('./components/index/index');
 const storeProductsRouter = require('./components/products/productRouter');
 const accountRouter = require('./components/account/accountRouter');
+const authRouter = require('./components/auth/authRouter');
 const apiCommentRouter = require('./components/api/comment/apiCommentRouter');
 const apiProductRouter = require('./components/api/product/apiProductRouter');
+const apiCartRouter = require('./components/api/cart/apiCartRouter');
 // Database
 const db = require('./models');
 app.use(express.json());
@@ -54,27 +56,33 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'components')));
 app.use(flash());
-// Authentication
-
+// Session management
 app.use(
-	session({ cookie: { maxAge: 100 * 60 * 60 * 24 * 365 }, secret: process.env.SESSION_SECRET })
+	session({
+		resave: false,
+		saveUninitialized: true,
+		cookie: { maxAge: 1000 * 60 * 60 * 24 * 30, sameSite: 'strict' }, // 30 days
+		secret: process.env.SESSION_SECRET,
+	})
 );
+// Authentication
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(function (req, res, next) {
-	res.locals.user = req.user;
-	next();
-});
-
 app.use(sessionHandler);
 app.use(_logger);
+app.use(function (req, res, next) {
+	res.locals.user = req.user;
+	res.locals.cart = req.session.cart;
+	next();
+});
 // Routes
 app.use('/', storeIndexRouter);
 app.use('/products', storeProductsRouter);
+app.use('/auth', authRouter);
 app.use('/account', accountRouter);
 app.use('/api/comment', apiCommentRouter);
 app.use('/api/product', apiProductRouter);
+app.use('/api/cart', apiCartRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

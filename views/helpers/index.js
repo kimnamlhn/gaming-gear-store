@@ -6,4 +6,7 @@ module.exports = {
 	lowerCase: require('./lowerCase'),
 	section: express_handlebars_sections(),
 	for: require('./forloop'),
+	sumPrice: require('./sumPrice'),
+	sumQuantity: require('./sumQuantity'),
+	ratingStar: require('./ratingStar'),
 };

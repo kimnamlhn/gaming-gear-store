@@ -719,6 +719,10 @@ textarea.input {
 	padding-bottom: 15px;
 }
 
+.billing-details input {
+	border-radius: 0;
+}
+
 /*=========================================================
 	03 -> Navigation
 ===========================================================*/
@@ -858,6 +862,8 @@ textarea.input {
 	position: relative;
 	background-color: #e4e7ed;
 	z-index: -1;
+	overflow: hidden;
+	height: 240px;
 }
 
 .shop .shop-img > img {
@@ -1980,6 +1986,7 @@ textarea.input {
 
 .review-form .input {
 	margin-bottom: 15px;
+	border-radius: 5px;
 }
 
 .review-form .input:read-only {

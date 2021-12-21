@@ -40,6 +40,48 @@ CREATE TABLE `account` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart` (
+  `idCart` int NOT NULL AUTO_INCREMENT,
+  `idAccount` int DEFAULT NULL,
+  `idSession` varchar(45) DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`idCart`),
+  UNIQUE KEY `idAccount_UNIQUE` (`idAccount`),
+  KEY `fk_account_cart_idx` (`idAccount`),
+  CONSTRAINT `fk_account_cart` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cart_items`
+--
+
+DROP TABLE IF EXISTS `cart_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart_items` (
+  `idCartItems` int NOT NULL AUTO_INCREMENT,
+  `idCart` int NOT NULL,
+  `idProduct` int NOT NULL,
+  `quantity` int NOT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`idCartItems`),
+  KEY `fk_cart_idx` (`idCart`),
+  KEY `fk_product_idx` (`idProduct`) USING BTREE,
+  CONSTRAINT `fk_cart_cart_items` FOREIGN KEY (`idCart`) REFERENCES `cart` (`idCart`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_product_cart_items` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `category`
 --
 
@@ -50,7 +92,7 @@ CREATE TABLE `category` (
   `idCategory` int NOT NULL AUTO_INCREMENT,
   `nameCategory` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,8 +180,8 @@ CREATE TABLE `product` (
   `creationDate` date NOT NULL,
   PRIMARY KEY (`idProduct`),
   KEY `fk_category_product_idx` (`category`) USING BTREE,
-  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,9 +202,9 @@ CREATE TABLE `product_comments` (
   PRIMARY KEY (`idComment`),
   KEY `fk_comment_account_idx` (`idAccount`) USING BTREE,
   KEY `fk_comment_product_idx` (`idProduct`) USING BTREE,
-  CONSTRAINT `product_comments_ibfk_1` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `product_comments_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `product_comments_ibfk_1` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `product_comments_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,8 +220,8 @@ CREATE TABLE `product_images` (
   `imageurl` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idImages`,`product`),
   KEY `product_idx` (`product`) USING BTREE,
-  CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product`) REFERENCES `product` (`idProduct`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product`) REFERENCES `product` (`idProduct`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -191,4 +233,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-11 22:14:51
+-- Dump completed on 2021-12-20 21:31:34
