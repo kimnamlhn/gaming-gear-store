@@ -35,12 +35,11 @@ exports.getProductCategories = () => {
 };
 
 // Product Details Page
-exports.getDetails = (id) => {
-	return models.product.findOne({
+exports.getDetails = async (id) => {
+	let product = await models.product.findOne({
 		where: {
 			idProduct: id,
 		},
-		raw: true,
 		include: [
 			{
 				model: models.category,
@@ -49,6 +48,22 @@ exports.getDetails = (id) => {
 			},
 		],
 	});
+	product.increment('views', { by: 1 });
+	await product.save();
+	product = await models.product.findOne({
+		where: {
+			idProduct: id,
+		},
+		include: [
+			{
+				model: models.category,
+				attributes: ['nameCategory'],
+				as: 'category_category',
+			},
+		],
+		raw: true,
+	});
+	return product;
 };
 
 exports.getDetailImages = (id) => {

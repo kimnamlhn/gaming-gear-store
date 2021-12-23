@@ -46,6 +46,11 @@ module.exports = function(sequelize, DataTypes) {
     creationDate: {
       type: DataTypes.DATEONLY,
       allowNull: false
+    },
+    views: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     sequelize,

@@ -1,6 +1,7 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
 28/40 (Trừ các chức năng nâng cao và tổng quát)
+-3
 
 ### Tổng quát
 
@@ -18,7 +19,7 @@
 ✅ Xem danh sách các sản phẩm theo từng loại sản phẩm/nhà sản xuất/phân loại  
 ✅ Hỗ trợ thay đổi thứ tự hiển thị, lọc sản phẩm  
 ✅ Phân trang danh sách sản phẩm  
-⬜ Xem thông tin chi tiết sản phẩm (Cần làm hiển thị số lần xem sản phẩm)  
+✅ Xem thông tin chi tiết sản phẩm
 ✅ Hiển thị các sản phẩm liên quan  
 ✅ Hiển thị danh sách bình luận sản phẩm  
 ✅ Thêm bình luận  

@@ -57,7 +57,7 @@ CREATE TABLE `cart` (
   UNIQUE KEY `idSession_UNIQUE` (`idSession`) USING BTREE,
   KEY `fk_account_cart_idx` (`idAccount`),
   CONSTRAINT `fk_account_cart` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,10 +179,11 @@ CREATE TABLE `product` (
   `thumbnail` varchar(45) DEFAULT NULL,
   `category` int NOT NULL,
   `creationDate` date NOT NULL,
+  `views` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idProduct`),
   KEY `fk_category_product_idx` (`category`) USING BTREE,
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,4 +235,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-23 17:43:05
+-- Dump completed on 2021-12-23 20:33:19
