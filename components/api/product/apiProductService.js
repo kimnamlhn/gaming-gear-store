@@ -60,7 +60,7 @@ exports.getProducts = async (filter, _order, search) => {
 		raw: true,
 		where,
 		order,
-		attributes: ['idProduct', 'name', 'brand', 'price', 'thumbnail'],
+		attributes: ['idProduct', 'name', 'brand', 'price', 'thumbnail', 'creationDate', 'stock'],
 		include: [
 			{
 				model: models.category,

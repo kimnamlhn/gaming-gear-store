@@ -27,7 +27,7 @@
                 <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         <label for="product_name">Product Name</label>
-                        <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter product name">
+                        <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter product name" value="{{entity.name}}">
                     </div>
                 </div>
                 <!--Category-->
@@ -47,7 +47,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="product_brand">Brand</label>
-                        <input type="text" class="form-control" id="product_brand" name="product_brand" placeholder="Enter product brand">
+                        <input type="text" class="form-control" id="product_brand" name="product_brand" placeholder="Enter product brand" value="{{entity.brand}}">
                     </div>
                 </div>
             </div>
@@ -56,14 +56,14 @@
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
                         <label for="product_stock">Stock</label>
-                        <input type="number" class="form-control" id="product_stock" name="product_stock" placeholder="Enter product stock">
+                        <input type="number" class="form-control" id="product_stock" name="product_stock" placeholder="Enter product stock" value="{{entity.stock}}">
                     </div>
                 </div>
                 <!--Price-->
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
                         <label for="product_price">Price</label>
-                        <input type="number" class="form-control" id="product_price" name="product_price" placeholder="Enter product price">
+                        <input type="number" class="form-control" id="product_price" name="product_price" placeholder="Enter product price" value="{{entity.price}}">
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                     <div class="form-group">
                         <label for="product_generalinfo">General Info</label>
                         <div class="html-editor">
-                            <textarea id="product_generalinfo" class="form-control border-radius-0" placeholder="Enter text..." name="product_generalinfo"></textarea>
+                            <textarea id="product_generalinfo" class="form-control border-radius-0" placeholder="Enter text..." name="product_generalinfo">{{entity.generalInfo}}</textarea>
                         </div>
                     </div>
                 </div>
@@ -82,13 +82,14 @@
                     <div class="form-group">
                         <label for="product_detailed_desciption">Detailed Description</label>
                         <div class="html-editor mb-30">
-                            <textarea id="product_detailed_desciption" class="textarea_editor form-control border-radius-0" placeholder="Enter text..." name="product_detailed_desciption"></textarea>
+                            <textarea id="product_detailed_desciption" class="textarea_editor form-control border-radius-0" placeholder="Enter text..." name="product_detailed_desciption">{{entity.detailedDescription}}</textarea>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 text-right">
+                    <p style="color:red;">{{message}}</p>
                     <button type="submit" class="btn btn-primary">Next</button>
                 </div>
             </div>

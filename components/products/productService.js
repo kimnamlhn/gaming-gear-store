@@ -144,9 +144,27 @@ exports.deleteProduct = async (id) => {
 };
 
 exports.createProduct = async (entity) => {
+	if (entity.name.length <= 0)
+		return { id: null, message: 'Product name cannot be empty.', done: false };
+	if (entity.brand.length <= 0)
+		return {
+			id: null,
+			message: 'Brand name cannot be empty. If product has no brand please type "No Brand"',
+			done: false,
+		};
+	if (entity.stock.length <= 0)
+		return {
+			id: null,
+			message: 'Please enter product stock. If product is out of stock please type "0"',
+			done: false,
+		};
+	if (entity.price.length <= 0)
+		return {
+			id: null,
+			message: 'Please enter product price.',
+			done: false,
+		};
 	try {
-		// console.log('trying to add:', entity);
-
 		const product = models.product.build({
 			idProduct: null,
 			name: entity.name,
@@ -156,27 +174,36 @@ exports.createProduct = async (entity) => {
 			brand: entity.brand,
 			stock: entity.stock,
 			price: entity.price,
-			// thumbnail: entity.thumbnail,
-			// images: entity.images,
-			creationDate: moment(), //test truoc da
+			creationDate: moment(),
 		});
-
-		// console.log('trying to add row:', product);
 		await product.save();
-		return product.idProduct;
+		return { id: product.idProduct, message: 'Product created successfully', done: true };
 	} catch (e) {
 		console.log('err:', e);
 	}
 };
 
 exports.updateProduct = async (entity) => {
+	if (entity.name.length <= 0) return { message: 'Product name cannot be empty.', done: false };
+	if (entity.brand.length <= 0)
+		return {
+			message: 'Brand name cannot be empty. If product has no brand please type "No Brand"',
+			done: false,
+		};
+	if (entity.stock.length <= 0)
+		return {
+			message: 'Please enter product stock. If product is out of stock please type "0"',
+			done: false,
+		};
+	if (entity.price.length <= 0)
+		return {
+			message: 'Please enter product price.',
+			done: false,
+		};
 	try {
-		console.log('trying to update:', entity);
-
 		let product = await models.product.findOne({
 			where: { idProduct: entity.idProduct },
 		});
-
 		product.set({
 			idProduct: entity.idProduct,
 			name: entity.name,
@@ -184,15 +211,12 @@ exports.updateProduct = async (entity) => {
 			brand: entity.brand,
 			stock: entity.stock,
 			price: entity.price,
-			// thumbnail: entity.thumbnail,
-			// images: entity.images,
 			generalInfo: entity.generalInfo,
-			desciption: entity.desciption,
-			creationDate: moment(), //test truoc da
+			detailedDescription: entity.detailedDescription,
+			creationDate: moment(),
 		});
-
-		console.log('trying to update:', product);
 		await product.save();
+		return { message: 'Product saved successfully.', done: true };
 	} catch (e) {
 		console.log('err:', e);
 	}

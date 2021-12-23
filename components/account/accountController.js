@@ -133,11 +133,13 @@ exports.accountListUser = async (req, res) => {
 exports.list = async (req, res) => {
 	try {
 		if (!req.user || !req.user.role) res.redirect('/');
-		const products = await productService.getAllProductsAdmin();
+		const brands = await productService.getProductBrands();
+		const categories = await productService.getProductCategories();
 		res.render('account/admin/productList', {
 			layout: 'account',
 			title: 'Product List',
-			products,
+			categories,
+			brands,
 		});
 	} catch (error) {
 		res.render('error', {
@@ -189,13 +191,21 @@ exports.addProductPost = async (req, res) => {
 			brand: req.body.product_brand,
 			stock: req.body.product_stock,
 			price: req.body.product_price,
-			// thumbnail: req.body.product_thumbnail,
-			// images: req.body.product_images,
 			generalInfo: req.body.product_generalinfo,
 			detailedDescription: req.body.product_detailed_desciption,
 		};
-		const id = await productService.createProduct(entity);
-		res.redirect(`/account/admin/products/add/${id}`);
+		const { id, message, done } = await productService.createProduct(entity);
+		console.log(id, message, done);
+		if (!done) {
+			res.render('account/admin/addProduct', {
+				layout: 'account',
+				title: 'Add a product',
+				entity,
+				message,
+			});
+		} else {
+			res.redirect(`/account/admin/products/add/${id}`);
+		}
 	} catch (error) {
 		res.render('error', {
 			error,
@@ -213,13 +223,21 @@ exports.editProductPost = async (req, res) => {
 			brand: req.body.product_brand,
 			stock: req.body.product_stock,
 			price: req.body.product_price,
-			// thumbnail: req.body.product_thumbnail,
-			// images: req.body.product_images,
 			generalInfo: req.body.product_generalinfo,
-			desciption: req.body.product_desciption,
+			detailedDescription: req.body.product_detailed_desciption,
 		};
-		await productService.updateProduct(entity);
-		res.redirect(req.headers.referer);
+
+		const { message, done } = await productService.updateProduct(entity);
+		if (!done) {
+			res.render('account/admin/editProduct', {
+				layout: 'account',
+				title: 'Edit a product',
+				entity,
+				message,
+			});
+		} else {
+			res.redirect('/account/admin/products');
+		}
 	} catch (error) {
 		res.render('error', {
 			error,
