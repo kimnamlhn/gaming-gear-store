@@ -1,7 +1,7 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
-28/40 (Trừ các chức năng nâng cao và tổng quát)
--3
+29/40 (Trừ các chức năng nâng cao và tổng quát)
+-2.75
 
 ### Tổng quát
 
