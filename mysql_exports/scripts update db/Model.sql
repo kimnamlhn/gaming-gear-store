@@ -36,7 +36,7 @@ CREATE TABLE `account` (
   `token` varchar(45) DEFAULT NULL,
   `tokenExpire` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idAccount`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +57,7 @@ CREATE TABLE `cart` (
   UNIQUE KEY `idSession_UNIQUE` (`idSession`) USING BTREE,
   KEY `fk_account_cart_idx` (`idAccount`),
   CONSTRAINT `fk_account_cart` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,24 +97,23 @@ CREATE TABLE `category` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `orderdetail`
+-- Table structure for table `order_detail`
 --
 
-DROP TABLE IF EXISTS `orderdetail`;
+DROP TABLE IF EXISTS `order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orderdetail` (
-  `idOrder` int NOT NULL,
-  `idProduct` int NOT NULL,
-  `quantityOrder` int DEFAULT NULL,
-  `product_idProduct` int NOT NULL,
-  `order_idOrder` int NOT NULL,
-  PRIMARY KEY (`idOrder`,`idProduct`,`product_idProduct`,`order_idOrder`),
-  UNIQUE KEY `orderdetail_product_idProduct_order_idOrder_unique` (`product_idProduct`,`order_idOrder`),
-  KEY `fk_orderDetail_product1_idx` (`product_idProduct`) USING BTREE,
-  KEY `fk_orderDetail_order1_idx` (`order_idOrder`) USING BTREE,
-  CONSTRAINT `orderdetail_ibfk_1` FOREIGN KEY (`product_idProduct`) REFERENCES `product` (`idProduct`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `orderdetail_ibfk_2` FOREIGN KEY (`order_idOrder`) REFERENCES `orders` (`idOrder`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE `order_detail` (
+  `idOrderDetail` int NOT NULL,
+  `idOrder` int DEFAULT NULL,
+  `idProduct` int DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  PRIMARY KEY (`idOrderDetail`),
+  UNIQUE KEY `order_product_unique` (`idOrder`,`idProduct`),
+  KEY `fk_product_order_detail_idx` (`idProduct`),
+  KEY `fk_order_order_detail_idx` (`idOrder`),
+  CONSTRAINT `fk_order_order_detail` FOREIGN KEY (`idOrder`) REFERENCES `orders` (`idOrder`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_product_order_detail` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -127,15 +126,13 @@ DROP TABLE IF EXISTS `orders`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `idOrder` int NOT NULL AUTO_INCREMENT,
-  `orderDate` date DEFAULT NULL,
-  `shippedDate` date DEFAULT NULL,
+  `idAccount` int DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `idCustomer` int DEFAULT NULL,
-  `idPayment` int DEFAULT NULL,
-  `customer_idCustomer` int NOT NULL,
+  `creationDate` date DEFAULT NULL,
+  `shippedDate` date DEFAULT NULL,
   PRIMARY KEY (`idOrder`),
-  KEY `fk_order_customer1_idx` (`customer_idCustomer`) USING BTREE,
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_idCustomer`) REFERENCES `account` (`idAccount`) ON UPDATE CASCADE
+  KEY `fk_order_account_idx` (`idAccount`),
+  CONSTRAINT `fk_order_account` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -147,17 +144,13 @@ DROP TABLE IF EXISTS `payment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
-  `idpayment` int NOT NULL AUTO_INCREMENT,
-  `idCustomer` int DEFAULT NULL,
-  `paymentDate` date DEFAULT NULL,
+  `idPayment` int NOT NULL AUTO_INCREMENT,
+  `idOrder` int DEFAULT NULL,
   `amount` int DEFAULT NULL,
-  `customer_idCustomer` int NOT NULL,
-  `order_idOrder` int NOT NULL,
-  PRIMARY KEY (`idpayment`),
-  KEY `fk_payment_customer_idx` (`customer_idCustomer`) USING BTREE,
-  KEY `fk_payment_order1_idx` (`order_idOrder`) USING BTREE,
-  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`customer_idCustomer`) REFERENCES `account` (`idAccount`) ON UPDATE CASCADE,
-  CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`order_idOrder`) REFERENCES `orders` (`idOrder`) ON UPDATE CASCADE
+  `creationDate` date DEFAULT NULL,
+  PRIMARY KEY (`idPayment`),
+  UNIQUE KEY `idOrder_UNIQUE` (`idOrder`),
+  CONSTRAINT `fk_payment_order` FOREIGN KEY (`idOrder`) REFERENCES `orders` (`idOrder`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -235,4 +228,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-23 20:33:19
+-- Dump completed on 2021-12-31 22:46:40

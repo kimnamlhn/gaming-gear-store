@@ -189,6 +189,16 @@ exports.deleteProduct = async (req, res) => {
 	}
 };
 
+exports.uploadImage = (req, res) => {
+	const id = Number(req.params.productID);
+	if (!req.user || !req.user.role) res.redirect('/');
+	res.render('account/admin/upload', {
+		layout: 'account',
+		title: 'Upload',
+		id,
+	});
+};
+
 exports.uploadImagePost = async (req, res) => {
 	const id = req.params.productID;
 	await productService.uploadImage(req, id);

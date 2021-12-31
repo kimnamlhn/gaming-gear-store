@@ -7,33 +7,25 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    orderDate: {
+    idAccount: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'account',
+        key: 'idAccount'
+      }
+    },
+    status: {
+      type: DataTypes.STRING(45),
+      allowNull: true
+    },
+    creationDate: {
       type: DataTypes.DATEONLY,
       allowNull: true
     },
     shippedDate: {
       type: DataTypes.DATEONLY,
       allowNull: true
-    },
-    status: {
-      type: DataTypes.STRING(45),
-      allowNull: true
-    },
-    idCustomer: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    idPayment: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    customer_idCustomer: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'account',
-        key: 'idAccount'
-      }
     }
   }, {
     sequelize,
@@ -49,10 +41,10 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "fk_order_customer1_idx",
+        name: "fk_order_account_idx",
         using: "BTREE",
         fields: [
-          { name: "customer_idCustomer" },
+          { name: "idAccount" },
         ]
       },
     ]

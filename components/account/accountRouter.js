@@ -20,17 +20,9 @@ router.post('/admin/products/add', accountController.addProductPost); // Add a p
 router.post('/admin/products/delete', accountController.deleteProduct); // Delete a product
 router.get('/admin/products/edit/:productID', accountController.getEditProductPage); // Edit a product
 router.post('/admin/products/edit/:productID', accountController.editProductPost); // Edit a product POST
-
-router.get('/admin/products/add/:productID', (req, res) => {
-	const id = Number(req.params.productID);
-	if (!req.user || !req.user.role) res.redirect('/');
-	res.render('account/admin/upload', {
-		layout: 'account',
-		title: 'Upload',
-		id,
-	});
-}); // Upload images
-
+router.get('/admin/products/add/:productID', accountController.uploadImage); // Upload images
 router.post('/admin/products/add/:productID', accountController.uploadImagePost); // Upload images POST
+
+router.get('/admin/orders', accountController.orderList);
 
 module.exports = router;

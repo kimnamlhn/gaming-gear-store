@@ -1,8 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('payment', {
-    idPayment: {
-      autoIncrement: true,
+  return sequelize.define('order_detail', {
+    idOrderDetail: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
@@ -13,21 +12,23 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'orders',
         key: 'idOrder'
-      },
-      unique: "fk_payment_order"
+      }
     },
-    amount: {
+    idProduct: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'product',
+        key: 'idProduct'
+      }
     },
-    creationDate: {
-      type: DataTypes.DATEONLY,
+    quantity: {
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'payment',
-    hasTrigger: true,
+    tableName: 'order_detail',
     timestamps: false,
     indexes: [
       {
@@ -35,12 +36,27 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "idPayment" },
+          { name: "idOrderDetail" },
         ]
       },
       {
-        name: "idOrder_UNIQUE",
+        name: "order_product_unique",
         unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "idOrder" },
+          { name: "idProduct" },
+        ]
+      },
+      {
+        name: "fk_product_order_detail_idx",
+        using: "BTREE",
+        fields: [
+          { name: "idProduct" },
+        ]
+      },
+      {
+        name: "fk_order_order_detail_idx",
         using: "BTREE",
         fields: [
           { name: "idOrder" },
