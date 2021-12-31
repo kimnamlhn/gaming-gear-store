@@ -1,7 +1,7 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
-29/40 (Trừ các chức năng nâng cao và tổng quát)
--2.75
+30/40 (Trừ các chức năng nâng cao và tổng quát)  
+-2.5đ
 
 ### Tổng quát
 
@@ -19,7 +19,7 @@
 ✅ Xem danh sách các sản phẩm theo từng loại sản phẩm/nhà sản xuất/phân loại  
 ✅ Hỗ trợ thay đổi thứ tự hiển thị, lọc sản phẩm  
 ✅ Phân trang danh sách sản phẩm  
-✅ Xem thông tin chi tiết sản phẩm
+✅ Xem thông tin chi tiết sản phẩm  
 ✅ Hiển thị các sản phẩm liên quan  
 ✅ Hiển thị danh sách bình luận sản phẩm  
 ✅ Thêm bình luận  
@@ -44,7 +44,7 @@
 
 ✅ Cập nhật thông tin cá nhân của tài khoản  
 ✅ Kiểm tra các ràng buộc  
-⬜ Yêu cầu nhập lại mật khẩu cũ khi thay đổi mật khẩu  
+✅ Yêu cầu nhập lại mật khẩu cũ khi thay đổi mật khẩu  
 ⬜ Đặt hàng siêu thị và thanh toán  
 ⬜ Điền các thông tin về giao hàng  
 ⬜ Xem thông tin lịch sử quá trình và trạng thái mua hàng

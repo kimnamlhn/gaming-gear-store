@@ -54,7 +54,20 @@ exports.profileUpdate = async (req, res) => {
 			});
 		}
 		if (req.body.changing === 'password') {
-			console.log('changing password');
+			const entity = {
+				idAccount: req.user.idAccount,
+				current_pwd: req.body.user_current_password,
+				new_pwd: req.body.user_password,
+				cfm_new_pwd: req.body.user_cfm_password,
+			};
+			const message = await accountService.updatePassword(entity);
+			const profile = await accountService.getProfile(req.user.idAccount);
+			res.render('account/profile', {
+				layout: 'account',
+				title: 'Main',
+				profile,
+				message,
+			});
 		}
 	} catch (error) {
 		res.render('error', { error });
