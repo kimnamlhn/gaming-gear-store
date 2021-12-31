@@ -24,258 +24,159 @@
     {{>account/page-header}}
     <div class="card-box mb-30">
         <div class="pd-20">
-            <h4 class="text-blue h4">Product List <a href="/account/admin/products/add" style="float:right;"><i class="fa fa-plus"></i> Add a product</a></h4>
+            <h4 class="text-blue h4">
+                Product List 
+                <button id="reset-btn" class="btn btn-primary">Reset Filter</button>
+                <input class="h5" type="text" name="search" id="search" placeholder="Search here" autocomplete="off">
+                <p class="h5" style="display:inline; color:black;">Sort By:
+                <select id="sort-method" name="sort" class="input-select">
+                    <option value="0">None</option>
+                    <option value="1">Price: Highest to Lowest</option>
+                    <option value="2">Price: Lowest to Highest</option>
+                    <option value="3">Rating: Highest to Lowest</option>
+                    <option value="4">Rating: Lowest to Highest</option>
+                    <option value="5">Creation: Highest to Lowest</option>
+                    <option value="6">Creation: Lowest to Highest</option>
+                </select></p>
+                <p class="h5" style="display:inline; color:black;">Show
+                <select id="show-limit" name="limit" class="input-select">
+                    <option value="12">12</option>
+                    <option value="24">24</option>
+                    <option value="36">36</option>
+                    <option value="3">3</option>
+                </select></p>
+                <a href="/account/admin/products/add" style="float:right;"><i class="fa fa-plus"></i> Add a product</a>
+
+            </h4>
+            
+            <div class="row">
+                <div class="col-xl-3 col-md-6 col-sm-12">
+                    <h5 class="h5">Category:</h5>
+                    <div class="checkbox-filter">
+                        {{#each categories}}
+                        <div class="input-radio">
+                            <input class="category-filter" type="radio" name="category" id="category-{{category}}" value="{{category}}">
+                            <label for="category-{{category}}">
+                                <span></span>
+                                {{'category_category.nameCategory'}}
+                            </label>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12">
+                    <h5 class="h5">Brand:</h5>
+                    <div class="checkbox-filter">
+                        {{#each brands}}
+                        <div class="input-radio">
+                            <input class="brand-filter" type="radio" name="brand" id="brand-{{brand}}" value="{{brand}}">
+                            <label for="brand-{{brand}}">
+                                <span></span>
+                                {{brand}}
+                            </label>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12">
+                    <h5 class="h5">Rating</>
+                    <div class="checkbox-filter">
+                        <div class="input-radio">
+                            <input class="rating-filter" type="radio" name="rating" id="rating-4" value="4">
+                            <label for="rating-4" style="font-weight: 400; font-size: 1rem;">
+                                <span></span>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                and up
+                            </label>
+                        </div>
+                        <div class="input-radio">
+                            <input class="rating-filter" type="radio" name="rating" id="rating-3" value="3">
+                            <label for="rating-3" style="font-weight: 400; font-size: 1rem;">
+                                <span></span>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                and up
+                            </label>
+                        </div>
+                        <div class="input-radio">
+                            <input class="rating-filter" type="radio" name="rating" id="rating-2" value="2">
+                            <label for="rating-2" style="font-weight: 400; font-size: 1rem;">
+                                <span></span>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                and up
+                            </label>
+                        </div>
+                        <div class="input-radio">
+                            <input class="rating-filter" type="radio" name="rating" id="rating-1" value="1">
+                            <label for="rating-1" style="font-weight: 400; font-size: 1rem;">
+                                <span></span>
+                                <i class="fa fa-star star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                <i class="fa fa-star-o star-red"></i>
+                                and up
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12">
+                    <h5 class="h5">Price:</h5>
+                    <div class="price-filter" style="display:flex;">
+                        <div class="input-number price-min">
+                            <input style="width: 75px;" id="price-min" type="number" value="" placeholder="From" name="pricemin">
+                        </div>
+                        <span>-</span>
+                        <div class="input-number price-max" >
+                            <input style="width: 75px;" id="price-max" type="number" value="" placeholder="To" name="pricemax">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="pb-20">
-            <table class="data-table table stripe hover nowrap">
-                <thead>
-                    <tr>
-                        <th class="table-plus">ID</th>
-                        <th>Product Name</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Stock</th>
-                        <th>Creation Date</th>
-                        <th class="datatable-nosort">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each products}}
-                    <tr>
-                        <form id="deleteProductForm-{{idProduct}}" method="post" action="/account/admin/products/delete">
-                            <input type="hidden" name="idProduct" value="{{idProduct}}">
-                            <td class="table-plus">{{idProduct}}</td>
-                            <td>{{name}}</td>
-                            <td>{{'category_category.nameCategory'}}</td>
-                            <td>{{price}}</td>
-                            <td>{{stock}}</td>
-                            <td>{{creationDate}}</td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                        <i class="dw dw-more"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                        <a class="dropdown-item" href="/products/{{idProduct}}"><i class="dw dw-eye"></i> View</a>
-                                        <a class="dropdown-item" href="/account/admin/products/edit/{{idProduct}}"><i class="dw dw-edit2"></i> Edit</a>
-                                        <a class="dropdown-item" onclick="document.getElementById('deleteProductForm-{{idProduct}}').submit();"><i class="dw dw-delete-3"></i> Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                       </form>
-                    </tr>
-                    {{/each}}
-                    {{!-- <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>30</td>
-                        <td>Gemini</td>
-                        <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>20</td>
-                        <td>Gemini</td>
-                        <td>2829 Trainer Avenue Peoria, IL 61602 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>30</td>
-                        <td>Sagittarius</td>
-                        <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>25</td>
-                        <td>Gemini</td>
-                        <td>2829 Trainer Avenue Peoria, IL 61602 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>20</td>
-                        <td>Sagittarius</td>
-                        <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>18</td>
-                        <td>Gemini</td>
-                        <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>30</td>
-                        <td>Sagittarius</td>
-                        <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>30</td>
-                        <td>Sagittarius</td>
-                        <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>30</td>
-                        <td>Gemini</td>
-                        <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>30</td>
-                        <td>Gemini</td>
-                        <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-plus">Andrea J. Cagle</td>
-                        <td>30</td>
-                        <td>Gemini</td>
-                        <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-                        <td>29-03-2018</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr> --}}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Creation Date</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-list">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <ul class="pagination-list">
+                    <li><i class="fa fa-angle-left"></i></li>
+                    <li class="active">1</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
+
+{{#section "fetch"}}
+<script src="/api/fetch/productListAdmin.js"></script>
+<script src="/store/js/helper.js"></script>
+{{/section}}

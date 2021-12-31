@@ -18,7 +18,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     idSession: {
       type: DataTypes.STRING(45),
-      allowNull: true
+      allowNull: true,
+      unique: "idSession_UNIQUE"
     }
   }, {
     sequelize,
@@ -39,6 +40,14 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "idAccount" },
+        ]
+      },
+      {
+        name: "idSession_UNIQUE",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "idSession" },
         ]
       },
       {

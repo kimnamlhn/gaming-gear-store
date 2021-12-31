@@ -36,7 +36,7 @@ CREATE TABLE `account` (
   `token` varchar(45) DEFAULT NULL,
   `tokenExpire` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idAccount`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,9 +54,10 @@ CREATE TABLE `cart` (
   `updatedAt` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idCart`),
   UNIQUE KEY `idAccount_UNIQUE` (`idAccount`),
+  UNIQUE KEY `idSession_UNIQUE` (`idSession`) USING BTREE,
   KEY `fk_account_cart_idx` (`idAccount`),
   CONSTRAINT `fk_account_cart` FOREIGN KEY (`idAccount`) REFERENCES `account` (`idAccount`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +79,7 @@ CREATE TABLE `cart_items` (
   KEY `fk_product_idx` (`idProduct`) USING BTREE,
   CONSTRAINT `fk_cart_cart_items` FOREIGN KEY (`idCart`) REFERENCES `cart` (`idCart`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_product_cart_items` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,16 +173,17 @@ CREATE TABLE `product` (
   `name` varchar(100) NOT NULL,
   `generalInfo` text,
   `detailedDescription` text,
-  `price` double DEFAULT NULL,
-  `stock` int DEFAULT NULL,
+  `price` double NOT NULL,
+  `stock` int NOT NULL,
   `brand` varchar(30) NOT NULL,
   `thumbnail` varchar(45) DEFAULT NULL,
   `category` int NOT NULL,
   `creationDate` date NOT NULL,
+  `views` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idProduct`),
   KEY `fk_category_product_idx` (`category`) USING BTREE,
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`idCategory`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,4 +235,4 @@ CREATE TABLE `product_images` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-20 21:31:34
+-- Dump completed on 2021-12-23 20:33:19

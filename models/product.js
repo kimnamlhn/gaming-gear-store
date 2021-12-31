@@ -21,11 +21,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     price: {
       type: DataTypes.DOUBLE,
-      allowNull: true
+      allowNull: false
     },
     stock: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false
     },
     brand: {
       type: DataTypes.STRING(30),
@@ -46,6 +46,11 @@ module.exports = function(sequelize, DataTypes) {
     creationDate: {
       type: DataTypes.DATEONLY,
       allowNull: false
+    },
+    views: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     sequelize,
