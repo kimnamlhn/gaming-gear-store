@@ -23,7 +23,7 @@ passport.use(
 					});
 				}
 				if (account.locked) {
-					return done(null, false, { message: 'This account is locked.' });
+					return done(null, false, { message: 'This account is locked or unconfirmed.' });
 				}
 				if (!bcrypt.compareSync(password, account.password)) {
 					return done(null, false, {

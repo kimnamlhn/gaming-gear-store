@@ -1,7 +1,7 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
-30/40 (Trừ các chức năng nâng cao và tổng quát)  
--2.5đ
+31/40 (Trừ các chức năng nâng cao và tổng quát)  
+-2.25đ
 
 ### Tổng quát
 
@@ -35,7 +35,7 @@
 ✅ Sử dụng một thư viện chuyên về authentication  
 ✅ Đăng ký tài khoản  
 ✅ Kiểm tra các ràng buộc về tên đăng nhập, mật khẩu nhập lại, ...  
-⬜ Kích hoạt tài khoản bằng email  
+✅ Kích hoạt tài khoản bằng email  
 ✅ Đăng nhập hệ thống  
 ✅ Ngăn cấm người chưa đăng nhập sử dụng các chức năng bắt buộc đăng nhập theo quyền hạn  
 ✅ Quên mật khẩu và làm mới mật khẩu bằng email

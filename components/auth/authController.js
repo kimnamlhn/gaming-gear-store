@@ -40,13 +40,13 @@ exports.createAccount = async (req, res) => {
 			address: req.body.user_address,
 			role: 0,
 		};
-		const { error, user } = await authService.createAccount(entity);
-		if (user)
-			req.login(user, function (err) {
-				if (!err) {
-					res.redirect('/');
-				} else console.log(err);
-			});
+		const error = await authService.createAccount(entity);
+		// if (user)
+		// 	req.login(user, function (err) {
+		// 		if (!err) {
+		// 			res.redirect('/');
+		// 		} else console.log(err);
+		// 	});
 		res.render('account/register', {
 			layout: 'auth',
 			title: 'Register',
@@ -58,6 +58,24 @@ exports.createAccount = async (req, res) => {
 		});
 	} catch (err) {
 		res.render('error', { err });
+	}
+};
+
+exports.confirmAccount = async (req, res) => {
+	try {
+		if (req.user) res.redirect('/');
+		const user = await authService.confirmAccount(req.query.token);
+		if (user)
+			req.login(user, function (err) {
+				if (!err) {
+					res.redirect('/');
+				} else console.log(err);
+			});
+		res.send('Token invalid');
+	} catch (error) {
+		res.render('error', {
+			error,
+		});
 	}
 };
 
