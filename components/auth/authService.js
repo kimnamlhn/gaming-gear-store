@@ -68,10 +68,10 @@ exports.forgotPassword = async (user_email) => {
 	});
 	const mailOptions = {
 		from: process.env.MAIL_USERNAME,
-		to: user_email,
-		//to: process.env.MAIL_USERNAME,
+		//to: user_email,
+		to: process.env.MAIL_USERNAME,
 		subject: `Link to reset password`,
-		html: `<p>Click this link to reset your password. <a href="http://localhost:3000/auth/reset-password?token=${token}">Click here.</a> This link will expires in 15 minutes.</p>`,
+		html: `<p>Click this link to reset your password. <a href="${process.env.ADDRESS}/auth/reset-password?token=${token}">Click here.</a> This link will expires in 15 minutes.</p>`,
 	};
 	transporter.sendMail(mailOptions, function (error, info) {
 		if (error) {
