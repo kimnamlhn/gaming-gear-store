@@ -17,7 +17,7 @@ router.get('/admin/acc', accountController.accountListUser); // User Account Lis
 router.get('/admin/products', accountController.list); // Product list
 router.get('/admin/products/add', accountController.addProduct); // Add a Product
 router.post('/admin/products/add', accountController.addProductPost); // Add a product POST
-router.post('/admin/products/delete', accountController.deleteProduct); // Delete a product
+router.get('/admin/products/delete/:productID', accountController.deleteProduct); // Delete a product
 router.get('/admin/products/edit/:productID', accountController.getEditProductPage); // Edit a product
 router.post('/admin/products/edit/:productID', accountController.editProductPost); // Edit a product POST
 router.get('/admin/products/add/:productID', accountController.uploadImage); // Upload images

@@ -1,0 +1,39 @@
+<div class="min-height-200px">
+    {{>account/page-header}}
+    <div class="card-box mb-30">
+        <div class="pd-20">
+            <h4 class="text-blue h4">
+                Order List 
+            </h4>          
+        </div>
+        <div class="pb-20">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Creation Date</th>
+                            <th scope="col">Shipped Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-list">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <ul class="pagination-list">
+                    <li><i class="fa fa-angle-left"></i></li>
+                    <li class="active">1</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#section "fetch"}}
+<script src="/api/fetch/orderListAdmin.js"></script>
+<script src="/store/js/helper.js"></script>
+{{/section}}

@@ -58,7 +58,7 @@
 ⬜ Khóa, mở khóa tài khoản người dùng  
 ✅ Quản lý hệ thống gian hàng  
 ✅ Quản lý sản phẩm trên gian hàng  
-✅ Phân trang, lọc danh sách sản phẩm
+✅ Phân trang, lọc danh sách sản phẩm  
 ✅ Kiểm tra các ràng buộc về sản phẩm  
 ✅ Cho phép đăng tải các hình đại diện của sản phẩm  
 ⬜ Quản lý đơn đặt hàng (đã giao, chưa giao, đang giao)  

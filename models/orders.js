@@ -15,6 +15,10 @@ module.exports = function(sequelize, DataTypes) {
         key: 'idAccount'
       }
     },
+    note: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
     status: {
       type: DataTypes.STRING(45),
       allowNull: true

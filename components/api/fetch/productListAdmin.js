@@ -18,29 +18,26 @@ const getProducts = async (page, search) => {
 		if (api.rows.length > 0) {
 			api.rows.forEach((product) => {
 				$('#product-list').append(`
-                <tr>
-                <form id="deleteProductForm-${product.idProduct}" method="post" action="/account/admin/products/delete">
-                    <input type="hidden" name="idProduct" value="{{idProduct}}">
-                    <th scope="row">${product.idProduct}</th>
-                    <td>${product.name}</td>
-                    <td>${product.nameCategory}</td>
-                    <td>${product.brand}</td>
-                    <td>${product.price}</td>
-                    <td>${product.stock}</td>
-                    <td>${product.creationDate}</td>
-                    <td>
-                        <div class="dropdown">
-                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                <i class="dw dw-more"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                <a class="dropdown-item" href="/products/${product.idProduct}"><i class="dw dw-eye"></i> View</a>
-                                <a class="dropdown-item" href="/account/admin/products/edit/${product.idProduct}"><i class="dw dw-edit2"></i> Edit</a>
-                                <a class="dropdown-item" onclick="document.getElementById('deleteProductForm-${product.idProduct}').submit();"><i class="dw dw-delete-3"></i> Delete</a>
-                            </div>
-                        </div>
-                    </td>
-                </form>
+			<tr>
+				<th scope="row">${product.idProduct}</th>
+				<td>${product.name}</td>
+				<td>${product.nameCategory}</td>
+				<td>${product.brand}</td>
+				<td>${product.price}</td>
+				<td>${product.stock}</td>
+				<td>${product.creationDate}</td>
+				<td>
+					<div class="dropdown">
+						<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+							<i class="dw dw-more"></i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+							<a class="dropdown-item" href="/products/${product.idProduct}"><i class="dw dw-eye"></i> View</a>
+							<a class="dropdown-item" href="/account/admin/products/edit/${product.idProduct}"><i class="dw dw-edit2"></i> Edit</a>
+							<a class="dropdown-item" href="/account/admin/products/delete/${product.idProduct}"><i class="dw dw-delete-3"></i> Delete</a>
+						</div>
+					</div>
+				</td>
             </tr>
                 `);
 			});
