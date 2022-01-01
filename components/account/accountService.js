@@ -65,6 +65,27 @@ exports.updateProfileInfo = async (entity) => {
 	}
 };
 
+exports.lockUser = async (idAccount) => {
+	try {
+		let account = await models.account.findOne({
+			where: { idAccount: idAccount },
+		});
+
+		console.log("id account", account);
+
+		if (account.locked) return 'This user is already locked';
+
+		account.set({
+			locked: 1
+		});
+
+		await account.save();
+		return 'Locked successfully.';
+	} catch (e) {
+		console.log('err:', e);
+	}
+};
+
 exports.updatePassword = async (entity) => {
 	try {
 		let account = await models.account.findOne({

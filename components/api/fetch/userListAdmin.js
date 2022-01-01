@@ -28,7 +28,9 @@ const getUserList = async (page) => {
 
 				$('#user-list').append(`
 				<tr>
-				<form id="deleteAccountForm-${user.idAccount}" method="post" action="/account/admin/acc/delete">
+				<form id="lockAccount" method="post" action="/account/lockaccount">
+					<input type="hidden" id="lockUserId" name="lockUserId" value="">
+
 					<th scope="row">${user.idAccount}</th>
 					<td>${user.email}</td>
 					<td>${user.name}</td>
@@ -44,7 +46,7 @@ const getUserList = async (page) => {
 							<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 								<a class="dropdown-item" href="/account/userprofile/${user.idAccount}"><i
 										class="dw dw-eye"></i> View</a>
-								<a class="dropdown-item" href="/account/admin/acc/edit/${user.idAccount}"><i
+								<a class="dropdown-item" onclick="$('#lockUserId').val(${user.idAccount}); document.getElementById('lockAccount').submit(); "><i
 										class="dw dw-lock"></i> Lock</a>
 								<a class="dropdown-item"
 									onclick="document.getElementById('deleteAccountForm-${user.idAccount}').submit();"><i
