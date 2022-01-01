@@ -9,6 +9,8 @@ router.post('/', accountController.profileUpdate);
 //user profile 
 router.get('/userprofile/:userID', accountController.userProfile);
 
+//lock user account
+router.post('/lockaccount', accountController.lockUser);
 
 router.get('/admin', accountController.adminIndex);
 router.post('/admin', accountController.profileUpdate);
