@@ -9,28 +9,29 @@ exports.createAccount = async (entity) => {
 	try {
 		const account = await models.account.findOne({ where: { email: entity.email } });
 		if (account) {
-			return { error: 'Account already exists.', user: null };
+			return 'Account already exists.';
 		}
 		if (!validator.isEmail(entity.email)) {
-			return { error: 'Please enter a valid email address.', user: null };
+			return 'Please enter a valid email address.';
 		}
 		if (entity.password.length < 6) {
-			return { error: 'Your password must be at least 6 characters long.', user: null };
+			return 'Your password must be at least 6 characters long.';
 		}
 		if (entity.password !== entity.cfm_password) {
-			return { error: `The passwords you typed aren't matching.`, user: null };
+			return `The passwords you typed aren't matching.`;
 		}
 		if (entity.name.length === 0) {
-			return { error: 'Please enter your name.', user: null };
+			return 'Please enter your name.';
 		}
 		if (entity.phone.length === 0) {
-			return { error: 'Please enter your phone number.', user: null };
+			return 'Please enter your phone number.';
 		}
 		if (entity.address.length === 0) {
-			return { error: 'Please enter your address.', user: null };
+			return 'Please enter your address.';
 		}
+		const token = uuidv4();
 		const hashPassword = await bcrypt.hash(entity.password, 10);
-		const newAccount = await models.account.create({
+		await models.account.create({
 			idAccount: null,
 			email: entity.email,
 			password: hashPassword,
@@ -40,11 +41,46 @@ exports.createAccount = async (entity) => {
 			role: entity.role,
 			createdAt: moment(),
 			updatedAt: moment(),
-			locked: 0,
+			locked: 1,
+			token: token,
 		});
-		return { error: null, user: newAccount };
+		const transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: process.env.MAIL_USERNAME,
+				pass: process.env.MAIL_PASSWORD,
+			},
+		});
+		const mailOptions = {
+			from: process.env.MAIL_USERNAME,
+			//to: user_email,
+			to: process.env.MAIL_USERNAME,
+			subject: `Link to confirm account`,
+			html: `<p>Click this link to confirm your account. <a href="${process.env.ADDRESS}/auth/confirm-account?token=${token}">Click here.</a></p>`,
+		};
+		transporter.sendMail(mailOptions, function (error, info) {
+			if (error) {
+				console.log(error);
+			} else {
+				return 'Account created sucessfully, please check your email address for confirmation link.';
+			}
+		});
+		return 'Account created sucessfully, please check your email address for confirmation link.';
 	} catch (err) {
 		console.log(err);
+	}
+};
+
+exports.confirmAccount = async (_token) => {
+	if (!uuidValidate(_token)) return null;
+	const account = await models.account.findOne({
+		where: { token: _token },
+	});
+	if (account) {
+		account.token = null;
+		account.locked = 0;
+		await account.save();
+		return account;
 	}
 };
 
@@ -54,7 +90,7 @@ exports.forgotPassword = async (user_email) => {
 	const account = await models.account.findOne({
 		where: { email: user_email },
 	});
-	if (account.locked) return 'This account is locked.';
+	if (account.locked && !account.token) return 'This account is locked.';
 	account.token = token;
 	account.tokenExpire = moment();
 	account.save();
@@ -68,10 +104,10 @@ exports.forgotPassword = async (user_email) => {
 	});
 	const mailOptions = {
 		from: process.env.MAIL_USERNAME,
-		to: user_email,
-		//to: process.env.MAIL_USERNAME,
+		//to: user_email,
+		to: process.env.MAIL_USERNAME,
 		subject: `Link to reset password`,
-		html: `<p>Click this link to reset your password. <a href="http://localhost:3000/auth/reset-password?token=${token}">Click here.</a> This link will expires in 15 minutes.</p>`,
+		html: `<p>Click this link to reset your password. <a href="${process.env.ADDRESS}/auth/reset-password?token=${token}">Click here.</a> This link will expires in 15 minutes.</p>`,
 	};
 	transporter.sendMail(mailOptions, function (error, info) {
 		if (error) {

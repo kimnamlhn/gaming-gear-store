@@ -17,6 +17,7 @@ router.post(
 //Register
 router.get('/register', authController.register);
 router.post('/register', authController.createAccount);
+router.get('/confirm-account', authController.confirmAccount);
 // Password
 router.get('/forgot-password', authController.forgotPassword);
 router.post('/forgot-password', authController.forgotPasswordPost);

@@ -94,7 +94,20 @@ exports.profileUpdate = async (req, res) => {
 			});
 		}
 		if (req.body.changing === 'password') {
-			console.log('changing password');
+			const entity = {
+				idAccount: req.user.idAccount,
+				current_pwd: req.body.user_current_password,
+				new_pwd: req.body.user_password,
+				cfm_new_pwd: req.body.user_cfm_password,
+			};
+			const message = await accountService.updatePassword(entity);
+			const profile = await accountService.getProfile(req.user.idAccount);
+			res.render('account/profile', {
+				layout: 'account',
+				title: 'Main',
+				profile,
+				message,
+			});
 		}
 	} catch (error) {
 		res.render('error', { error });
@@ -204,16 +217,27 @@ exports.addProduct = async (req, res) => {
 
 exports.deleteProduct = async (req, res) => {
 	try {
-		const idProduct = req.body.idProduct;
+		if (!req.user || !req.user.role) res.redirect('/');
+		const idProduct = req.params.productID;
 		await productService.deleteProductComment(idProduct);
 		await productService.deleteProductImage(idProduct);
 		await productService.deleteProduct(idProduct);
-		res.redirect(req.headers.referer);
+		res.redirect('/account/admin/products');
 	} catch (error) {
 		res.render('error', {
 			error,
 		});
 	}
+};
+
+exports.uploadImage = (req, res) => {
+	const id = Number(req.params.productID);
+	if (!req.user || !req.user.role) res.redirect('/');
+	res.render('account/admin/upload', {
+		layout: 'account',
+		title: 'Upload',
+		id,
+	});
 };
 
 exports.uploadImagePost = async (req, res) => {
@@ -297,6 +321,21 @@ exports.getEditProductPage = async (req, res) => {
 			title: 'Edit a product',
 			product,
 			image,
+		});
+	} catch (error) {
+		res.render('error', {
+			error,
+		});
+	}
+};
+
+exports.orderList = async (req, res) => {
+	try {
+		// if (!req.user || !req.user.role) res.redirect('/');
+
+		res.render('account/admin/orderList', {
+			layout: 'account',
+			title: 'Order list',
 		});
 	} catch (error) {
 		res.render('error', {

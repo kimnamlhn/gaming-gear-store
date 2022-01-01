@@ -1,5 +1,6 @@
 const moment = require('moment');
 const sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
 const validator = require('validator');
 const { models } = require('../../models');
 
@@ -64,7 +65,6 @@ exports.updateProfileInfo = async (entity) => {
 	}
 };
 
-
 exports.lockUser = async (idAccount) => {
 	try {
 		let account = await models.account.findOne({
@@ -81,6 +81,33 @@ exports.lockUser = async (idAccount) => {
 
 		await account.save();
 		return 'Locked successfully.';
+	} catch (e) {
+		console.log('err:', e);
+	}
+};
+
+exports.updatePassword = async (entity) => {
+	try {
+		let account = await models.account.findOne({
+			where: { idAccount: entity.idAccount },
+		});
+		if (!bcrypt.compareSync(entity.current_pwd, account.password)) {
+			return 'Current password is incorrect.';
+		}
+		if (entity.new_pwd.length < 6) {
+			return 'Your new password must be at least 6 characters long.';
+		}
+		if (entity.new_pwd !== entity.cfm_new_pwd) {
+			return `The new passwords you typed aren't matching.`;
+		}
+		const hashPassword = await bcrypt.hash(entity.cfm_new_pwd, 10);
+		account.set({
+			password: hashPassword,
+			updatedAt: moment(),
+		});
+
+		await account.save();
+		return 'Account password changed.';
 	} catch (e) {
 		console.log('err:', e);
 	}

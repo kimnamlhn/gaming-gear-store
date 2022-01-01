@@ -1,7 +1,7 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
-29/40 (Trừ các chức năng nâng cao và tổng quát)
--2.75
+31/40 (Trừ các chức năng nâng cao và tổng quát)  
+-2.25đ
 
 ### Tổng quát
 
@@ -19,7 +19,7 @@
 ✅ Xem danh sách các sản phẩm theo từng loại sản phẩm/nhà sản xuất/phân loại  
 ✅ Hỗ trợ thay đổi thứ tự hiển thị, lọc sản phẩm  
 ✅ Phân trang danh sách sản phẩm  
-✅ Xem thông tin chi tiết sản phẩm
+✅ Xem thông tin chi tiết sản phẩm  
 ✅ Hiển thị các sản phẩm liên quan  
 ✅ Hiển thị danh sách bình luận sản phẩm  
 ✅ Thêm bình luận  
@@ -35,7 +35,7 @@
 ✅ Sử dụng một thư viện chuyên về authentication  
 ✅ Đăng ký tài khoản  
 ✅ Kiểm tra các ràng buộc về tên đăng nhập, mật khẩu nhập lại, ...  
-⬜ Kích hoạt tài khoản bằng email  
+✅ Kích hoạt tài khoản bằng email  
 ✅ Đăng nhập hệ thống  
 ✅ Ngăn cấm người chưa đăng nhập sử dụng các chức năng bắt buộc đăng nhập theo quyền hạn  
 ✅ Quên mật khẩu và làm mới mật khẩu bằng email
@@ -44,7 +44,7 @@
 
 ✅ Cập nhật thông tin cá nhân của tài khoản  
 ✅ Kiểm tra các ràng buộc  
-⬜ Yêu cầu nhập lại mật khẩu cũ khi thay đổi mật khẩu  
+✅ Yêu cầu nhập lại mật khẩu cũ khi thay đổi mật khẩu  
 ⬜ Đặt hàng siêu thị và thanh toán  
 ⬜ Điền các thông tin về giao hàng  
 ⬜ Xem thông tin lịch sử quá trình và trạng thái mua hàng
@@ -58,7 +58,7 @@
 ⬜ Khóa, mở khóa tài khoản người dùng  
 ✅ Quản lý hệ thống gian hàng  
 ✅ Quản lý sản phẩm trên gian hàng  
-✅ Phân trang, lọc danh sách sản phẩm
+✅ Phân trang, lọc danh sách sản phẩm  
 ✅ Kiểm tra các ràng buộc về sản phẩm  
 ✅ Cho phép đăng tải các hình đại diện của sản phẩm  
 ⬜ Quản lý đơn đặt hàng (đã giao, chưa giao, đang giao)  
@@ -68,7 +68,7 @@
 ### Các chức năng nâng cao
 
 ✅ Website đã được đăng và hoạt động tốt trên host thực tế (0.5đ)  
-⬜ AJAX: Done: phân trang tìm kiếm, phân trang comment, phân trang DS sản phẩm, tìm kiếm sản phẩm, thêm item, delete item trong giỏ hàng  
+✅ AJAX: Done: phân trang tìm kiếm, phân trang comment, phân trang DS sản phẩm, tìm kiếm sản phẩm, thêm item, delete item trong giỏ hàng (0.75đ)  
 ⬜ Sử dụng memory cache để tăng tốc độ website  
 ⬜ Sử dụng Google Analytics  
 ⬜ Vẽ biểu đồ  
