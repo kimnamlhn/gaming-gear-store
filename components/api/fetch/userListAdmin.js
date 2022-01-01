@@ -42,7 +42,7 @@ const getUserList = async (page) => {
 								<i class="dw dw-more"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-								<a class="dropdown-item" href="/account/${user.idAccount}"><i
+								<a class="dropdown-item" href="/account/userprofile/${user.idAccount}"><i
 										class="dw dw-eye"></i> View</a>
 								<a class="dropdown-item" href="/account/admin/acc/edit/${user.idAccount}"><i
 										class="dw dw-lock"></i> Lock</a>

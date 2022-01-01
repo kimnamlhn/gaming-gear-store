@@ -6,6 +6,10 @@ const accountController = require('./accountController');
 router.get('/', accountController.userIndex);
 router.post('/', accountController.profileUpdate);
 
+//user profile 
+router.get('/userprofile/:userID', accountController.userProfile);
+
+
 router.get('/admin', accountController.adminIndex);
 router.post('/admin', accountController.profileUpdate);
 

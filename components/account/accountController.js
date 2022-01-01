@@ -17,6 +17,22 @@ exports.userIndex = async (req, res) => {
 	}
 };
 
+exports.userProfile = async (req, res) => {
+	try {
+		if (!req.user) res.redirect('/');
+		const profile = await accountService.getProfile(req.user.idAccount);
+		res.render('account/profile', {
+			layout: 'account',
+			title: 'User proflie',
+			profile,
+		});
+	} catch (error) {
+		res.render('error', {
+			error,
+		});
+	}
+};
+
 exports.adminIndex = async (req, res) => {
 	try {
 		if (!req.user || !req.user.role) res.redirect('/');
