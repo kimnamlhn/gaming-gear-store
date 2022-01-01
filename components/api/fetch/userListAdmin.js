@@ -42,12 +42,12 @@ const getUserList = async (page) => {
 								<i class="dw dw-more"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-								<a class="dropdown-item" href="/account/{{idAccount}}"><i
+								<a class="dropdown-item" href="/account/userprofile/${user.idAccount}"><i
 										class="dw dw-eye"></i> View</a>
-								<a class="dropdown-item" href="/account/admin/acc/edit/{{idAccount}}"><i
+								<a class="dropdown-item" href="/account/admin/acc/edit/${user.idAccount}"><i
 										class="dw dw-lock"></i> Lock</a>
 								<a class="dropdown-item"
-									onclick="document.getElementById('deleteAccountForm-{{idAccount}}').submit();"><i
+									onclick="document.getElementById('deleteAccountForm-${user.idAccount}').submit();"><i
 										class="dw dw-delete-3"></i> Delete</a>
 							</div>
 						</div>
