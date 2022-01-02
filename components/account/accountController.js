@@ -242,7 +242,6 @@ exports.addProductPost = async (req, res) => {
 			detailedDescription: req.body.product_detailed_desciption,
 		};
 		const { id, message, done } = await productService.createProduct(entity);
-		console.log(id, message, done);
 		if (!done) {
 			res.render('account/admin/addProduct', {
 				layout: 'account',

@@ -7,7 +7,6 @@ const getComments = async (page) => {
 			throw new Error(message);
 		}
 		res.json().then((api) => {
-			//console.log(api);
 			$('.product-rating').html(rating_star(api.commentsCount.ratingAvg));
 			$('.review-link').text(`${api.comments.count} Review(s) | Add your review`);
 			$('#rating-tab-count').text(`Reviews (${api.comments.count})`);

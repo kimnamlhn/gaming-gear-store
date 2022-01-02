@@ -10,8 +10,6 @@ const getUserList = async (page) => {
 			throw new Error(message);
 		}
 		const api = await res.json();
-		console.log(api);
-
 		$('#user-list').empty();
 		if (api.rows.length > 0) {
 			api.rows.forEach((user) => {

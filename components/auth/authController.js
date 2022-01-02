@@ -41,12 +41,6 @@ exports.createAccount = async (req, res) => {
 			role: 0,
 		};
 		const error = await authService.createAccount(entity);
-		// if (user)
-		// 	req.login(user, function (err) {
-		// 		if (!err) {
-		// 			res.redirect('/');
-		// 		} else console.log(err);
-		// 	});
 		res.render('account/register', {
 			layout: 'auth',
 			title: 'Register',
