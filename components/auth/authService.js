@@ -58,7 +58,7 @@ exports.createAccount = async (entity) => {
 			subject: `Link to confirm account`,
 			html: `<p>Click this link to confirm your account. <a href="${process.env.ADDRESS}/auth/confirm-account?token=${token}">Click here.</a></p>`,
 		};
-		transporter.sendMail(mailOptions, function (error, info) {
+		transporter.sendMail(mailOptions, async function (error, info) {
 			if (error) {
 				console.log(error);
 			} else {
