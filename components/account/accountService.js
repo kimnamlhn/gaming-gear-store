@@ -18,7 +18,7 @@ exports.getProfile = (id) => {
 			idAccount: id,
 		},
 		attributes: {
-			exclude: ['password', 'role', 'locked', 'token', 'tokenExpire'],
+			exclude: ['password', 'locked', 'token', 'tokenExpire'],
 		},
 		raw: true,
 	});
@@ -71,12 +71,12 @@ exports.lockUser = async (idAccount) => {
 			where: { idAccount: idAccount },
 		});
 
-		console.log("id account", account);
+		console.log('id account', account);
 
 		if (account.locked) return 'This user is already locked';
 
 		account.set({
-			locked: 1
+			locked: 1,
 		});
 
 		await account.save();

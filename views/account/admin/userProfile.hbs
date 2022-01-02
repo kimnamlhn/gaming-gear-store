@@ -1,0 +1,42 @@
+<div class="min-height-200px">
+    {{>account/page-header}}
+    <div class="row">
+        <div class="col-12 mb-30">
+            <div class="pd-20 card-box height-100-p">
+                <h3 class="text-center h3 mb-0">{{profile.name}}</h3>
+                <p class="text-center text-muted font-14">
+                    {{#if profile.role}}
+                    Admin 
+                    {{else}}
+                    User
+                    {{/if}}
+                </p>
+                <div class="profile-info text-center">
+                    <h5 class="mb-20 h5 text-blue ">Account Information</h5>
+                    <ul>
+                        <li>
+                            <span>Email Address:</span>
+                            {{profile.email}}
+                        </li>
+                        <li>
+                            <span>Phone Number:</span>
+                            {{profile.phone}}
+                        </li>
+                        <li>
+                            <span>Address:</span>
+                            {{profile.address}}
+                        </li>
+                        <li>
+                            <span>Creation Date:</span>
+                            {{profile.createdAt}}
+                        </li>
+                        <li>
+                            <span>Updated Date:</span>
+                            {{profile.updatedAt}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

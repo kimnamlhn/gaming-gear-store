@@ -20,10 +20,10 @@ exports.userIndex = async (req, res) => {
 exports.userProfile = async (req, res) => {
 	try {
 		if (!req.user) res.redirect('/');
-		const profile = await accountService.getProfile(req.user.idAccount);
-		res.render('account/profile', {
+		const profile = await accountService.getProfile(req.params.userID);
+		res.render('account/admin/userProfile', {
 			layout: 'account',
-			title: 'User proflie',
+			title: 'User profile',
 			profile,
 		});
 	} catch (error) {
@@ -35,7 +35,7 @@ exports.userProfile = async (req, res) => {
 
 exports.lockUser = async (req, res) => {
 	try {
-		console.log("id account", req.user.lockUserId);
+		console.log('id account', req.user.lockUserId);
 
 		const message = await accountService.lockUser(req.user.lockUserId);
 
@@ -49,7 +49,6 @@ exports.lockUser = async (req, res) => {
 			list: 'user',
 			accounts,
 		});
-
 	} catch (error) {
 		res.render('error', {
 			error,
