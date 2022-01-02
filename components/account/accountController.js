@@ -105,12 +105,9 @@ exports.profileUpdate = async (req, res) => {
 exports.accountListAdmin = async (req, res) => {
 	try {
 		if (!req.user || !req.user.role) res.redirect('/');
-		let { count, rows: accounts } = await accountService.listAccounts(1);
-		res.render('account/admin/accountList', {
+		res.render('account/admin/adminAccountList', {
 			layout: 'account',
 			title: 'Admin Account List',
-			list: 'admin',
-			accounts,
 		});
 	} catch (error) {
 		res.render('error', { error });
@@ -159,12 +156,10 @@ exports.addAdminAccountPost = async (req, res) => {
 exports.accountListUser = async (req, res) => {
 	try {
 		if (!req.user || !req.user.role) res.redirect('/');
-		let { count, rows: accounts } = await accountService.listAccounts(0);
 		res.render('account/admin/accountList', {
 			layout: 'account',
 			title: 'User Account List',
 			list: 'user',
-			accounts,
 		});
 	} catch (error) {
 		res.render('error', { error });

@@ -1,0 +1,38 @@
+<div class="min-height-200px">
+    {{>account/page-header}}
+    <div class="card-box mb-30">
+        <div class="pd-20">
+            <h4 class="text-blue h4">{{title}}<a href="/account/admin/admin-acc/add" style="float:right;"><i
+                class="fa fa-plus"></i> Add an Admin account</a></h4>
+        </div>
+        <div class="pb-20">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Creation Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-list">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <ul class="pagination-list">
+                    <li><i class="fa fa-angle-left"></i></li>
+                    <li class="active">1</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#section "fetch"}}
+<script src="/api/fetch/adminList.js"></script>
+<script src="/store/js/helper.js"></script>
+{{/section}}

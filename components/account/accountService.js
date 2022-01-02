@@ -4,14 +4,6 @@ const bcrypt = require('bcrypt');
 const validator = require('validator');
 const { models } = require('../../models');
 
-exports.listAccounts = async (type) => {
-	const { count, rows } = await models.account.findAndCountAll({
-		where: { role: type },
-		raw: true,
-	});
-	return { count, rows };
-};
-
 exports.getProfile = (id) => {
 	return models.account.findOne({
 		where: {

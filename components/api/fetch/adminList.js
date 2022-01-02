@@ -4,22 +4,17 @@ const getUserList = async (page) => {
 	try {
 		const params = Object.fromEntries(urlSearchParams.entries()); // Get filter from Search Params
 		params.page = page;
-		const res = await fetch(`/api/user/?page=${params.page}`);
+		const res = await fetch(`/api/user/admin?page=${params.page}`);
 		if (!res.ok) {
 			const message = 'Error with status code: ' + res.status;
 			throw new Error(message);
 		}
 		const api = await res.json();
+		console.log(api);
 
 		$('#user-list').empty();
 		if (api.rows.length > 0) {
 			api.rows.forEach((user) => {
-				let isLocked = 'False';
-
-				if (user.locked) {
-					isLocked = 'True';
-				}
-
 				$('#user-list').append(`
 				<tr>
 					<th scope="row">${user.idAccount}</th>
@@ -27,21 +22,6 @@ const getUserList = async (page) => {
 					<td>${user.name}</td>
 					<td>${user.phone}</td>
 					<td>${user.createdAt}</td>
-					<td>${isLocked}</td>
-					<td>
-						<div class="dropdown">
-							<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-								href="#" role="button" data-toggle="dropdown">
-								<i class="dw dw-more"></i>
-							</a>
-							<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-								<a class="dropdown-item" href="/account/admin/acc/${user.idAccount}"><i
-										class="dw dw-eye"></i> View</a>
-								<a class="dropdown-item" href="/account/admin/acc/lock/${user.idAccount}"><i
-										class="dw dw-lock"></i> Lock</a>
-							</div>
-						</div>
-					</td>
 				</tr>
                 `);
 			});
