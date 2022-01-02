@@ -31,7 +31,7 @@ exports.createAccount = async (entity) => {
 		}
 		const token = uuidv4();
 		const hashPassword = await bcrypt.hash(entity.password, 10);
-		await models.account.create({
+		const newAccount = await models.account.build({
 			idAccount: null,
 			email: entity.email,
 			password: hashPassword,
@@ -53,8 +53,8 @@ exports.createAccount = async (entity) => {
 		});
 		const mailOptions = {
 			from: process.env.MAIL_USERNAME,
-			//to: user_email,
-			to: process.env.MAIL_USERNAME,
+			to: entity.email,
+			// to: process.env.MAIL_USERNAME,
 			subject: `Link to confirm account`,
 			html: `<p>Click this link to confirm your account. <a href="${process.env.ADDRESS}/auth/confirm-account?token=${token}">Click here.</a></p>`,
 		};
@@ -62,6 +62,7 @@ exports.createAccount = async (entity) => {
 			if (error) {
 				console.log(error);
 			} else {
+				await newAccount.save();
 				return 'Account created sucessfully, please check your email address for confirmation link.';
 			}
 		});
@@ -104,8 +105,8 @@ exports.forgotPassword = async (user_email) => {
 	});
 	const mailOptions = {
 		from: process.env.MAIL_USERNAME,
-		//to: user_email,
-		to: process.env.MAIL_USERNAME,
+		to: user_email,
+		// to: process.env.MAIL_USERNAME,
 		subject: `Link to reset password`,
 		html: `<p>Click this link to reset your password. <a href="${process.env.ADDRESS}/auth/reset-password?token=${token}">Click here.</a> This link will expires in 15 minutes.</p>`,
 	};
