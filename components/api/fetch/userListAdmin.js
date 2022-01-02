@@ -4,26 +4,20 @@ const getUserList = async (page) => {
 	try {
 		const params = Object.fromEntries(urlSearchParams.entries()); // Get filter from Search Params
 		params.page = page;
-		console.log("param:", params);
-		const res = await fetch(
-			`/api/user/?page=${params.page}`
-		);
-		console.log("test res: ", res);
+		const res = await fetch(`/api/user/?page=${params.page}`);
 		if (!res.ok) {
 			const message = 'Error with status code: ' + res.status;
 			throw new Error(message);
 		}
 		const api = await res.json();
-		console.log("api: ", api);
 
 		$('#user-list').empty();
 		if (api.rows.length > 0) {
 			api.rows.forEach((user) => {
-				let isLocked = "False";
+				let isLocked = 'False';
 
-				if(user.locked)
-				{
-					isLocked = "True";
+				if (user.locked) {
+					isLocked = 'True';
 				}
 
 				$('#user-list').append(`
@@ -44,13 +38,10 @@ const getUserList = async (page) => {
 								<i class="dw dw-more"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-								<a class="dropdown-item" href="/account/userprofile/${user.idAccount}"><i
+								<a class="dropdown-item" href="/account/admin/acc/${user.idAccount}"><i
 										class="dw dw-eye"></i> View</a>
-								<a class="dropdown-item" onclick="$('#lockUserId').val(${user.idAccount}); document.getElementById('lockAccount').submit(); "><i
+								<a class="dropdown-item" href="/account/admin/acc/lock/${user.idAccount}"><i
 										class="dw dw-lock"></i> Lock</a>
-								<a class="dropdown-item"
-									onclick="document.getElementById('deleteAccountForm-${user.idAccount}').submit();"><i
-										class="dw dw-delete-3"></i> Delete</a>
 							</div>
 						</div>
 					</td>
