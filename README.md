@@ -1,7 +1,7 @@
 # Đồ án cuối kì - Phát triển ứng dụng web
 
-31/40 (Trừ các chức năng nâng cao và tổng quát)  
--1.5đ
+35/40 (Trừ các chức năng nâng cao và tổng quát)  
+-1.25đ
 
 ### Tổng quát
 
@@ -61,7 +61,7 @@
 ✅ Phân trang, lọc danh sách sản phẩm  
 ✅ Kiểm tra các ràng buộc về sản phẩm  
 ✅ Cho phép đăng tải các hình đại diện của sản phẩm  
-⬜ Quản lý đơn đặt hàng (đã giao, chưa giao, đang giao)  
+✅ Quản lý đơn đặt hàng (đã giao, chưa giao, đang giao)  
 ⬜ Thống kê doanh số bán hàng theo các ngày, tuần, tháng, năm, quý  
 ⬜ Thống kê số lượng bán top 10 của sản phẩm, của gian hàng
 

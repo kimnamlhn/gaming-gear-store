@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const accountController = require('./accountController');
+const apiOrderController = require('../api/order/apiOrderController');
 
 // Account Pages
 router.get('/', accountController.userIndex);
@@ -26,5 +27,7 @@ router.get('/admin/products/add/:productID', accountController.uploadImage); // 
 router.post('/admin/products/add/:productID', accountController.uploadImagePost); // Upload images POST
 
 router.get('/admin/orders', accountController.orderList);
+// router.get('/admin/orders/:orderID', accountController.orderDetail);
+router.get('/admin/orders/action/:orderID', apiOrderController.orderAction);
 
 module.exports = router;

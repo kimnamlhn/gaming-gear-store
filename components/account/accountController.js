@@ -313,7 +313,7 @@ exports.getEditProductPage = async (req, res) => {
 
 exports.orderList = async (req, res) => {
 	try {
-		// if (!req.user || !req.user.role) res.redirect('/');
+		if (!req.user || !req.user.role) res.redirect('/');
 
 		res.render('account/admin/orderList', {
 			layout: 'account',

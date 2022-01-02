@@ -211,7 +211,6 @@ const paginationSearch = (page, count) => {
 	}
 };
 
-
 const paginationUserList = (page, count) => {
 	let result = '';
 	page++;
@@ -271,6 +270,73 @@ const paginationUserList = (page, count) => {
 					})"><i class="fa fa-angle-left"></i></li>
                     <li onclick="getUserListPage(${count - 3})">${count - 2}</li>
                     <li onclick="getUserListPage(${count - 2})">${count - 1}</li>
+                    <li class="active">${count}</li>`;
+				}
+			}
+			return result;
+		}
+	}
+};
+
+const paginationOrderList = (page, count) => {
+	let result = '';
+	page++;
+	if (page > count) {
+		return '';
+	}
+	switch (count) {
+		case 0:
+			return '';
+		case 1:
+			return `<li class="active">${page}</li>`;
+		case 2: {
+			if (page === 1)
+				return `<li class="active">${page}</li><li onclick="getOrderListPage(${page})">${
+					page + 1
+				}</li>`;
+			else
+				return `<li onclick="getOrderListPage(${page - 2})">${
+					page - 1
+				}</li><li class="active">${page}</li>`;
+		}
+		case 3:
+		case 4: {
+			for (let i = 0; i < count; i++) {
+				if (page - 1 === i) result += `<li class="active">${page}</li>`;
+				else result += `<li onclick="getOrderListPage(${i})">${i + 1}</li>`;
+			}
+			return result;
+		}
+		default: {
+			if (page - 1 !== 0 && page !== count)
+				result += `
+                <li onclick="getOrderListPage(0)"><i class="fa fa-angle-double-left"></i></li>
+                <li onclick="getOrderListPage(${page - 2})"><i class="fa fa-angle-left"></i></li>
+                <li onclick="getOrderListPage(${page - 2})">${page - 1}</li>
+                <li class="active">${page}</li>
+                <li onclick="getOrderListPage(${page})">${page + 1}</li>
+                <li onclick="getOrderListPage(${page})"><i class="fa fa-angle-right"></i></li>
+                <li onclick="getOrderListPage(${
+					count - 1
+				})"><i class="fa fa-angle-double-right"></i></li>`;
+			else {
+				if (page - 1 === 0)
+					result += `
+                <li class="active">${page}</li>
+                <li onclick="getOrderListPage(${page})">${page + 1}</li>
+                <li onclick="getOrderListPage(${page + 1})">${page + 2}</li>
+                <li onclick="getOrderListPage(${page})"><i class="fa fa-angle-right"></i></li>
+                <li onclick="getOrderListPage(${
+					count - 1
+				})"><i class="fa fa-angle-double-right"></i></li>`;
+				else {
+					result += `
+                    <li onclick="getOrderListPage(0)"><i class="fa fa-angle-double-left"></i></li>
+                    <li onclick="getOrderListPage(${
+						count - 2
+					})"><i class="fa fa-angle-left"></i></li>
+                    <li onclick="getOrderListPage(${count - 3})">${count - 2}</li>
+                    <li onclick="getOrderListPage(${count - 2})">${count - 1}</li>
                     <li class="active">${count}</li>`;
 				}
 			}
