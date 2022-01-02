@@ -24,6 +24,7 @@ const apiCommentRouter = require('./components/api/comment/apiCommentRouter');
 const apiProductRouter = require('./components/api/product/apiProductRouter');
 const apiCartRouter = require('./components/api/cart/apiCartRouter');
 const apiUserRouter = require('./components/api/user/apiUserRouter');
+const apiOrderRouter = require('./components/api/order/apiOrderRouter');
 
 // Database
 const db = require('./models');
@@ -86,6 +87,7 @@ app.use('/api/comment', apiCommentRouter);
 app.use('/api/product', apiProductRouter);
 app.use('/api/cart', apiCartRouter);
 app.use('/api/user', apiUserRouter);
+app.use('/api/order', apiOrderRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
