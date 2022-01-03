@@ -9,8 +9,8 @@
 ✅ Nội dung trong CSDL phong phú  
 ✅ Thiết kế layout của Web  
 ✅ Kiến trúc của website  
-⬜ Báo cáo  
-⬜ Phim hướng dẫn  
+✅ Báo cáo  
+✅ Phim hướng dẫn  
 ✅ Quá trình thực hiện website được đăng lên Git
 
 ### Chức năng khi chưa đăng nhập
